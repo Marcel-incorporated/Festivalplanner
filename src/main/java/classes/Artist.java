@@ -5,7 +5,7 @@ import interfaces.PlanningImporter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Artist implements PlanningImporter, Serializable {
+public class Artist implements Serializable {
     private String name;
     private int popularity;
     private ArrayList<Song> songs = new ArrayList<>();

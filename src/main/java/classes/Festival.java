@@ -5,7 +5,7 @@ import interfaces.PlanningImporter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Festival implements PlanningImporter, Serializable {
+public class Festival implements Serializable {
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private String startTime;
     private String endTime;

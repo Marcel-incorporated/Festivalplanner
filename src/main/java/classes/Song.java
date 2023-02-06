@@ -4,7 +4,7 @@ import interfaces.PlanningImporter;
 
 import java.io.Serializable;
 
-public class Song implements PlanningImporter, Serializable {
+public class Song implements Serializable {
     private String name;
     private int length;
     private String genre;
