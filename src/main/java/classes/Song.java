@@ -1,7 +1,5 @@
 package classes;
 
-import interfaces.PlanningImporter;
-
 import java.io.Serializable;
 
 public class Song implements Serializable {
