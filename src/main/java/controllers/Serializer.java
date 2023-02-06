@@ -1,33 +1,32 @@
 package controllers;
 
-import classes.Visitor;
-import interfaces.PlanningImporter;
+import classes.Festival;
 
 import java.io.*;
 
 public class Serializer {
 
-    public static void Serialize(PlanningImporter x) throws IOException {
+    public static void Serialize(Festival festival) throws IOException {
 
         FileOutputStream fos = new FileOutputStream("planning.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(x);
+        oos.writeObject(festival);
 
         if (oos != null) {
             oos.close();
         }
     }
 
-    public static PlanningImporter Deserialize() throws IOException, ClassNotFoundException {
+    public static Festival Deserialize() throws IOException, ClassNotFoundException {
 
         FileInputStream fis = new FileInputStream("planning.txt");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        PlanningImporter planningObject = (PlanningImporter) ois.readObject();
+        Festival festival = (Festival) ois.readObject();
 
         if (ois != null) {
             ois.close();
         }
 
-        return planningObject;
+        return festival;
     }
 }
