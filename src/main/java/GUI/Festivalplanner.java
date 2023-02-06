@@ -10,11 +10,13 @@ import java.io.IOException;
 public class Festivalplanner extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Festivalplanner.class.getResource("Festivalplanner.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Festivalplanner.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("Festivalplanner");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
