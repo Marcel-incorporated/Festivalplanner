@@ -1,95 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FestivalplannerController">
   <tabs>
     <Tab text="Schedule">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="467.0" prefWidth="943.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="900.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
                <children>
-                  <Button layoutX="934.0" layoutY="732.0" mnemonicParsing="false" text="Import" />
-                  <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="11.0" prefHeight="744.0" prefWidth="804.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label text="Time" />
-                        <Label text="00:00" GridPane.rowIndex="1" />
-                        <Label text="01:00" GridPane.rowIndex="2" />
-                        <Label prefHeight="17.0" prefWidth="41.0" text="02:00" GridPane.rowIndex="3" />
-                        <Label text="03:00" GridPane.rowIndex="4" />
-                        <Label text="04:00" GridPane.rowIndex="5" />
-                        <Label text="05:00" GridPane.rowIndex="6" />
-                        <Label text="06:00" GridPane.rowIndex="7" />
-                        <Label text="07:00" GridPane.rowIndex="8" />
-                        <Label text="08:00" GridPane.rowIndex="9" />
-                        <Label text="09:00" GridPane.rowIndex="10" />
-                        <Label text="10:00" GridPane.rowIndex="11" />
-                        <Label text="11:00" GridPane.rowIndex="12" />
-                        <Label text="12:00" GridPane.rowIndex="13" />
-                        <Label text="13:00" GridPane.rowIndex="14" />
-                        <Label text="14:00" GridPane.rowIndex="15" />
-                        <Label text="15:00" GridPane.rowIndex="16" />
-                        <Label text="16:00" GridPane.rowIndex="17" />
-                        <Label text="17:00" GridPane.rowIndex="18" />
-                        <Label text="18:00" GridPane.rowIndex="19" />
-                        <Label text="19:00" GridPane.rowIndex="20" />
-                        <Label text="20:00" GridPane.rowIndex="21" />
-                        <Label text="21:00" GridPane.rowIndex="22" />
-                        <Label text="22:00" GridPane.rowIndex="23" />
-                        <Label text="23:00" GridPane.rowIndex="24" />
-                        <Label text="Event" GridPane.columnIndex="1" />
-                        <Label text="Location" GridPane.columnIndex="2" />
-                        <Label text="24:00" GridPane.rowIndex="25" />
-                     </children>
-                  </GridPane>
-               </children></AnchorPane>
+                  <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
+                     <image>
+                        <Image url="@images/scheduleBackground.png" />
+                     </image></ImageView>
+                  <Button fx:id="addEventButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="6.0" layoutY="6.0" maxHeight="28.0" maxWidth="87.0" mnemonicParsing="false" onAction="#onAddEditEventButton" prefHeight="28.0" prefWidth="87.0" style="-fx-background-color: #ECE6DB;">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/editAddEventButton.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+               </children>
+        </AnchorPane>
       </content>
     </Tab>
       <Tab text="Map">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Button layoutX="934.0" layoutY="732.0" mnemonicParsing="false" text="Import" />
-               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="900.0" />
         </content>
       </Tab>
     <Tab text="Simulator" />
