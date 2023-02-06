@@ -4,7 +4,7 @@ import interfaces.PlanningImporter;
 
 import java.io.Serializable;
 
-public class Performance implements PlanningImporter, Serializable {
+public class Performance implements Serializable {
     private Artist artist;
     private String startPerformance;
     private String endPerformance;
