@@ -1,4 +1,4 @@
-package controllers;
+package classes;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public class Visitor implements Serializable {
 
     @Override
     public String toString() {
-        return "controllers.Visitor{" +
+        return "classes.Visitor{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +

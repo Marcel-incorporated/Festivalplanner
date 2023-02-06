@@ -1,12 +1,15 @@
 package controllers;
 
+import classes.Visitor;
+import interfaces.PlanningImporter;
+
 import java.io.*;
 
 public class Serializer {
 
-    public static void Serialize(Visitor x) throws IOException {
+    public static void Serialize(PlanningImporter x) throws IOException {
 
-        FileOutputStream fos = new FileOutputStream("Visitors.txt");
+        FileOutputStream fos = new FileOutputStream("planning.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(x);
 
@@ -15,16 +18,16 @@ public class Serializer {
         }
     }
 
-    public static Visitor Deserialize() throws IOException, ClassNotFoundException {
+    public static PlanningImporter Deserialize() throws IOException, ClassNotFoundException {
 
-        FileInputStream fis = new FileInputStream("Visitors.txt");
+        FileInputStream fis = new FileInputStream("planning.txt");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        Visitor visitor = (Visitor) ois.readObject();
+        PlanningImporter planningObject = (PlanningImporter) ois.readObject();
 
         if (ois != null) {
             ois.close();
         }
 
-        return visitor;
+        return planningObject;
     }
 }

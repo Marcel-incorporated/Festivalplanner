@@ -6,4 +6,6 @@ module com.example.festivalplanner {
     exports GUI;
     exports controllers;
     opens controllers to javafx.fxml;
+    exports classes;
+    opens classes to javafx.fxml;
 }
