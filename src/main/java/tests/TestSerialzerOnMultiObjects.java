@@ -2,7 +2,6 @@ package tests;
 
 import classes.*;
 import controllers.Serializer;
-import interfaces.PlanningImporter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,8 +63,8 @@ public class TestSerialzerOnMultiObjects {
 //
 //        Serializer.Serialize(festival);
 
-        PlanningImporter planningImporter = Serializer.Deserialize();
-        System.out.println(planningImporter.toString());
+        Festival festival1 = Serializer.Deserialize();
+        System.out.println(festival1.toString());
 
     }
 }
