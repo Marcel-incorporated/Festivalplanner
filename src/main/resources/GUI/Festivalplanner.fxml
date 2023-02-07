@@ -43,7 +43,7 @@
                <children>
                   <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
                      <image>
-                        <Image url="@../../../../../../../images/draft.png" />
+                        <Image url="@images/scheduleBackground.png" />
                      </image>
                   </ImageView>
                   <ScrollPane layoutX="636.0" layoutY="14.0" prefHeight="400.0" prefWidth="250.0">
@@ -65,7 +65,7 @@
                   </ImageView>
                   <ImageView fitHeight="404.0" fitWidth="254.0" layoutX="634.0" layoutY="12.0">
                      <image>
-                        <Image url="@../../../../../../../images/scrollPaneOutline.png" />
+                        <Image url="@images/scrollPaneOutline.png" />
                      </image>
                   </ImageView>
                   <TextField fx:id="artistNameTextfield" layoutX="20.0" layoutY="39.0" prefHeight="25.0" prefWidth="161.0" />
