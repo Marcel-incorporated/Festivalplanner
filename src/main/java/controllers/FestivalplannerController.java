@@ -1,5 +1,6 @@
 package controllers;
 
+import classes.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.image.*;
 import javafx.stage.*;
 
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.Desktop;
 import java.io.File;
@@ -64,7 +67,21 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
+        System.out.println("exporting");
 
+//        Song song = new Song();
+        ArrayList<Song> songs = new ArrayList<>();
+//        Visitor visitor = new Visitor();
+        ArrayList<Visitor> visitors = new ArrayList<>();
+        Artist artist = new Artist(artistNameTextfield.getText(), popularity, songs, 0);
+        Performance performance = new Performance(artist, "", "", "");
+        ArrayList<Performance> performances = new ArrayList<>();
+        Festival festival = new Festival(visitors,"","","", performances, "");
+        try {
+            Serializer.Serialize(festival);
+        } catch(IOException e) {
+
+        }
     }
 
     @FXML
