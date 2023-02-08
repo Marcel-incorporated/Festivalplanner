@@ -7,14 +7,16 @@ public class Artist implements Serializable {
     private String name;
     private int popularity;
     private ArrayList<Song> songs = new ArrayList<>();
-
     private int id;
 
-    public Artist(String name, int popularity, ArrayList<Song> songs, int id) {
+    private String genre;
+
+    public Artist(String name, int popularity, ArrayList<Song> songs, int id, String genre) {
         this.name = name;
         this.popularity = popularity;
         this.songs = songs;
         this.id = id;
+        this.genre = genre;
     }
     @Override
     public String toString() {
