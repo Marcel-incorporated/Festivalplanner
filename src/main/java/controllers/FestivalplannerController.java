@@ -99,6 +99,7 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
+
 //        System.out.println("exporting");
 //
 ////        Song song = new Song();
@@ -112,6 +113,7 @@ public class FestivalplannerController {
 //        try {
 //            Serializer.Serialize(festival);
 //        } catch(IOException e) {
+
 
 //        }
     }

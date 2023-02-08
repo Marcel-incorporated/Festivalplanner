@@ -13,6 +13,7 @@ public class Artist implements Serializable {
     private int id;
 
     public Artist(String name, int popularity, ArrayList<Song> songs, int id, Genre genre) {
+
         this.name = name;
         this.popularity = popularity;
         this.songs = songs;
