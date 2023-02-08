@@ -43,7 +43,7 @@
                <children>
                   <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
                      <image>
-                        <Image url="@images/scheduleBackground.png" />
+                        <Image url="@images/fileGeneratorBackground.png" />
                      </image>
                   </ImageView>
                   <ScrollPane layoutX="636.0" layoutY="14.0" prefHeight="400.0" prefWidth="250.0">
