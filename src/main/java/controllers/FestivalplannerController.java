@@ -405,7 +405,7 @@ public class FestivalplannerController {
 
     @FXML
     public void onConfirmVisitorsButton(ActionEvent actionEvent) {
-        visitorCount = Integer.parseInt(confirmVisitorsButton.getText());
+        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
     }
 
     @FXML
