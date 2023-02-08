@@ -15,8 +15,6 @@ public class Festivalplanner extends Application {
         stage.setTitle("Festivalplanner");
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
