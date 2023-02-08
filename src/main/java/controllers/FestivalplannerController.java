@@ -28,6 +28,20 @@ public class FestivalplannerController {
     @FXML
     public Button addArtistButton;
     @FXML
+    public TextField amountOfVisitorsTextfield;
+    @FXML
+    public Button confirmVisitorsButton;
+    @FXML
+    public TextField festivalNameTextfield;
+    @FXML
+    public Button confirmFestivalNameButton;
+    @FXML
+    public TextField startingTimeTextfield;
+    @FXML
+    public TextField artistNameTextfield1;
+    @FXML
+    public TextField setDurationTextfield;
+    @FXML
     private Button addEventButton;
     @FXML
     private TabPane tabPane;
@@ -36,7 +50,6 @@ public class FestivalplannerController {
     @FXML
     void onAddEditEventButton(ActionEvent event) throws IOException {
         tabPane.getSelectionModel().select(1);
-
     }
 
     // File editor/generator controller
@@ -96,6 +109,11 @@ public class FestivalplannerController {
     private Label artistLabel15;
     @FXML
     private Label artistLabel16;
+
+    private int visitorCount;
+    private String festivalName;
+
+    private List<Artist> artists = new ArrayList<>();
 
     @FXML
     void onExportButton(ActionEvent event) {
@@ -215,6 +233,8 @@ public class FestivalplannerController {
 
     private void addArtistToList(String name, String genre, int popularity) {
         if (amountOfArtistsAdded <= 16) {
+            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));
+
             switch (amountOfArtistsAdded) {
                 case 1 -> {
                     artistLabel1.setOpacity(1);
@@ -281,17 +301,25 @@ public class FestivalplannerController {
                     artistLabel16.setText(name);
                 }
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Maximum amount of artists reached!");
+
+            alert.showAndWait();
         }
 
     }
 
     @FXML
     public void onAddArtistButton(ActionEvent actionEvent) {
-        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0) {
+        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
+                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("You must enter a name, a genre and set the artist's popularity!");
+            alert.setContentText("Make sure to fill all fields!");
 
             noStarsClicked();
 
@@ -373,6 +401,16 @@ public class FestivalplannerController {
             fifthStar.setStyle("-fx-fill: white");
         }
 
+    }
+
+    @FXML
+    public void onConfirmVisitorsButton(ActionEvent actionEvent) {
+        visitorCount = Integer.parseInt(confirmVisitorsButton.getText());
+    }
+
+    @FXML
+    public void onConfirmFestivalNameButton(ActionEvent actionEvent) {
+        festivalName = confirmFestivalNameButton.getText();
     }
 }
 
