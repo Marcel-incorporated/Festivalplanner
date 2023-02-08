@@ -73,7 +73,7 @@ public class FestivalplannerController {
         ArrayList<Song> songs = new ArrayList<>();
 //        Visitor visitor = new Visitor();
         ArrayList<Visitor> visitors = new ArrayList<>();
-        Artist artist = new Artist(artistNameTextfield.getText(), popularity, songs, 0);
+        Artist artist = new Artist(artistNameTextfield.getText(), popularity, songs, 0, genreTextfield.getText());
         Performance performance = new Performance(artist, "", "", "");
         ArrayList<Performance> performances = new ArrayList<>();
         Festival festival = new Festival(visitors,"","","", performances, "");

@@ -25,8 +25,8 @@ public class TestSerialzerOnMultiObjects {
         KimsSongs.add(song4);
         KimsSongs.add(song5);
 
-        Artist artist1 = new Artist("john", 3, JohnsSongs, 1);
-        Artist artist2 = new Artist("kim", 1, KimsSongs, 2);
+        Artist artist1 = new Artist("john", 3, JohnsSongs, 1, "EDM");
+        Artist artist2 = new Artist("kim", 1, KimsSongs, 2, "Pop");
 
         ArrayList<Artist> artists = new ArrayList<>();
 
