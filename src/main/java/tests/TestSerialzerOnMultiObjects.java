@@ -55,6 +55,5 @@ public class TestSerialzerOnMultiObjects {
 //
 //        Festival festival1 = Serializer.Deserialize();
 //        System.out.println(festival1.toString());
-
     }
 }
