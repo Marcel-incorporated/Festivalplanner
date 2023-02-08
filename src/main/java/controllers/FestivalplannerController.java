@@ -7,10 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.image.*;
 import javafx.stage.*;
 
 import java.awt.event.MouseEvent;
@@ -58,9 +60,7 @@ public class FestivalplannerController {
     private SVGPath fourthStar;
     @FXML
     private SVGPath fifthStar;
-
     private int popularity;
-
 
     @FXML
     void onExportButton(ActionEvent event) {

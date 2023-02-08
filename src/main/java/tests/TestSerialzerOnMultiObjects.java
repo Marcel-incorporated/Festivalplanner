@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class TestSerialzerOnMultiObjects {
-
-
-
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         Song song1 = new Song("name", 30, "rock", 1);
