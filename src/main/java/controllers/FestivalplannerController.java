@@ -65,6 +65,8 @@ public class FestivalplannerController {
     @FXML
     private Button importButton;
     @FXML
+    private TextField podiumName;
+    @FXML
     private TextField artistNameTextfield;
     @FXML
     private TextField genreTextfield;
@@ -132,12 +134,12 @@ public class FestivalplannerController {
 
         Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
 
-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
+        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumName.getText());
 
         ArrayList<Performance> performances = new ArrayList<>();
         performances.add(performance);
 
-        Festival festival = new Festival(visitors.size(), festivalName, performances);
+        Festival festival = new Festival(visitors, festivalName, performances);
 
         try {
             Serializer.Serialize(festival);
