@@ -121,21 +121,29 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
-//        System.out.println("exporting");
-//
-////        Song song = new Song();
-//        ArrayList<Song> songs = new ArrayList<>();
-////        Visitor visitor = new Visitor();
-//        ArrayList<Visitor> visitors = new ArrayList<>();
-//        Artist artist = new Artist(artistNameTextfield.getText(), popularity, songs, 0);
-//        Performance performance = new Performance(artist, "", "", "");
-//        ArrayList<Performance> performances = new ArrayList<>();
-//        Festival festival = new Festival(visitors,"","","", performances, "");
-//        try {
-//            Serializer.Serialize(festival);
-//        } catch(IOException e) {
+        System.out.println("exporting");
 
-//        }
+//        Song song = new Song();
+        ArrayList<Song> songs = new ArrayList<>();
+        ArrayList<Visitor> visitors = new ArrayList<>();
+        for (int i = 0; i < visitorCount; i++) {
+            visitors.add(new Visitor());
+        }
+
+        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
+
+        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
+
+        ArrayList<Performance> performances = new ArrayList<>();
+        performances.add(performance);
+
+        Festival festival = new Festival(visitors.size(), festivalName, performances);
+
+        try {
+            Serializer.Serialize(festival);
+        } catch(IOException e) {
+
+        }
     }
 
     @FXML
@@ -330,11 +338,11 @@ public class FestivalplannerController {
     @FXML
     public void onAddArtistButton(ActionEvent actionEvent) {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
-                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty()) {
+                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("Make sure to fill all fields!");
+            alert.setContentText("Make sure to fill out all fields!");
 
             noStarsClicked();
 
@@ -347,6 +355,8 @@ public class FestivalplannerController {
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
         artistNameTextfield.clear();
         genreTextfield.clear();
+        startingTimeTextfield.clear();
+        setDurationTextfield.clear();
         noStarsClicked();
 
     }
@@ -428,6 +438,3 @@ public class FestivalplannerController {
         festivalName = confirmFestivalNameButton.getText();
     }
 }
-
-
-

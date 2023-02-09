@@ -9,15 +9,13 @@ public class Festival implements Serializable {
     private String endTime;
     private String name;
     private ArrayList<Performance> performances = new ArrayList<>();
-    private String date;
     private int numberOfVisitors;
 
-    public Festival(int numberOfVisitors, String name, ArrayList<Performance> performances, String date) {
+    public Festival(int numberOfVisitors, String name, ArrayList<Performance> performances) {
         this.visitorList = new ArrayList<>();
         this.numberOfVisitors = numberOfVisitors;
         this.name = name;
         this.performances = performances;
-        this.date = date;
     }
 
     public void addToVisitorList(Visitor visitor) {
@@ -27,12 +25,12 @@ public class Festival implements Serializable {
     @Override
     public String toString() {
         return "Festival{" +
-                "visitors=" + visitorList +
+                "visitorList=" + visitorList +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", name='" + name + '\'' +
                 ", performances=" + performances +
-                ", date='" + date + '\'' +
+                ", numberOfVisitors=" + numberOfVisitors +
                 '}';
     }
 }
