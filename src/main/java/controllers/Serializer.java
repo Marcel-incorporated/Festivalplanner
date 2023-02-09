@@ -9,7 +9,6 @@ import java.io.*;
 public class Serializer {
 
     public static void Serialize(Festival festival) throws IOException {
-
         Stage stage = new Stage();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("src"));
