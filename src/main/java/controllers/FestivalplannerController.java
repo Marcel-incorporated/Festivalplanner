@@ -3,7 +3,6 @@ package controllers;
 import classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,19 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
-import javafx.stage.FileChooser;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class FestivalplannerController {
+
 
     private boolean mapIsClicked = false;
     private boolean mapMakerIsClicked = false;
@@ -31,6 +26,11 @@ public class FestivalplannerController {
     private ArrayList<Block> blocks = new ArrayList<>();
     private Block lastBlockChanged = null;
     private int blockColorCounter = 0;
+
+    //FXML Components
+    @FXML
+    public Button saveFestival;
+    
     @FXML
     public Canvas mapCanvas;
     @FXML
@@ -40,32 +40,13 @@ public class FestivalplannerController {
     @FXML
     public TextField amountOfVisitorsTextfield;
     @FXML
-    public Button confirmVisitorsButton;
-    @FXML
     public TextField festivalNameTextfield;
-    @FXML
-    public Button confirmFestivalNameButton;
     @FXML
     public TextField startingTimeTextfield;
     @FXML
-    public TextField artistNameTextfield1;
-    @FXML
     public TextField setDurationTextfield;
     @FXML
-    private Button addEventButton;
-    @FXML
     private TabPane tabPane;
-
-    // Schedule/main tab controller
-    @FXML
-    void onAddEditEventButton(ActionEvent event) throws IOException {
-        tabPane.getSelectionModel().select(1);
-    }
-
-    // File editor/generator controller
-
-
-
     @FXML
     private Button exportButton;
     @FXML
@@ -86,9 +67,6 @@ public class FestivalplannerController {
     private SVGPath fourthStar;
     @FXML
     private SVGPath fifthStar;
-    private int popularity = 0;
-    private boolean popularitySelected = false;
-    private int amountOfArtistsAdded = 0;
     @FXML
     private Label artistLabel1;
     @FXML
@@ -122,10 +100,27 @@ public class FestivalplannerController {
     @FXML
     private Label artistLabel16;
 
+    //Actual attributes to save data
+    private int popularity = 0;
+    private boolean popularitySelected = false;
+    private int amountOfArtistsAdded = 0;
+    private boolean mapIsClicked = false;
     private int visitorCount;
     private String festivalName;
+    private boolean mapMakerIsClicked = false;
+    private Color blockColors[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private Block lastBlockChanged = null;
+    private int blockColorCounter = 0;
+    private ArrayList<Artist> artists = new ArrayList<>();
 
-    private List<Artist> artists = new ArrayList<>();
+    // Schedule/main tab controller
+    @FXML
+    void onAddEditEventButton(ActionEvent event) throws IOException {
+        tabPane.getSelectionModel().select(1);
+    }
+
+    // File editor/generator controller
 
 
     @FXML
@@ -152,7 +147,7 @@ public class FestivalplannerController {
             Serializer.Serialize(festival);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully converted data to .txt file :)");
             alert.showAndWait();
-        } catch(IOException e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to convert data to .txt file :(");
             alert.showAndWait();
         }
@@ -309,24 +304,17 @@ public class FestivalplannerController {
                 }
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Maximum amount of artists reached!");
-
-            alert.showAndWait();
+            notificationPopup(1, "Maximum amount of artists reached!");
         }
-
     }
 
     @FXML
     public void mapTabClicked() {
         FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
         if (!mapIsClicked) {
-            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200,200,100,100);
+            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200, 200, 100, 100);
             mapIsClicked = true;
-        }
-        else {
+        } else {
             mapIsClicked = false;
         }
     }
@@ -335,7 +323,8 @@ public class FestivalplannerController {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
                 //System.out.println(block.toString());
-                if (block != lastBlockChanged){
+
+                if (block != lastBlockChanged) {
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
@@ -357,8 +346,6 @@ public class FestivalplannerController {
             }
         }
     }
-
-
 
     @FXML
     public void mapMakerTabClicked() {
@@ -408,18 +395,56 @@ public class FestivalplannerController {
     }
 
     @FXML
+    public void mapMakerTabClicked() {
+        FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
+        if (!mapMakerIsClicked) {
+            int y = 1;
+            for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
+                for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
+                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
+                }
+            }
+
+            updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
+
+            mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+
+            mapMakerIsClicked = true;
+        } else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    public void updateBlock(FXGraphics2D graphics2DMapMaker, Block block) {
+        block.changeSizeOfBlock(19, 19);
+        graphics2DMapMaker.setColor(block.getColor());
+        graphics2DMapMaker.fill(block);
+    }
+
+    public void updateBlocks(FXGraphics2D graphics2DMapMaker, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            graphics2DMapMaker.setColor(Color.LIGHT_GRAY);
+            graphics2DMapMaker.fill(block);
+            graphics2DMapMaker.setColor(Color.BLACK);
+            graphics2DMapMaker.draw(block);
+        }
+    }
+
+    @FXML
+    public void btnExportMapMaker() {
+        System.out.println("Exporting");
+    }
+
+    @FXML
+    public void btnImportMapMaker() {
+        System.out.println("Importing");
+    }
+
+    @FXML
     public void onAddArtistButton(ActionEvent actionEvent) {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Make sure to fill out all fields!");
-
-            noStarsClicked();
-
-            alert.showAndWait();
-
+            notificationPopup(1, "Make sure to fill out all fields!");
             return;
         }
 
@@ -430,7 +455,22 @@ public class FestivalplannerController {
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
         noStarsClicked();
+    }
 
+    @FXML
+    public void onSaveFestivalButton(ActionEvent actionEvent) {
+        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
+            notificationPopup(0, "Make sure to fill in all fields!");
+            return;
+        }
+        try {
+            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+        } catch (Exception e) {
+            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
+            return;
+        }
+        festivalName = festivalNameTextfield.getText();
+        notificationPopup(0, "Festival information saved :)");
     }
 
     @FXML
@@ -497,16 +537,24 @@ public class FestivalplannerController {
             fourthStar.setStyle("-fx-fill: white");
             fifthStar.setStyle("-fx-fill: white");
         }
-
     }
 
-    @FXML
-    public void onConfirmVisitorsButton(ActionEvent actionEvent) {
-        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
-    }
 
-    @FXML
-    public void onConfirmFestivalNameButton(ActionEvent actionEvent) {
-        festivalName = confirmFestivalNameButton.getText();
+    public void notificationPopup(int type, String message) {
+        //type 0 = information, 1 = error
+        switch (type) {
+            case 0:
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.showAndWait();
+                break;
+            case 1:
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+                alert1.setTitle("Information");
+                alert1.setHeaderText("Information");
+                alert1.showAndWait();
+                break;
+        }
     }
 }
