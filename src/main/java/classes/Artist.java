@@ -31,4 +31,8 @@ public class Artist implements Serializable {
                 ", popularity=" + popularity +
                 '}';
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
