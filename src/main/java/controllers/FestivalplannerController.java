@@ -323,11 +323,11 @@ public class FestivalplannerController {
     @FXML
     public void onAddArtistButton(ActionEvent actionEvent) {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
-                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty()) {
+                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("Make sure to fill all fields!");
+            alert.setContentText("Make sure to fill out all fields!");
 
             noStarsClicked();
 

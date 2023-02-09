@@ -150,8 +150,8 @@
                   <TextField fx:id="artistNameTextfield" layoutX="20.0" layoutY="39.0" prefHeight="25.0" prefWidth="161.0" promptText="artist" />
                   <TextField fx:id="genreTextfield" layoutX="20.0" layoutY="91.0" prefHeight="25.0" prefWidth="161.0" promptText="genre" />
                   <TextField fx:id="amountOfVisitorsTextfield" layoutX="20.0" layoutY="239.0" prefHeight="26.0" prefWidth="100.0" promptText="visitor count" />
-                  <TextField fx:id="startingTimeTextfield" layoutX="21.0" layoutY="305.0" prefHeight="26.0" prefWidth="100.0" promptText="festival name" />
-                  <TextField fx:id="artistNameTextfield1" layoutX="187.0" layoutY="39.0" prefHeight="25.0" prefWidth="108.0" promptText="xx:xx" />
+                  <TextField fx:id="festivalNameTextfield" layoutX="21.0" layoutY="305.0" prefHeight="26.0" prefWidth="100.0" promptText="festival name" />
+                  <TextField fx:id="startingTimeTextfield" layoutX="187.0" layoutY="39.0" prefHeight="25.0" prefWidth="108.0" promptText="xx:xx" />
                   <TextField fx:id="setDurationTextfield" layoutX="187.0" layoutY="91.0" prefHeight="25.0" prefWidth="108.0" promptText="minutes" />
                   <SVGPath fx:id="firstStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="21.0" layoutY="150.0" onMouseClicked="#onFirstStarClicked" onMouseEntered="#onHoverOverFirstStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
                   <SVGPath fx:id="secondStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="42.0" layoutY="150.0" onMouseClicked="#onSecondStarClicked" onMouseEntered="#onHoverOverSecondStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
