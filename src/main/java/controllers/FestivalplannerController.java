@@ -92,7 +92,7 @@ public class FestivalplannerController {
     @FXML
     void onImportButton() {
         try {                                           //try importing file, showing error when unsuccessfull
-            Serializer.Deserialize();
+            Serializer.DeserializeFestival();
             notificationPrompt(false, "Imported .txt file successfully :)");
         } catch (Exception e) {
             notificationPrompt(true,"Unable to import .txt file :(" );
@@ -287,32 +287,43 @@ public class FestivalplannerController {
     }
 
     //MAP MAKER
-    public void mapTabClicked() {
-        FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
-        if (!mapIsClicked) {
-            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200, 200, 100, 100);
-            mapIsClicked = true;
-        } else {
-            mapIsClicked = false;
+    public void drawMap(FXGraphics2D graphics2DMap, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            block.changeSizeOfBlock(20, 20);
+            graphics2DMap.setColor(block.getColor());
+            graphics2DMap.fill(block);
+            graphics2DMap.setColor(Color.BLACK);
+            graphics2DMap.draw(block);
         }
+    }
+
+    public void mapTabClicked() {
+//        FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
+//        if (!mapIsClicked) {
+//            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200, 200, 100, 100);
+//            mapIsClicked = true;
+//        } else {
+//            mapIsClicked = false;
+//        }
     }
 
     private void mousePressed(MouseEvent event) {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
                 //System.out.println(block.toString());
-
-                if (block != lastBlockChanged) {
+                if (block != lastBlockChanged){
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     lastBlockChanged = block;
-                } else {
+                }
+                else {
                     blockColorCounter++;
                     if (blockColorCounter < 4) {
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
-                    } else {
+                    }
+                    else {
                         blockColorCounter = 0;
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
@@ -339,13 +350,20 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void btnExportMapMaker() {
-        System.out.println("Exporting");
+    public void btnExportMapMaker() throws IOException {
+        //System.out.println("Exporting");
+        Map map = new Map(blocks);
+        Serializer.Serialize(map);
     }
 
     @FXML
-    public void btnImportMapMaker() {
-        System.out.println("Importing");
+    public void btnImportMapMaker() throws IOException, ClassNotFoundException {
+        //System.out.println("Importing");
+        Map map = Serializer.DeserializeMap();
+
+        ArrayList<Block> importedBlocks = map.getBlocks();
+
+        drawMap(new FXGraphics2D(mapCanvas.getGraphicsContext2D()), importedBlocks);
     }
 
     @FXML
@@ -355,7 +373,7 @@ public class FestivalplannerController {
             int y = 1;
             for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
                 for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
-                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
+                    blocks.add(new Block(20,20, i, j, Color.LIGHT_GRAY));
                 }
             }
 
@@ -364,7 +382,8 @@ public class FestivalplannerController {
             mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
 
             mapMakerIsClicked = true;
-        } else {
+        }
+        else {
             mapMakerIsClicked = false;
         }
     }

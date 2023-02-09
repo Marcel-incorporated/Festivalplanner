@@ -15,15 +15,14 @@ public class Artist implements Serializable {
 
 
     public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes, String podium) {
+        this.podium = podium;
         this.setStartingTime = setStartingTime;
         this.setDurationInMinutes = setDurationInMinutes;
         this.name = name;
         this.popularity = popularity;
-        this.podium = podium;
 //        this.songs = songs;
         this.genre = genre;
     }
-
     @Override
     public String toString() {
         return "Artist{" +
@@ -33,6 +32,6 @@ public class Artist implements Serializable {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 }
