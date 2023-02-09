@@ -21,7 +21,7 @@
                      <image>
                         <Image url="@images/scheduleBackground.png" />
                      </image></ImageView>
-                  <Button fx:id="addEventButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="6.0" layoutY="6.0" maxHeight="28.0" maxWidth="87.0" mnemonicParsing="false" onAction="#onImportButton" prefHeight="22.0" prefWidth="87.0" style="-fx-background-color: #ECE6DB;">
+                  <Button fx:id="importButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="6.0" layoutY="6.0" maxHeight="28.0" maxWidth="87.0" mnemonicParsing="false" onAction="#onImportButton" prefHeight="22.0" prefWidth="87.0" style="-fx-background-color: #ECE6DB;">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
