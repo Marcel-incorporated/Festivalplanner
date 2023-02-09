@@ -381,13 +381,13 @@ public class FestivalplannerController {
     public void notificationPrompt(boolean error, String message) {
         if(error) {
             Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
-            alert1.setTitle("Information");
-            alert1.setHeaderText("Information");
+            alert1.setTitle("Error");
+            alert1.setHeaderText("Error");
             alert1.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
+            alert.setTitle("Information");
+            alert.setHeaderText("Information");
             alert.showAndWait();
         }
     }
