@@ -21,7 +21,12 @@ public class Visitor implements Serializable {
         } else {
             this.gender = "female";
         }
+        //DISCRIMINATIE WANT GENDER VAATWASSER IS ER NIET!!!!!11111
         this.email = faker.internet().emailAddress();
+    }
+
+    public void makeVisitor() {
+
     }
 
     @Override

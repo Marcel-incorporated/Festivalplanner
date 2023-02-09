@@ -1,6 +1,9 @@
 package controllers;
 
 import classes.Festival;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -8,7 +11,13 @@ public class Serializer {
 
     public static void Serialize(Festival festival) throws IOException {
 
-        FileOutputStream fos = new FileOutputStream("planning.txt");
+        Stage stage = new Stage();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("src"));
+        File selectedDirectory = directoryChooser.showDialog(stage);
+        File file = new File(selectedDirectory.getAbsolutePath());
+//        System.out.println(selectedDirectory.getAbsolutePath());
+        FileOutputStream fos = new FileOutputStream(file + "/planning.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(festival);
 
@@ -19,7 +28,7 @@ public class Serializer {
 
     public static Festival Deserialize() throws IOException, ClassNotFoundException {
 
-        FileInputStream fis = new FileInputStream("planning.txt");
+        FileInputStream fis = new FileInputStream("planning. txt");
         ObjectInputStream ois = new ObjectInputStream(fis);
         Festival festival = (Festival) ois.readObject();
 
