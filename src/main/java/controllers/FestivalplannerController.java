@@ -18,9 +18,19 @@ import java.util.ArrayList;
 
 
 public class FestivalplannerController {
+
+
+    private boolean mapIsClicked = false;
+    private boolean mapMakerIsClicked = false;
+    private Color blockColors[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private Block lastBlockChanged = null;
+    private int blockColorCounter = 0;
+
     //FXML Components
     @FXML
     public Button saveFestival;
+    
     @FXML
     public Canvas mapCanvas;
     @FXML
@@ -42,7 +52,7 @@ public class FestivalplannerController {
     @FXML
     private Button importButton;
     @FXML
-    private TextField podiumName;
+    private TextField podiumNameTextfield;
     @FXML
     private TextField artistNameTextfield;
     @FXML
@@ -58,9 +68,9 @@ public class FestivalplannerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    private Label artistLabel1;
+    private Label artistLabel1 = new Label();
     @FXML
-    private Label artistLabel2;
+    private Label artistLabel2 = new Label();
     @FXML
     private Label artistLabel3;
     @FXML
@@ -103,6 +113,9 @@ public class FestivalplannerController {
     private Block lastBlockChanged = null;
     private int blockColorCounter = 0;
     private ArrayList<Artist> artists = new ArrayList<>();
+    private ArrayList<Visitor> visitors = new ArrayList<>();
+    private ArrayList<Song> songs = new ArrayList<>();
+
 
     // Schedule/main tab controller
     @FXML
@@ -112,25 +125,16 @@ public class FestivalplannerController {
 
     // File editor/generator controller
 
+
     @FXML
     void onExportButton(ActionEvent event) {
-        System.out.println("exporting");
+//        System.out.println("exporting");      //create song generator
 
-//        Song song = new Song();
-        ArrayList<Song> songs = new ArrayList<>();
-        ArrayList<Visitor> visitors = new ArrayList<>();
         for (int i = 0; i < visitorCount; i++) {
-            visitors.add(new Visitor());
+            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
 
-        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
-
-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumName.getText());
-
-        ArrayList<Performance> performances = new ArrayList<>();
-        performances.add(performance);
-
-        Festival festival = new Festival(visitors, festivalName, performances);
+        Festival festival = new Festival(visitors, festivalName, artists);
 
         try {
             Serializer.Serialize(festival);
@@ -222,14 +226,14 @@ public class FestivalplannerController {
         fifthStar.setStyle("-fx-fill: yellow");
     }
 
-    private void addArtistToList(String name, String genre, int popularity) {
+    private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));
+            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
 
             switch (amountOfArtistsAdded) {
                 case 1 -> {
-                    artistLabel1.setOpacity(1);
                     artistLabel1.setText(name);
+                    artistLabel1.setOpacity(1);
                 }
                 case 2 -> {
                     artistLabel2.setOpacity(1);
@@ -312,17 +316,20 @@ public class FestivalplannerController {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
                 //System.out.println(block.toString());
+
                 if (block != lastBlockChanged) {
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     lastBlockChanged = block;
-                } else {
+                }
+                else {
                     blockColorCounter++;
                     if (blockColorCounter < 4) {
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
-                    } else {
+                    }
+                    else {
                         blockColorCounter = 0;
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
@@ -333,6 +340,52 @@ public class FestivalplannerController {
         }
     }
 
+    @FXML
+    public void mapMakerTabClicked() {
+        FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
+        if (!mapMakerIsClicked) {
+        int y = 1;
+            for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
+                for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
+                    blocks.add(new Block(20,20, i, j, Color.LIGHT_GRAY));
+                }
+            }
+
+            updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
+
+            mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+
+            mapMakerIsClicked = true;
+        }
+        else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    public void updateBlock(FXGraphics2D graphics2DMapMaker, Block block) {
+        block.changeSizeOfBlock(19, 19);
+        graphics2DMapMaker.setColor(block.getColor());
+        graphics2DMapMaker.fill(block);
+    }
+
+    public void updateBlocks(FXGraphics2D graphics2DMapMaker, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            graphics2DMapMaker.setColor(Color.LIGHT_GRAY);
+            graphics2DMapMaker.fill(block);
+            graphics2DMapMaker.setColor(Color.BLACK);
+            graphics2DMapMaker.draw(block);
+        }
+    }
+
+    @FXML
+    public void btnExportMapMaker() {
+        System.out.println("Exporting");
+    }
+
+    @FXML
+    public void btnImportMapMaker() {
+        System.out.println("Importing");
+    }
 
     @FXML
     public void mapMakerTabClicked() {
@@ -389,11 +442,12 @@ public class FestivalplannerController {
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
+        podiumNameTextfield.clear();
         noStarsClicked();
     }
 

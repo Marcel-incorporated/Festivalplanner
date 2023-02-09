@@ -75,7 +75,7 @@
                         <Image url="@images/6025ButtonOutline.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="podiumName" layoutX="463.0" layoutY="110.0" promptText="Podium Name" />
+                  <TextField fx:id="podiumNameTextfield" layoutX="463.0" layoutY="110.0" promptText="Podium Name" />
                   <Label layoutX="353.0" layoutY="7.0" text="Artist">
                      <font>
                         <Font size="22.0" />
