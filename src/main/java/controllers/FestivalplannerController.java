@@ -340,6 +340,8 @@ public class FestivalplannerController {
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
         artistNameTextfield.clear();
         genreTextfield.clear();
+        startingTimeTextfield.clear();
+        setDurationTextfield.clear();
         noStarsClicked();
 
     }
@@ -421,6 +423,3 @@ public class FestivalplannerController {
         festivalName = confirmFestivalNameButton.getText();
     }
 }
-
-
-
