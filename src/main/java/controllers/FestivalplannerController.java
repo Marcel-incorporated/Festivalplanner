@@ -42,7 +42,7 @@ public class FestivalplannerController {
     @FXML
     private Button importButton;
     @FXML
-    private TextField podiumName;
+    private TextField podiumNameTextfield;
     @FXML
     private TextField artistNameTextfield;
     @FXML
@@ -58,9 +58,9 @@ public class FestivalplannerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    private Label artistLabel1;
+    private Label artistLabel1 = new Label();
     @FXML
-    private Label artistLabel2;
+    private Label artistLabel2 = new Label();
     @FXML
     private Label artistLabel3;
     @FXML
@@ -103,6 +103,9 @@ public class FestivalplannerController {
     private Block lastBlockChanged = null;
     private int blockColorCounter = 0;
     private ArrayList<Artist> artists = new ArrayList<>();
+    private ArrayList<Visitor> visitors = new ArrayList<>();
+    private ArrayList<Song> songs = new ArrayList<>();
+
 
     // Schedule/main tab controller
     @FXML
@@ -114,23 +117,13 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
-        System.out.println("exporting");
+//        System.out.println("exporting");      //create song generator
 
-//        Song song = new Song();
-        ArrayList<Song> songs = new ArrayList<>();
-        ArrayList<Visitor> visitors = new ArrayList<>();
         for (int i = 0; i < visitorCount; i++) {
-            visitors.add(new Visitor());
+            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
 
-        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
-
-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumName.getText());
-
-        ArrayList<Performance> performances = new ArrayList<>();
-        performances.add(performance);
-
-        Festival festival = new Festival(visitors, festivalName, performances);
+        Festival festival = new Festival(visitors, festivalName, artists);
 
         try {
             Serializer.Serialize(festival);
@@ -222,14 +215,14 @@ public class FestivalplannerController {
         fifthStar.setStyle("-fx-fill: yellow");
     }
 
-    private void addArtistToList(String name, String genre, int popularity) {
+    private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));
+            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
 
             switch (amountOfArtistsAdded) {
                 case 1 -> {
-                    artistLabel1.setOpacity(1);
                     artistLabel1.setText(name);
+                    artistLabel1.setOpacity(1);
                 }
                 case 2 -> {
                     artistLabel2.setOpacity(1);
@@ -389,11 +382,12 @@ public class FestivalplannerController {
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
+        podiumNameTextfield.clear();
         noStarsClicked();
     }
 
