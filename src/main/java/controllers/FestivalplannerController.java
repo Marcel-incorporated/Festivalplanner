@@ -54,9 +54,8 @@ public class FestivalplannerController {
     private ListView artistsListView;
 
     //Actual attributes to save data
-    private boolean mapIsClicked = false;
     private boolean mapMakerIsClicked = false;
-    private Color blockColors[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
+    private Color[] blockColors = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
     private ArrayList<Block> blocks = new ArrayList<>();
     private Block lastBlockChanged = null;
     private int blockColorCounter = 0;
@@ -303,15 +302,11 @@ public class FestivalplannerController {
                 }
                 else {
                     blockColorCounter++;
-                    if (blockColorCounter < 4) {
-                        block.setColor(blockColors[blockColorCounter]);
-                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
-                    }
-                    else {
+                    if (blockColorCounter >= 4) {
                         blockColorCounter = 0;
-                        block.setColor(blockColors[blockColorCounter]);
-                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     }
+                    block.setColor(blockColors[blockColorCounter]);
+                    updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                 }
             }
         }
