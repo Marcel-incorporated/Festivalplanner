@@ -3,7 +3,6 @@ package controllers;
 import classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,16 +10,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
-import javafx.stage.FileChooser;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class FestivalplannerController {
@@ -29,6 +23,8 @@ public class FestivalplannerController {
     public Button saveFestival;
     @FXML
     public Canvas mapCanvas;
+    @FXML
+    public Canvas mapCanvasMaker;
     @FXML
     public Button addArtistButton;
     @FXML
@@ -101,14 +97,18 @@ public class FestivalplannerController {
     private Label artistLabel16;
 
     //Actual attributes to save data
-    private boolean mapIsClicked = false;
     private int popularity = 0;
     private boolean popularitySelected = false;
     private int amountOfArtistsAdded = 0;
+    private boolean mapIsClicked = false;
     private int visitorCount;
     private String festivalName;
+    private boolean mapMakerIsClicked = false;
+    private Color blockColors[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private Block lastBlockChanged = null;
+    private int blockColorCounter = 0;
     private ArrayList<Artist> artists = new ArrayList<>();
-
 
     // Schedule/main tab controller
     @FXML
@@ -311,6 +311,7 @@ public class FestivalplannerController {
 
     @FXML
     public void mapTabClicked() {
+        FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
         if (!mapIsClicked) {
             new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200,200,100,100);
             mapIsClicked = true;
@@ -318,6 +319,82 @@ public class FestivalplannerController {
         else {
             mapIsClicked = false;
         }
+    }
+
+    private void mousePressed(MouseEvent event) {
+        for (Block block : blocks) {
+            if (block.contains(event.getX(), event.getY())) {
+                //System.out.println(block.toString());
+                if (block != lastBlockChanged){
+                    blockColorCounter = 0;
+                    block.setColor(blockColors[blockColorCounter]);
+                    updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    lastBlockChanged = block;
+                }
+                else {
+                    blockColorCounter++;
+                    if (blockColorCounter < 4) {
+                        block.setColor(blockColors[blockColorCounter]);
+                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    }
+                    else {
+                        blockColorCounter = 0;
+                        block.setColor(blockColors[blockColorCounter]);
+                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    }
+                }
+                //System.out.println(block.toString());
+            }
+        }
+    }
+
+
+
+    @FXML
+    public void mapMakerTabClicked() {
+        FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
+        if (!mapMakerIsClicked) {
+            int y = 1;
+            for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
+                for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
+                    blocks.add(new Block(20,20, i, j, Color.LIGHT_GRAY));
+                }
+            }
+
+            updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
+
+            mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+
+            mapMakerIsClicked = true;
+        }
+        else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    public void updateBlock(FXGraphics2D graphics2DMapMaker, Block block) {
+        block.changeSizeOfBlock(19, 19);
+        graphics2DMapMaker.setColor(block.getColor());
+        graphics2DMapMaker.fill(block);
+    }
+
+    public void updateBlocks(FXGraphics2D graphics2DMapMaker, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            graphics2DMapMaker.setColor(Color.LIGHT_GRAY);
+            graphics2DMapMaker.fill(block);
+            graphics2DMapMaker.setColor(Color.BLACK);
+            graphics2DMapMaker.draw(block);
+        }
+    }
+
+    @FXML
+    public void btnExportMapMaker() {
+        System.out.println("Exporting");
+    }
+
+    @FXML
+    public void btnImportMapMaker() {
+        System.out.println("Importing");
     }
 
     @FXML
