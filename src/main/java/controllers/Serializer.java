@@ -49,25 +49,6 @@ public class Serializer {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
         File selected = fileChooser.showOpenDialog(stage);
         File file = new File(selected.getAbsolutePath());
-        System.out.println(file);
-//        System.out.println("filechooser created");
-
-//        System.out.println("handle method started");
-//        List<File> list =
-//                fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
-//        System.out.println("opened filechooser");
-//        if (list != null) {
-//            for (File file : list) {
-//                try {
-//                    desktop.open(file);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(
-//                            getClass().getName()).log(
-//                            Level.SEVERE, null, ex
-//                    );
-//                }
-//            }
-//        }
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
         Festival festival = (Festival) ois.readObject();
