@@ -287,12 +287,12 @@ public class FestivalplannerController {
 
         amountOfArtistsAdded++;
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+        
         for (Artist a : artists) {
             if(!artistsListView.getItems().contains(a.getName())) {
                 artistsListView.getItems().add(a.getName());
             }
         }
-
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
