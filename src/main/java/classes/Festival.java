@@ -1,18 +1,18 @@
 package classes;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Festival implements Serializable {
     private ArrayList<Visitor> visitorList;
     private String name;
-    private ArrayList<Artist> artists;
+    private ArrayList<Performance> performances = new ArrayList<>();
 
-    public Festival(ArrayList<Visitor> visitors, String name, ArrayList<Artist> artists) {
+    public Festival(ArrayList<Visitor> visitors, String name, ArrayList<Performance> performances) {
+        this.visitorList = new ArrayList<>();
         this.visitorList = visitors;
         this.name = name;
-        this.artists = artists;
+        this.performances = performances;
     }
 //
 //    public void addToVisitorList(Visitor visitor) {
@@ -24,6 +24,7 @@ public class Festival implements Serializable {
         return "Festival{" +
                 "visitorList=" + visitorList +
                 ", name='" + name + '\'' +
+                ", performances=" + performances +
                 '}';
     }
 }
