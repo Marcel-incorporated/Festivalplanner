@@ -103,6 +103,7 @@
             </AnchorPane>
         </content>
       </Tab>
+
     <Tab text="Simulator" />
   </tabs>
 </TabPane>
