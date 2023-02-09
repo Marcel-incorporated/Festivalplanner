@@ -50,6 +50,7 @@ public class FestivalplannerController {
     @FXML
     void onAddEditEventButton(ActionEvent event) throws IOException {
         tabPane.getSelectionModel().select(1);
+
     }
 
     // File editor/generator controller
@@ -117,6 +118,7 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
+
 //        System.out.println("exporting");
 //
 ////        Song song = new Song();
@@ -130,6 +132,7 @@ public class FestivalplannerController {
 //        try {
 //            Serializer.Serialize(festival);
 //        } catch(IOException e) {
+
 
 //        }
     }
@@ -405,7 +408,7 @@ public class FestivalplannerController {
 
     @FXML
     public void onConfirmVisitorsButton(ActionEvent actionEvent) {
-        visitorCount = Integer.parseInt(confirmVisitorsButton.getText());
+        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
     }
 
     @FXML
