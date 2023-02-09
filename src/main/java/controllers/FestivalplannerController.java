@@ -35,12 +35,6 @@ public class FestivalplannerController {
     @FXML
     public TextField setDurationTextfield;
     @FXML
-    private TabPane tabPane;
-    @FXML
-    private Button exportButton;
-    @FXML
-    private Button importButton;
-    @FXML
     private TextField podiumNameTextfield;
     @FXML
     private TextField artistNameTextfield;
@@ -80,6 +74,7 @@ public class FestivalplannerController {
     @FXML
     void onExportButton() {
         Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
+        System.out.println(artists);
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);

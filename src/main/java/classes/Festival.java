@@ -13,16 +13,13 @@ public class Festival implements Serializable {
         this.name = name;
         this.artists = artists;
     }
-//
-//    public void addToVisitorList(Visitor visitor) {
-//        visitorList.add(visitor);
-//    }
 
     @Override
     public String toString() {
         return "Festival{" +
                 "visitorList=" + visitorList +
                 ", name='" + name + '\'' +
+                ", artists=" + artists +
                 '}';
     }
 }
