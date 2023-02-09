@@ -24,17 +24,15 @@ import java.util.logging.Logger;
 
 
 public class FestivalplannerController {
-
-    private boolean mapIsClicked = false;
-
+    //FXML Components
+    @FXML
+    public Button saveFestival;
     @FXML
     public Canvas mapCanvas;
     @FXML
     public Button addArtistButton;
     @FXML
     public TextField amountOfVisitorsTextfield;
-    @FXML
-    public Button confirmVisitorsButton;
     @FXML
     public TextField festivalNameTextfield;
     @FXML
@@ -49,17 +47,6 @@ public class FestivalplannerController {
     private Button addEventButton;
     @FXML
     private TabPane tabPane;
-
-    // Schedule/main tab controller
-    @FXML
-    void onAddEditEventButton(ActionEvent event) throws IOException {
-        tabPane.getSelectionModel().select(1);
-    }
-
-    // File editor/generator controller
-
-
-
     @FXML
     private Button exportButton;
     @FXML
@@ -80,9 +67,6 @@ public class FestivalplannerController {
     private SVGPath fourthStar;
     @FXML
     private SVGPath fifthStar;
-    private int popularity = 0;
-    private boolean popularitySelected = false;
-    private int amountOfArtistsAdded = 0;
     @FXML
     private Label artistLabel1;
     @FXML
@@ -116,10 +100,23 @@ public class FestivalplannerController {
     @FXML
     private Label artistLabel16;
 
+    //Actual attributes to save data
+    private boolean mapIsClicked = false;
+    private int popularity = 0;
+    private boolean popularitySelected = false;
+    private int amountOfArtistsAdded = 0;
     private int visitorCount;
     private String festivalName;
+    private ArrayList<Artist> artists = new ArrayList<>();
 
-    private List<Artist> artists = new ArrayList<>();
+
+    // Schedule/main tab controller
+    @FXML
+    void onAddEditEventButton(ActionEvent event) throws IOException {
+        tabPane.getSelectionModel().select(1);
+    }
+
+    // File editor/generator controller
 
     @FXML
     void onExportButton(ActionEvent event) {
@@ -417,12 +414,8 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onConfirmVisitorsButton(ActionEvent actionEvent) {
+    public void onSaveFestivalButton(ActionEvent actionEvent) {
         visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
-    }
-
-    @FXML
-    public void onConfirmFestivalNameButton(ActionEvent actionEvent) {
-        festivalName = confirmFestivalNameButton.getText();
+        festivalName = festivalNameTextfield.getText();
     }
 }
