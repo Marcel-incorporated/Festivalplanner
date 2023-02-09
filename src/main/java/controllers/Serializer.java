@@ -2,7 +2,6 @@ package controllers;
 
 import classes.Festival;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -16,7 +15,6 @@ public class Serializer {
         directoryChooser.setInitialDirectory(new File("src"));
         File selectedDirectory = directoryChooser.showDialog(stage);
         File file = new File(selectedDirectory.getAbsolutePath());
-//        System.out.println(selectedDirectory.getAbsolutePath());
         FileOutputStream fos = new FileOutputStream(file + "/planning.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(festival);
