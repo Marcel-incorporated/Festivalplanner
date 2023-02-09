@@ -104,7 +104,7 @@ public class FestivalplannerController {
     private int blockColorCounter = 0;
     private ArrayList<Artist> artists = new ArrayList<>();
 
-    // Schedule/main tab controller
+    //SCHEDULE MAKER
     @FXML
     void onAddEditEventButton(ActionEvent event) throws IOException {
         tabPane.getSelectionModel().select(1);
@@ -141,14 +141,25 @@ public class FestivalplannerController {
             alert.showAndWait();
         }
     }
+            
+    void onExportButton() {
+        Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
+
+        try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
+            Serializer.Serialize(festival);
+            notificationPopup(0, "Successfully converted data to .txt file :)");
+        } catch (IOException e) {
+            notificationPopup(1, "Unable to convert data to .txt file :(");
+        }
+    }
 
     @FXML
-    void onImportButton(ActionEvent event) {
-//        System.out.println("importing");
-        try {
-            Serializer.DeserializeFestival();
+    void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
+            Serializer.Deserialize();
+            notificationPopup(0, "Imported .txt file successfully :)");
         } catch (Exception e) {
-
+            notificationPopup(1,"Unable to import .txt file :(" );
         }
     }
 
@@ -163,7 +174,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFirstStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFirstStarClicked() {
         popularity = 1;
         popularitySelected = true;
 
@@ -175,7 +186,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onSecondStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onSecondStarClicked() {
         popularity = 2;
         popularitySelected = true;
 
@@ -187,7 +198,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onThirdStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onThirdStarClicked() {
         popularity = 3;
         popularitySelected = true;
 
@@ -199,7 +210,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFourthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFourthStarClicked() {
         popularity = 4;
         popularitySelected = true;
 
@@ -211,7 +222,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFifthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFifthStarClicked() {
         popularity = 5;
         popularitySelected = true;
 
@@ -409,7 +420,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onAddArtistButton(ActionEvent actionEvent) {
+    public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -425,17 +436,41 @@ public class FestivalplannerController {
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
+
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+
+        for (Artist a : artists) {
+            if(!artistsListView.getItems().contains(a.getName())) {
+                artistsListView.getItems().add(a.getName());
+            }
+        }
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
         noStarsClicked();
 
+    @FXML
+    public void onSaveFestivalButton() {
+        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
+            notificationPopup(0, "Make sure to fill in all fields!");
+            return;
+        }
+        try {
+            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+        } catch (Exception e) {
+            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
+            return;
+        }
+        for (int i = 0; i < visitorCount; i++) {
+            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
+        }
+        festivalName = festivalNameTextfield.getText();
+        notificationPopup(0, "Festival information saved :)");
     }
 
     @FXML
-    public void onHoverOverFirstStar(MouseEvent event) {
+    public void onHoverOverFirstStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: white");
@@ -446,7 +481,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverSecondStar(MouseEvent event) {
+    public void onHoverOverSecondStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -457,7 +492,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverThirdStar(MouseEvent event) {
+    public void onHoverOverThirdStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -468,7 +503,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverFourthStar(MouseEvent event) {
+    public void onHoverOverFourthStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -479,7 +514,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverFifthStar(MouseEvent event) {
+    public void onHoverOverFifthStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -490,7 +525,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onMouseNotOnStars(MouseEvent event) {
+    public void onMouseNotOnStars() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: white");
             secondStar.setStyle("-fx-fill: white");
@@ -505,5 +540,95 @@ public class FestivalplannerController {
     public void onSaveFestivalButton(ActionEvent actionEvent) {
         visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
         festivalName = festivalNameTextfield.getText();
+
+    private void mousePressed(MouseEvent event) {
+        for (Block block : blocks) {
+            if (block.contains(event.getX(), event.getY())) {
+                //System.out.println(block.toString());
+
+                if (block != lastBlockChanged) {
+                    blockColorCounter = 0;
+                    block.setColor(blockColors[blockColorCounter]);
+                    updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    lastBlockChanged = block;
+                } else {
+                    blockColorCounter++;
+                    if (blockColorCounter < 4) {
+                        block.setColor(blockColors[blockColorCounter]);
+                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    } else {
+                        blockColorCounter = 0;
+                        block.setColor(blockColors[blockColorCounter]);
+                        updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    }
+                }
+                //System.out.println(block.toString());
+            }
+        }
+    }
+
+    public void updateBlock(FXGraphics2D graphics2DMapMaker, Block block) {
+        block.changeSizeOfBlock(19, 19);
+        graphics2DMapMaker.setColor(block.getColor());
+        graphics2DMapMaker.fill(block);
+    }
+
+    public void updateBlocks(FXGraphics2D graphics2DMapMaker, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            graphics2DMapMaker.setColor(Color.LIGHT_GRAY);
+            graphics2DMapMaker.fill(block);
+            graphics2DMapMaker.setColor(Color.BLACK);
+            graphics2DMapMaker.draw(block);
+        }
+    }
+
+    @FXML
+    public void btnExportMapMaker() {
+        System.out.println("Exporting");
+    }
+
+    @FXML
+    public void btnImportMapMaker() {
+        System.out.println("Importing");
+    }
+
+    @FXML
+    public void mapMakerTabClicked() {
+        FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
+        if (!mapMakerIsClicked) {
+            int y = 1;
+            for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
+                for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
+                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
+                }
+            }
+
+            updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
+
+            mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+
+            mapMakerIsClicked = true;
+        } else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    //OTHER
+    public void notificationPopup(int type, String message) {
+        //type 0 = information, 1 = error
+        switch (type) {
+            case 0:
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.showAndWait();
+                break;
+            case 1:
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+                alert1.setTitle("Information");
+                alert1.setHeaderText("Information");
+                alert1.showAndWait();
+                break;
+        }
     }
 }
