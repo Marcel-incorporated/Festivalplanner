@@ -101,6 +101,7 @@
                         <Image url="@images/startingTimeSetDuration.png" />
                      </image>
                   </ImageView>
+                  <TextField fx:id="podiumName" layoutX="329.0" layoutY="39.0" promptText="podium name" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

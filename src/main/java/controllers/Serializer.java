@@ -63,7 +63,7 @@ public class Serializer {
         if (ois != null) {
             ois.close();
         }
-//        System.out.println(festival.toString());
+        System.out.println(festival.toString());
         return festival;
     }
 }
