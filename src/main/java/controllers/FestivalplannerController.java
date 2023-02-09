@@ -59,7 +59,7 @@ public class FestivalplannerController {
     // File editor/generator controller
 
 
-    private Desktop desktop = Desktop.getDesktop();
+
     @FXML
     private Button exportButton;
     @FXML
@@ -152,27 +152,10 @@ public class FestivalplannerController {
     @FXML
     void onImportButton(ActionEvent event) {
 //        System.out.println("importing");
+        try {
+            Serializer.Deserialize();
+        } catch (Exception e) {
 
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Pick a file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
-//        System.out.println("filechooser created");
-
-//        System.out.println("handle method started");
-        List<File> list =
-                fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
-//        System.out.println("opened filechooser");
-        if (list != null) {
-            for (File file : list) {
-                try {
-                    desktop.open(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(
-                            getClass().getName()).log(
-                            Level.SEVERE, null, ex
-                    );
-                }
-            }
         }
     }
 
