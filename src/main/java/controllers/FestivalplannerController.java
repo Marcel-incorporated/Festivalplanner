@@ -65,11 +65,13 @@ public class FestivalplannerController {
     // File editor/generator controller
 
 
-    private Desktop desktop = Desktop.getDesktop();
+
     @FXML
     private Button exportButton;
     @FXML
     private Button importButton;
+    @FXML
+    private TextField podiumName;
     @FXML
     private TextField artistNameTextfield;
     @FXML
@@ -139,44 +141,30 @@ public class FestivalplannerController {
 
         Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
 
-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
+        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumName.getText());
 
         ArrayList<Performance> performances = new ArrayList<>();
         performances.add(performance);
 
-        Festival festival = new Festival(visitors.size(), festivalName, performances);
+        Festival festival = new Festival(visitors, festivalName, performances);
 
         try {
             Serializer.Serialize(festival);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully converted data to .txt file :)");
+            alert.showAndWait();
         } catch(IOException e) {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to convert data to .txt file :(");
+            alert.showAndWait();
         }
     }
 
     @FXML
     void onImportButton(ActionEvent event) {
 //        System.out.println("importing");
+        try {
+            Serializer.Deserialize();
+        } catch (Exception e) {
 
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Pick a file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
-//        System.out.println("filechooser created");
-
-//        System.out.println("handle method started");
-        List<File> list =
-                fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
-//        System.out.println("opened filechooser");
-        if (list != null) {
-            for (File file : list) {
-                try {
-                    desktop.open(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(
-                            getClass().getName()).log(
-                            Level.SEVERE, null, ex
-                    );
-                }
-            }
         }
     }
 
