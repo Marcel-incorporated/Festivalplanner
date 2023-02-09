@@ -1,7 +1,6 @@
 package controllers;
 
 import classes.*;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -77,42 +76,26 @@ public class FestivalplannerController {
     private ArrayList<Song> songs = new ArrayList<>();
 
 
-    // Schedule/main tab controller
+    //SCHEDULE MAKER
     @FXML
-    void onAddEditEventButton(ActionEvent event) {
-        tabPane.getSelectionModel().select(1);
-    }
+    void onExportButton() {
+        Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
 
-    // File editor/generator controller
-
-
-    @FXML
-    void onExportButton(ActionEvent event) {
-//        System.out.println("exporting");      //create song generator
-
-        for (int i = 0; i < visitorCount; i++) {
-            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
-        }
-
-        Festival festival = new Festival(visitors, festivalName, artists);
-
-        try {
+        try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully converted data to .txt file :)");
-            alert.showAndWait();
+            notificationPopup(0, "Successfully converted data to .txt file :)");
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to convert data to .txt file :(");
-            alert.showAndWait();
+            notificationPopup(1, "Unable to convert data to .txt file :(");
         }
     }
 
     @FXML
-    void onImportButton(ActionEvent event) {
-//        System.out.println("importing");
-        try {
+    void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
             Serializer.Deserialize();
+            notificationPopup(0, "Imported .txt file successfully :)");
         } catch (Exception e) {
-
+            notificationPopup(1,"Unable to import .txt file :(" );
         }
     }
 
@@ -127,7 +110,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFirstStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFirstStarClicked() {
         popularity = 1;
         popularitySelected = true;
 
@@ -139,7 +122,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onSecondStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onSecondStarClicked() {
         popularity = 2;
         popularitySelected = true;
 
@@ -151,7 +134,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onThirdStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onThirdStarClicked() {
         popularity = 3;
         popularitySelected = true;
 
@@ -163,7 +146,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFourthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFourthStarClicked() {
         popularity = 4;
         popularitySelected = true;
 
@@ -175,7 +158,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFifthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFifthStarClicked() {
         popularity = 5;
         popularitySelected = true;
 
@@ -195,6 +178,115 @@ public class FestivalplannerController {
     }
 
     @FXML
+    public void onAddArtistButton() {
+        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
+                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
+            notificationPopup(1, "Make sure to fill out all fields!");
+            return;
+        }
+
+        amountOfArtistsAdded++;
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+
+        for (Artist a : artists) {
+            if(!artistsListView.getItems().contains(a.getName())) {
+                artistsListView.getItems().add(a.getName());
+            }
+        }
+        artistNameTextfield.clear();
+        genreTextfield.clear();
+        startingTimeTextfield.clear();
+        setDurationTextfield.clear();
+        podiumNameTextfield.clear();
+        noStarsClicked();
+    }
+
+    @FXML
+    public void onSaveFestivalButton() {
+        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
+            notificationPopup(0, "Make sure to fill in all fields!");
+            return;
+        }
+        try {
+            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+        } catch (Exception e) {
+            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
+            return;
+        }
+        for (int i = 0; i < visitorCount; i++) {
+            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
+        }
+        festivalName = festivalNameTextfield.getText();
+        notificationPopup(0, "Festival information saved :)");
+    }
+
+    @FXML
+    public void onHoverOverFirstStar() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: yellow");
+            secondStar.setStyle("-fx-fill: white");
+            thirdStar.setStyle("-fx-fill: white");
+            fourthStar.setStyle("-fx-fill: white");
+            fifthStar.setStyle("-fx-fill: white");
+        }
+    }
+
+    @FXML
+    public void onHoverOverSecondStar() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: yellow");
+            secondStar.setStyle("-fx-fill: yellow");
+            thirdStar.setStyle("-fx-fill: white");
+            fourthStar.setStyle("-fx-fill: white");
+            fifthStar.setStyle("-fx-fill: white");
+        }
+    }
+
+    @FXML
+    public void onHoverOverThirdStar() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: yellow");
+            secondStar.setStyle("-fx-fill: yellow");
+            thirdStar.setStyle("-fx-fill: yellow");
+            fourthStar.setStyle("-fx-fill: white");
+            fifthStar.setStyle("-fx-fill: white");
+        }
+    }
+
+    @FXML
+    public void onHoverOverFourthStar() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: yellow");
+            secondStar.setStyle("-fx-fill: yellow");
+            thirdStar.setStyle("-fx-fill: yellow");
+            fourthStar.setStyle("-fx-fill: yellow");
+            fifthStar.setStyle("-fx-fill: white");
+        }
+    }
+
+    @FXML
+    public void onHoverOverFifthStar() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: yellow");
+            secondStar.setStyle("-fx-fill: yellow");
+            thirdStar.setStyle("-fx-fill: yellow");
+            fourthStar.setStyle("-fx-fill: yellow");
+            fifthStar.setStyle("-fx-fill: yellow");
+        }
+    }
+
+    @FXML
+    public void onMouseNotOnStars() {
+        if (!popularitySelected) {
+            firstStar.setStyle("-fx-fill: white");
+            secondStar.setStyle("-fx-fill: white");
+            thirdStar.setStyle("-fx-fill: white");
+            fourthStar.setStyle("-fx-fill: white");
+            fifthStar.setStyle("-fx-fill: white");
+        }
+    }
+
+    //MAP MAKER
     public void mapTabClicked() {
         FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
         if (!mapIsClicked) {
@@ -277,113 +369,7 @@ public class FestivalplannerController {
         }
     }
 
-    @FXML
-    public void onAddArtistButton(ActionEvent actionEvent) {
-        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
-                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            notificationPopup(1, "Make sure to fill out all fields!");
-            return;
-        }
-
-        amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
-        
-        for (Artist a : artists) {
-            if(!artistsListView.getItems().contains(a.getName())) {
-                artistsListView.getItems().add(a.getName());
-            }
-        }
-        artistNameTextfield.clear();
-        genreTextfield.clear();
-        startingTimeTextfield.clear();
-        setDurationTextfield.clear();
-        podiumNameTextfield.clear();
-        noStarsClicked();
-    }
-
-    @FXML
-    public void onSaveFestivalButton(ActionEvent actionEvent) {
-        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            notificationPopup(0, "Make sure to fill in all fields!");
-            return;
-        }
-        try {
-            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
-        } catch (Exception e) {
-            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
-            return;
-        }
-        festivalName = festivalNameTextfield.getText();
-        notificationPopup(0, "Festival information saved :)");
-    }
-
-    @FXML
-    public void onHoverOverFirstStar(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: yellow");
-            secondStar.setStyle("-fx-fill: white");
-            thirdStar.setStyle("-fx-fill: white");
-            fourthStar.setStyle("-fx-fill: white");
-            fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-    @FXML
-    public void onHoverOverSecondStar(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: yellow");
-            secondStar.setStyle("-fx-fill: yellow");
-            thirdStar.setStyle("-fx-fill: white");
-            fourthStar.setStyle("-fx-fill: white");
-            fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-    @FXML
-    public void onHoverOverThirdStar(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: yellow");
-            secondStar.setStyle("-fx-fill: yellow");
-            thirdStar.setStyle("-fx-fill: yellow");
-            fourthStar.setStyle("-fx-fill: white");
-            fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-    @FXML
-    public void onHoverOverFourthStar(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: yellow");
-            secondStar.setStyle("-fx-fill: yellow");
-            thirdStar.setStyle("-fx-fill: yellow");
-            fourthStar.setStyle("-fx-fill: yellow");
-            fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-    @FXML
-    public void onHoverOverFifthStar(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: yellow");
-            secondStar.setStyle("-fx-fill: yellow");
-            thirdStar.setStyle("-fx-fill: yellow");
-            fourthStar.setStyle("-fx-fill: yellow");
-            fifthStar.setStyle("-fx-fill: yellow");
-        }
-    }
-
-    @FXML
-    public void onMouseNotOnStars(MouseEvent event) {
-        if (!popularitySelected) {
-            firstStar.setStyle("-fx-fill: white");
-            secondStar.setStyle("-fx-fill: white");
-            thirdStar.setStyle("-fx-fill: white");
-            fourthStar.setStyle("-fx-fill: white");
-            fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-
+    //OTHER
     public void notificationPopup(int type, String message) {
         //type 0 = information, 1 = error
         switch (type) {
