@@ -32,15 +32,9 @@ public class FestivalplannerController {
     @FXML
     public TextField festivalNameTextfield;
     @FXML
-    public Button confirmFestivalNameButton;
-    @FXML
     public TextField startingTimeTextfield;
     @FXML
-    public TextField artistNameTextfield1;
-    @FXML
     public TextField setDurationTextfield;
-    @FXML
-    private Button addEventButton;
     @FXML
     private TabPane tabPane;
     @FXML
