@@ -136,7 +136,7 @@ public class FestivalplannerController {
             Serializer.Serialize(festival);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully converted data to .txt file :)");
             alert.showAndWait();
-        } catch(IOException e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to convert data to .txt file :(");
             alert.showAndWait();
         }
@@ -293,24 +293,17 @@ public class FestivalplannerController {
                 }
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Maximum amount of artists reached!");
-
-            alert.showAndWait();
+            notificationPopup(1, "Maximum amount of artists reached!");
         }
-
     }
 
     @FXML
     public void mapTabClicked() {
         FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
         if (!mapIsClicked) {
-            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200,200,100,100);
+            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200, 200, 100, 100);
             mapIsClicked = true;
-        }
-        else {
+        } else {
             mapIsClicked = false;
         }
     }
@@ -319,19 +312,17 @@ public class FestivalplannerController {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
                 //System.out.println(block.toString());
-                if (block != lastBlockChanged){
+                if (block != lastBlockChanged) {
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     lastBlockChanged = block;
-                }
-                else {
+                } else {
                     blockColorCounter++;
                     if (blockColorCounter < 4) {
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
-                    }
-                    else {
+                    } else {
                         blockColorCounter = 0;
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
@@ -343,7 +334,6 @@ public class FestivalplannerController {
     }
 
 
-
     @FXML
     public void mapMakerTabClicked() {
         FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
@@ -351,7 +341,7 @@ public class FestivalplannerController {
             int y = 1;
             for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
                 for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
-                    blocks.add(new Block(20,20, i, j, Color.LIGHT_GRAY));
+                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
                 }
             }
 
@@ -360,8 +350,7 @@ public class FestivalplannerController {
             mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
 
             mapMakerIsClicked = true;
-        }
-        else {
+        } else {
             mapMakerIsClicked = false;
         }
     }
@@ -395,15 +384,7 @@ public class FestivalplannerController {
     public void onAddArtistButton(ActionEvent actionEvent) {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Make sure to fill out all fields!");
-
-            noStarsClicked();
-
-            alert.showAndWait();
-
+            notificationPopup(1, "Make sure to fill out all fields!");
             return;
         }
 
@@ -414,7 +395,22 @@ public class FestivalplannerController {
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
         noStarsClicked();
+    }
 
+    @FXML
+    public void onSaveFestivalButton(ActionEvent actionEvent) {
+        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
+            notificationPopup(0, "Make sure to fill in all fields!");
+            return;
+        }
+        try {
+            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+        } catch (Exception e) {
+            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
+            return;
+        }
+        festivalName = festivalNameTextfield.getText();
+        notificationPopup(0, "Festival information saved :)");
     }
 
     @FXML
@@ -481,12 +477,24 @@ public class FestivalplannerController {
             fourthStar.setStyle("-fx-fill: white");
             fifthStar.setStyle("-fx-fill: white");
         }
-
     }
 
-    @FXML
-    public void onSaveFestivalButton(ActionEvent actionEvent) {
-        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
-        festivalName = festivalNameTextfield.getText();
+
+    public void notificationPopup(int type, String message) {
+        //type 0 = information, 1 = error
+        switch (type) {
+            case 0:
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.showAndWait();
+                break;
+            case 1:
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+                alert1.setTitle("Information");
+                alert1.setHeaderText("Information");
+                alert1.showAndWait();
+                break;
+        }
     }
 }
