@@ -1,30 +1,34 @@
 package controllers;
 
-import classes.*;
+import classes.Artist;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.image.*;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
+import org.jfree.fx.FXGraphics2D;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class FestivalplannerController {
+
+    private boolean mapIsClicked = false;
+
+    @FXML
+    public Canvas mapCanvas;
     @FXML
     public Button addArtistButton;
     @FXML
@@ -318,6 +322,17 @@ public class FestivalplannerController {
             alert.showAndWait();
         }
 
+    }
+
+    @FXML
+    public void mapTabClicked() {
+        if (!mapIsClicked) {
+            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200,200,100,100);
+            mapIsClicked = true;
+        }
+        else {
+            mapIsClicked = false;
+        }
     }
 
     @FXML
