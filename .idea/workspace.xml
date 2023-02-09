@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="071fcc10-71e1-4f73-adf2-2549564f3b5b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/FestivalplannerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/FestivalplannerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/GUI/Festivalplanner.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/GUI/Festivalplanner.fxml" afterDir="false" />
     </list>
@@ -30,6 +31,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="Marcel-incorporated" />
+        <option name="repository" value="Festivalplanner" />
+      </RepoCoordinatesHolder>
+    </option>
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -65,6 +74,7 @@
       <list>
         <item itemvalue="Application.Festivalplanner" />
         <item itemvalue="Application.Festivalplanner" />
+        <item itemvalue="Application.Festivalplanner" />
       </list>
     </recent_temporary>
   </component>
@@ -78,6 +88,14 @@
       <updated>1675933419614</updated>
       <workItem from="1675933421773" duration="8162000" />
     </task>
+    <task id="LOCAL-00001" summary="Changed location of importButton &amp; new image">
+      <created>1675951283985</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1675951283985</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -90,5 +108,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changed location of importButton &amp; new image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed location of importButton &amp; new image" />
   </component>
 </project>

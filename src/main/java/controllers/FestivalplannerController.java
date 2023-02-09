@@ -141,8 +141,11 @@ public class FestivalplannerController {
 
         try {
             Serializer.Serialize(festival);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully converted data to .txt file :)");
+            alert.showAndWait();
         } catch(IOException e) {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to convert data to .txt file :(");
+            alert.showAndWait();
         }
     }
 
