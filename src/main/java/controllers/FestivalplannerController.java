@@ -78,9 +78,9 @@ public class FestivalplannerController {
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-            notificationPrompt(false, "Successfully converted data to .txt file :)");
+            notificationPrompt(false, "Successfully exported festival file :)");
         } catch (IOException e) {
-            notificationPrompt(true, "Unable to convert data to .txt file :(");
+            notificationPrompt(true, "Unable to import festival file :(");
         }
     }
 
@@ -88,9 +88,9 @@ public class FestivalplannerController {
     void onImportButton() {
         try {                                           //try importing file, showing error when unsuccessfull
             Serializer.DeserializeFestival();
-            notificationPrompt(false, "Imported .txt file successfully :)");
+            notificationPrompt(false, "Successfully import festival file :)");
         } catch (Exception e) {
-            notificationPrompt(true,"Unable to import .txt file :(" );
+            notificationPrompt(true,"Unable to import festival file :(" );
         }
     }
 
@@ -212,7 +212,7 @@ public class FestivalplannerController {
             visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
         festivalName = festivalNameTextfield.getText();
-        notificationPrompt(false, "Festival information saved :)");
+        notificationPrompt(false, "Successfully saved festival information :)");
     }
 
     @FXML
@@ -292,20 +292,9 @@ public class FestivalplannerController {
         }
     }
 
-    public void mapTabClicked() {
-//        FXGraphics2D graphics2DMap = new FXGraphics2D(mapCanvas.getGraphicsContext2D());
-//        if (!mapIsClicked) {
-//            new FXGraphics2D(mapCanvas.getGraphicsContext2D()).drawLine(200, 200, 100, 100);
-//            mapIsClicked = true;
-//        } else {
-//            mapIsClicked = false;
-//        }
-    }
-
     private void mousePressed(MouseEvent event) {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
-                //System.out.println(block.toString());
                 if (block != lastBlockChanged){
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
@@ -324,7 +313,6 @@ public class FestivalplannerController {
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     }
                 }
-                //System.out.println(block.toString());
             }
         }
     }
@@ -345,20 +333,26 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void btnExportMapMaker() throws IOException {
-        //System.out.println("Exporting");
+    public void btnExportMapMaker() {
         Map map = new Map(blocks);
-        Serializer.Serialize(map);
+        try {
+            Serializer.Serialize(map);
+            notificationPrompt(false, "Successfully exported map file :)");
+        } catch (Exception e) {
+            notificationPrompt(true, "Unable to export map file :(");
+        }
     }
 
     @FXML
-    public void btnImportMapMaker() throws IOException, ClassNotFoundException {
-        //System.out.println("Importing");
-        Map map = Serializer.DeserializeMap();
-
-        ArrayList<Block> importedBlocks = map.getBlocks();
-
-        drawMap(new FXGraphics2D(mapCanvas.getGraphicsContext2D()), importedBlocks);
+    public void btnImportMapMaker() {
+        try {
+            Map map = Serializer.DeserializeMap();
+            ArrayList<Block> importedBlocks = map.getBlocks();
+            drawMap(new FXGraphics2D(mapCanvas.getGraphicsContext2D()), importedBlocks);
+            notificationPrompt(false, "Successfully imported map file :)");
+        } catch (Exception e) {
+            notificationPrompt(true, "Unable to import map file :(");
+        }
     }
 
     @FXML
