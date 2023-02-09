@@ -50,7 +50,6 @@ public class FestivalplannerController {
     @FXML
     void onAddEditEventButton(ActionEvent event) throws IOException {
         tabPane.getSelectionModel().select(1);
-
     }
 
     // File editor/generator controller
@@ -118,23 +117,29 @@ public class FestivalplannerController {
 
     @FXML
     void onExportButton(ActionEvent event) {
+        System.out.println("exporting");
 
-//        System.out.println("exporting");
-//
-////        Song song = new Song();
-//        ArrayList<Song> songs = new ArrayList<>();
-////        Visitor visitor = new Visitor();
-//        ArrayList<Visitor> visitors = new ArrayList<>();
-//        Artist artist = new Artist(artistNameTextfield.getText(), popularity, songs, 0);
-//        Performance performance = new Performance(artist, "", "", "");
-//        ArrayList<Performance> performances = new ArrayList<>();
-//        Festival festival = new Festival(visitors,"","","", performances, "");
-//        try {
-//            Serializer.Serialize(festival);
-//        } catch(IOException e) {
+//        Song song = new Song();
+        ArrayList<Song> songs = new ArrayList<>();
+        ArrayList<Visitor> visitors = new ArrayList<>();
+        for (int i = 0; i < visitorCount; i++) {
+            visitors.add(new Visitor());
+        }
 
+        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
 
-//        }
+        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
+
+        ArrayList<Performance> performances = new ArrayList<>();
+        performances.add(performance);
+
+        Festival festival = new Festival(visitors.size(), festivalName, performances);
+
+        try {
+            Serializer.Serialize(festival);
+        } catch(IOException e) {
+
+        }
     }
 
     @FXML
