@@ -1,6 +1,6 @@
 package controllers;
 
-import classes.Artist;
+import classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
