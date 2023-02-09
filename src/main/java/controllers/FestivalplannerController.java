@@ -92,7 +92,7 @@ public class FestivalplannerController {
     @FXML
     void onImportButton() {
         try {                                           //try importing file, showing error when unsuccessfull
-            Serializer.Deserialize();
+            Serializer.DeserializeFestival();
             notificationPrompt(false, "Imported .txt file successfully :)");
         } catch (Exception e) {
             notificationPrompt(true,"Unable to import .txt file :(" );
