@@ -83,9 +83,9 @@ public class FestivalplannerController {
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-            notificationPopup(0, "Successfully converted data to .txt file :)");
+            notificationPrompt(false, "Successfully converted data to .txt file :)");
         } catch (IOException e) {
-            notificationPopup(1, "Unable to convert data to .txt file :(");
+            notificationPrompt(true, "Unable to convert data to .txt file :(");
         }
     }
 
@@ -93,9 +93,9 @@ public class FestivalplannerController {
     void onImportButton() {
         try {                                           //try importing file, showing error when unsuccessfull
             Serializer.Deserialize();
-            notificationPopup(0, "Imported .txt file successfully :)");
+            notificationPrompt(false, "Imported .txt file successfully :)");
         } catch (Exception e) {
-            notificationPopup(1,"Unable to import .txt file :(" );
+            notificationPrompt(true,"Unable to import .txt file :(" );
         }
     }
 
@@ -173,7 +173,7 @@ public class FestivalplannerController {
         if (amountOfArtistsAdded <= 16) {
             artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
         } else {
-            notificationPopup(1, "Maximum amount of artists reached!");
+            notificationPrompt(true, "Maximum amount of artists reached!");
         }
     }
 
@@ -181,7 +181,7 @@ public class FestivalplannerController {
     public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            notificationPopup(1, "Make sure to fill out all fields!");
+            notificationPrompt(true, "Make sure to fill out all fields!");
             return;
         }
 
@@ -204,20 +204,20 @@ public class FestivalplannerController {
     @FXML
     public void onSaveFestivalButton() {
         if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            notificationPopup(0, "Make sure to fill in all fields!");
+            notificationPrompt(false, "Make sure to fill in all fields!");
             return;
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
         } catch (Exception e) {
-            notificationPopup(1, "Value in box Visitor Count is supposed to be a number!");
+            notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
             return;
         }
         for (int i = 0; i < visitorCount; i++) {
             visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
         festivalName = festivalNameTextfield.getText();
-        notificationPopup(0, "Festival information saved :)");
+        notificationPrompt(false, "Festival information saved :)");
     }
 
     @FXML
@@ -370,21 +370,17 @@ public class FestivalplannerController {
     }
 
     //OTHER
-    public void notificationPopup(int type, String message) {
-        //type 0 = information, 1 = error
-        switch (type) {
-            case 0:
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.showAndWait();
-                break;
-            case 1:
-                Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
-                alert1.setTitle("Information");
-                alert1.setHeaderText("Information");
-                alert1.showAndWait();
-                break;
+    public void notificationPrompt(boolean error, String message) {
+        if(error) {
+            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+            alert1.setTitle("Information");
+            alert1.setHeaderText("Information");
+            alert1.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.showAndWait();
         }
     }
 }
