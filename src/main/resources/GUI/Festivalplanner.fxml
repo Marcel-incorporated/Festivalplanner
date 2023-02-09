@@ -113,8 +113,19 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="900.0">
                <children>
-                  <Canvas fx:id="mapCanvas" height="542.0" layoutX="14.0" layoutY="14.0" width="873.0" />
+                  <Canvas fx:id="mapCanvas" height="540.0" layoutX="10.0" layoutY="10.0" width="780.0" />
                </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab onSelectionChanged="#mapMakerTabClicked" text="Map maker">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Canvas fx:id="mapCanvasMaker" height="540.0" layoutX="10.0" layoutY="10.0" width="780.0" />
+                  <Button layoutX="826.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#btnExportMapMaker" text="Export" />
+                  <Button layoutX="825.0" layoutY="449.0" mnemonicParsing="false" onMouseClicked="#btnImportMapMaker" text="Import" />
+               </children>
+            </AnchorPane>
         </content>
       </Tab>
     <Tab text="Simulator" />
