@@ -18,14 +18,9 @@ import java.util.ArrayList;
 
 
 public class FestivalplannerController {
-
-
-
-
     //FXML Components
     @FXML
     public Button saveFestival;
-    
     @FXML
     public Canvas mapCanvas;
     @FXML
@@ -67,33 +62,35 @@ public class FestivalplannerController {
     @FXML
     private Label artistLabel2 = new Label();
     @FXML
-    private Label artistLabel3;
+    private Label artistLabel3 = new Label();
     @FXML
-    private Label artistLabel4;
+    private Label artistLabel4 = new Label();
     @FXML
-    private Label artistLabel5;
+    private Label artistLabel5 = new Label();
     @FXML
-    private Label artistLabel6;
+    private Label artistLabel6 = new Label();
     @FXML
-    private Label artistLabel7;
+    private Label artistLabel7 = new Label();
     @FXML
-    private Label artistLabel8;
+    private Label artistLabel8 = new Label();
     @FXML
-    private Label artistLabel9;
+    private Label artistLabel9 = new Label();
     @FXML
-    private Label artistLabel10;
+    private Label artistLabel10 = new Label();
     @FXML
-    private Label artistLabel11;
+    private Label artistLabel11 = new Label();
     @FXML
-    private Label artistLabel12;
+    private Label artistLabel12 = new Label();
     @FXML
-    private Label artistLabel13;
+    private Label artistLabel13 = new Label();
     @FXML
-    private Label artistLabel14;
+    private Label artistLabel14 = new Label();
     @FXML
-    private Label artistLabel15;
+    private Label artistLabel15 = new Label();
     @FXML
-    private Label artistLabel16;
+    private Label artistLabel16 = new Label();
+    @FXML
+    private ListView artistsListView;
 
     //Actual attributes to save data
     private boolean mapIsClicked = false;
@@ -317,14 +314,12 @@ public class FestivalplannerController {
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     lastBlockChanged = block;
-                }
-                else {
+                } else {
                     blockColorCounter++;
                     if (blockColorCounter < 4) {
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
-                    }
-                    else {
+                    } else {
                         blockColorCounter = 0;
                         block.setColor(blockColors[blockColorCounter]);
                         updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
@@ -391,6 +386,13 @@ public class FestivalplannerController {
 
         amountOfArtistsAdded++;
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+        for (Artist a : artists) {
+            if(!artistsListView.getItems().contains(a)) {
+                artistsListView.getItems().add(a.getName());
+            }
+        }
+
+
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
