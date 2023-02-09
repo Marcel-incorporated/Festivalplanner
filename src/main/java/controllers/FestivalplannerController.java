@@ -1,11 +1,11 @@
 package controllers;
 
 import classes.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -58,38 +58,6 @@ public class FestivalplannerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    private Label artistLabel1 = new Label();
-    @FXML
-    private Label artistLabel2 = new Label();
-    @FXML
-    private Label artistLabel3 = new Label();
-    @FXML
-    private Label artistLabel4 = new Label();
-    @FXML
-    private Label artistLabel5 = new Label();
-    @FXML
-    private Label artistLabel6 = new Label();
-    @FXML
-    private Label artistLabel7 = new Label();
-    @FXML
-    private Label artistLabel8 = new Label();
-    @FXML
-    private Label artistLabel9 = new Label();
-    @FXML
-    private Label artistLabel10 = new Label();
-    @FXML
-    private Label artistLabel11 = new Label();
-    @FXML
-    private Label artistLabel12 = new Label();
-    @FXML
-    private Label artistLabel13 = new Label();
-    @FXML
-    private Label artistLabel14 = new Label();
-    @FXML
-    private Label artistLabel15 = new Label();
-    @FXML
-    private Label artistLabel16 = new Label();
-    @FXML
     private ListView artistsListView;
 
     //Actual attributes to save data
@@ -111,7 +79,7 @@ public class FestivalplannerController {
 
     // Schedule/main tab controller
     @FXML
-    void onAddEditEventButton(ActionEvent event) throws IOException {
+    void onAddEditEventButton(ActionEvent event) {
         tabPane.getSelectionModel().select(1);
     }
 
@@ -221,73 +189,6 @@ public class FestivalplannerController {
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
             artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
-
-            switch (amountOfArtistsAdded) {
-                case 1 -> {
-                    artistLabel1.setText(name);
-                    artistLabel1.setOpacity(1);
-                }
-                case 2 -> {
-                    artistLabel2.setOpacity(1);
-                    artistLabel2.setText(name);
-                }
-                case 3 -> {
-                    artistLabel3.setOpacity(1);
-                    artistLabel3.setText(name);
-                }
-                case 4 -> {
-                    artistLabel4.setOpacity(1);
-                    artistLabel4.setText(name);
-                }
-                case 5 -> {
-                    artistLabel5.setOpacity(1);
-                    artistLabel5.setText(name);
-                }
-                case 6 -> {
-                    artistLabel6.setOpacity(1);
-                    artistLabel6.setText(name);
-                }
-                case 7 -> {
-                    artistLabel7.setOpacity(1);
-                    artistLabel7.setText(name);
-                }
-                case 8 -> {
-                    artistLabel8.setOpacity(1);
-                    artistLabel8.setText(name);
-                }
-                case 9 -> {
-                    artistLabel9.setOpacity(1);
-                    artistLabel9.setText(name);
-                }
-                case 10 -> {
-                    artistLabel10.setOpacity(1);
-                    artistLabel10.setText(name);
-                }
-                case 11 -> {
-                    artistLabel11.setOpacity(1);
-                    artistLabel11.setText(name);
-                }
-                case 12 -> {
-                    artistLabel12.setOpacity(1);
-                    artistLabel12.setText(name);
-                }
-                case 13 -> {
-                    artistLabel13.setOpacity(1);
-                    artistLabel13.setText(name);
-                }
-                case 14 -> {
-                    artistLabel14.setOpacity(1);
-                    artistLabel14.setText(name);
-                }
-                case 15 -> {
-                    artistLabel15.setOpacity(1);
-                    artistLabel15.setText(name);
-                }
-                case 16 -> {
-                    artistLabel16.setOpacity(1);
-                    artistLabel16.setText(name);
-                }
-            }
         } else {
             notificationPopup(1, "Maximum amount of artists reached!");
         }
@@ -387,11 +288,10 @@ public class FestivalplannerController {
         amountOfArtistsAdded++;
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
         for (Artist a : artists) {
-            if(!artistsListView.getItems().contains(a)) {
+            if(!artistsListView.getItems().contains(a.getName())) {
                 artistsListView.getItems().add(a.getName());
             }
         }
-
 
         artistNameTextfield.clear();
         genreTextfield.clear();
