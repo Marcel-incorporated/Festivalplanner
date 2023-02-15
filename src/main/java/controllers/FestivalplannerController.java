@@ -67,6 +67,7 @@ public class FestivalplannerController {
     private ArrayList<Artist> artists = new ArrayList<>();
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
+    private boolean firstMapCanvas = true;
 
 
     //SCHEDULE MAKER
@@ -89,7 +90,7 @@ public class FestivalplannerController {
             Serializer.DeserializeFestival();
             notificationPrompt(false, "Successfully import festival file :)");
         } catch (Exception e) {
-            notificationPrompt(true,"Unable to import festival file :(" );
+            notificationPrompt(true, "Unable to import festival file :(");
         }
     }
 
@@ -183,7 +184,7 @@ public class FestivalplannerController {
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
 
         for (Artist a : artists) {
-            if(!artistsListView.getItems().contains(a.getName())) {
+            if (!artistsListView.getItems().contains(a.getName())) {
                 artistsListView.getItems().add(a.getName());
             }
         }
@@ -294,21 +295,22 @@ public class FestivalplannerController {
     private void mousePressed(MouseEvent event) {
         for (Block block : blocks) {
             if (block.contains(event.getX(), event.getY())) {
-                if (block != lastBlockChanged){
+                if (lastBlockChanged == null) {
                     blockColorCounter = 0;
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
                     lastBlockChanged = block;
-                }
-                else {
-                    blockColorCounter++;
+                } else {
                     if (blockColorCounter >= 4) {
                         blockColorCounter = 0;
                     }
                     block.setColor(blockColors[blockColorCounter]);
                     updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    blockColorCounter++;
+                    break;
                 }
             }
+
         }
     }
 
@@ -357,24 +359,24 @@ public class FestivalplannerController {
             int y = 1;
             for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
                 for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
-                    blocks.add(new Block(20,20, i, j, Color.LIGHT_GRAY));
+                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
                 }
             }
-
             updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
 
-            mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
-
+            if (firstMapCanvas) {
+                mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+                firstMapCanvas = false;
+            }
             mapMakerIsClicked = true;
-        }
-        else {
+        } else {
             mapMakerIsClicked = false;
         }
     }
 
     //OTHER
     public void notificationPrompt(boolean error, String message) {
-        if(error) {
+        if (error) {
             Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
             alert1.setTitle("Error");
             alert1.setHeaderText("Error");
