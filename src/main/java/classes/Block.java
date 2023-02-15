@@ -11,8 +11,7 @@ public class Block extends Rectangle2D.Double
     private double y;
     private Color color;
 
-    public Block(double width, double height, double x, double y, Color color)
-    {
+    public Block(double width, double height, double x, double y, Color color) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -28,8 +27,7 @@ public class Block extends Rectangle2D.Double
         setRect(x, y, width, height);
     }
 
-    public void changeSizeOfBlock(double width, double height)
-    {
+    public void changeSizeOfBlock(double width, double height) {
         this.width = width;
         this.height = height;
         setRect(x, y, width, height);
