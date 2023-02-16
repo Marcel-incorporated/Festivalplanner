@@ -25,8 +25,6 @@
         <TextField fx:id="genreTextfield" layoutX="353.0" layoutY="79.0" prefHeight="25.0" prefWidth="161.0" promptText="Genre" />
         <TextField fx:id="amountOfVisitorsTextfield" layoutX="14.0" layoutY="79.0" prefHeight="26.0" prefWidth="100.0" promptText="Visitor Count" />
         <TextField fx:id="festivalNameTextfield" layoutX="14.0" layoutY="40.0" prefHeight="26.0" prefWidth="100.0" promptText="Festival Name" />
-        <TextField fx:id="startingTimeTextfield" layoutX="537.0" layoutY="39.0" prefHeight="25.0" prefWidth="75.0" promptText="HH:MM " />
-        <TextField fx:id="setDurationTextfield" layoutX="537.0" layoutY="79.0" prefHeight="25.0" prefWidth="75.0" promptText="Minutes" />
         <SVGPath fx:id="firstStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="354.0" layoutY="125.0" onMouseClicked="#onFirstStarClicked" onMouseEntered="#onHoverOverFirstStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
         <SVGPath fx:id="secondStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="375.0" layoutY="125.0" onMouseClicked="#onSecondStarClicked" onMouseEntered="#onHoverOverSecondStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
         <SVGPath fx:id="fifthStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="437.0" layoutY="125.0" onMouseClicked="#onFifthStarClicked" onMouseEntered="#onHoverOverFifthStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
@@ -51,9 +49,11 @@
         </Label>
         <Button fx:id="saveFestival" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" onAction="#onSaveFestivalButton" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: ECE6DB;" text="Save Festival" />
         <ListView fx:id="artistsListView" layoutX="618.0" layoutY="14.0" prefHeight="400.0" prefWidth="270.0" />
-        <Label layoutX="538.0" layoutY="23.0" text="Start time" />
-        <Label layoutX="538.0" layoutY="63.0" text="Duration" />
+        <Label layoutX="522.0" layoutY="23.0" text="Start time" />
+        <Label layoutX="522.0" layoutY="64.0" text="Duration" />
         <Label layoutX="355.0" layoutY="107.0" text="Popularity" />
+      <ChoiceBox fx:id="startTimeChoicebox" layoutX="522.0" layoutY="39.0" prefHeight="25.0" prefWidth="90.0" />
+      <ChoiceBox fx:id="durationChoicebox" layoutX="522.0" layoutY="79.0" prefHeight="25.0" prefWidth="90.0" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
