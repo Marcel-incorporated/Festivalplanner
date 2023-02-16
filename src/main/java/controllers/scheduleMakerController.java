@@ -1,12 +1,13 @@
 package controllers;
 
-import classes.*;
-import javafx.collections.ObservableList;
+
+import classes.Artist;
+import classes.Festival;
+import classes.Song;
+import classes.Visitor;
+
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
@@ -16,21 +17,13 @@ public class scheduleMakerController {
     @FXML
     public Button saveFestival;
     @FXML
-    public Canvas mapCanvas;
-    @FXML
-    public Canvas mapCanvasMaker;
-    @FXML
     public Button addArtistButton;
     @FXML
     public TextField amountOfVisitorsTextfield;
     @FXML
     public TextField festivalNameTextfield;
-    @FXML
-    public TextField startingTimeTextfield;
-    @FXML
-    public TextField setDurationTextfield;
-    @FXML
-    private TextField podiumNameTextfield;
+    public ChoiceBox<String> startTimeChoicebox;
+    public ChoiceBox<String> durationChoicebox;
     @FXML
     private TextField artistNameTextfield;
     @FXML
@@ -46,7 +39,9 @@ public class scheduleMakerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    private ListView artistsListView;
+    
+    private ListView<String> artistsListView;
+
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
@@ -67,6 +62,15 @@ public class scheduleMakerController {
     //SCHEDULE MAKER
     @FXML
     public void initialize() {
+        startTimeChoicebox.getItems().addAll("10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00",
+                "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30",
+                "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00", "01:30", "02:00", "02:30");
+        startTimeChoicebox.setValue("10:00");
+
+        durationChoicebox.getItems().addAll("30 minutes", "60 minutes", "90 minutes", "120 minutes");
+        durationChoicebox.setValue("30 minutes");
+
+
         stagePickerChoicebox.getItems().addAll("Main stage", "Stage 2", "Stage 3", "Stage 4");
         stagePickerChoicebox.setValue("Main stage");
     }
@@ -166,7 +170,7 @@ public class scheduleMakerController {
 
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
+            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
         } else {
             notificationPrompt(true, "Maximum amount of artists reached!");
         }
@@ -174,14 +178,16 @@ public class scheduleMakerController {
 
     @FXML
     public void onAddArtistButton() {
-        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
-                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
+        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0) {
             notificationPrompt(true, "Make sure to fill out all fields!");
             return;
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
+
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startTimeChoicebox.getSelectionModel().getSelectedItem(),
+                durationChoicebox.getSelectionModel().getSelectedItem(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
+
 
         for (Artist a : artists) {
             if (!artistsListView.getItems().contains(a.getName())) {
@@ -190,9 +196,9 @@ public class scheduleMakerController {
         }
         artistNameTextfield.clear();
         genreTextfield.clear();
-        startingTimeTextfield.clear();
-        setDurationTextfield.clear();
-        podiumNameTextfield.clear();
+        startTimeChoicebox.setValue("10:00");
+        durationChoicebox.setValue("30 minutes");
+        stagePickerChoicebox.setValue("Main stage");
         noStarsClicked();
     }
 

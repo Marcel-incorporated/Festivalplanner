@@ -9,6 +9,5 @@ public enum Genre {
     EDM,
     COUNTRY,
     CLASSICAL,
-    KPOP,
-    JPOP
+
 }
