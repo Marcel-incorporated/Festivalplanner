@@ -1,9 +1,11 @@
 package controllers;
 
+
 import classes.Artist;
 import classes.Festival;
 import classes.Song;
 import classes.Visitor;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
@@ -37,7 +39,9 @@ public class scheduleMakerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
+    
     private ListView<String> artistsListView;
+
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
@@ -65,6 +69,7 @@ public class scheduleMakerController {
 
         durationChoicebox.getItems().addAll("30 minutes", "60 minutes", "90 minutes", "120 minutes");
         durationChoicebox.setValue("30 minutes");
+
 
         stagePickerChoicebox.getItems().addAll("Main stage", "Stage 2", "Stage 3", "Stage 4");
         stagePickerChoicebox.setValue("Main stage");
@@ -179,8 +184,10 @@ public class scheduleMakerController {
         }
 
         amountOfArtistsAdded++;
+
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startTimeChoicebox.getSelectionModel().getSelectedItem(),
                 durationChoicebox.getSelectionModel().getSelectedItem(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
+
 
         for (Artist a : artists) {
             if (!artistsListView.getItems().contains(a.getName())) {
