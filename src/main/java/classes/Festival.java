@@ -14,10 +14,6 @@ public class Festival implements Serializable {
         this.artists = artists;
     }
 
-    public ArrayList<Artist> getArtists() {
-        return this.artists;
-    }
-
     @Override
     public String toString() {
         return "Festival{" +
