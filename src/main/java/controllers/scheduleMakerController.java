@@ -1,6 +1,7 @@
 package controllers;
 
 import classes.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -46,8 +47,11 @@ public class scheduleMakerController {
     private SVGPath fifthStar;
     @FXML
     private ListView artistsListView;
+    @FXML
+    private ChoiceBox<String> stagePickerChoicebox;
 
     //Actual attributes to save data
+
     private int popularity = 0;
     private boolean popularitySelected = false;
     private int amountOfArtistsAdded = 0;
@@ -56,10 +60,17 @@ public class scheduleMakerController {
     private ArrayList<Artist> artists = new ArrayList<>();
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
-    private boolean firstMapCanvas = true;
+    private String selectedStage;
+
 
 
     //SCHEDULE MAKER
+    @FXML
+    public void initialize() {
+        stagePickerChoicebox.getItems().addAll("Main stage", "Stage 2", "Stage 3", "Stage 4");
+        stagePickerChoicebox.setValue("Main stage");
+    }
+
     @FXML
     void onExportButton() {
         Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
@@ -170,7 +181,7 @@ public class scheduleMakerController {
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
 
         for (Artist a : artists) {
             if (!artistsListView.getItems().contains(a.getName())) {
