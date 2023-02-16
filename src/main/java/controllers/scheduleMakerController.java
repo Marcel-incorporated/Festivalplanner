@@ -1,7 +1,9 @@
 package controllers;
 
 import classes.*;
+
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -47,6 +49,7 @@ public class scheduleMakerController {
     private SVGPath fifthStar;
     @FXML
     private ListView artistsListView;
+
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
@@ -61,6 +64,7 @@ public class scheduleMakerController {
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
     private String selectedStage;
+
 
 
 
@@ -182,6 +186,7 @@ public class scheduleMakerController {
 
         amountOfArtistsAdded++;
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
+
 
         for (Artist a : artists) {
             if (!artistsListView.getItems().contains(a.getName())) {
