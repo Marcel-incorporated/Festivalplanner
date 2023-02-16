@@ -78,21 +78,14 @@ public class FestivalplannerController {
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-            notificationPrompt(false, "Successfully exported festival file :)");
+            NotificationPromptController.notificationPrompt(false, "Successfully exported festival file :)");
         } catch (IOException e) {
-            notificationPrompt(true, "Unable to import festival file :(");
+            NotificationPromptController.notificationPrompt(false, "Unable to import festival file :(");
+
         }
     }
 
-    @FXML
-    void onImportButton() {
-        try {                                           //try importing file, showing error when unsuccessfull
-            Serializer.DeserializeFestival();
-            notificationPrompt(false, "Successfully import festival file :)");
-        } catch (Exception e) {
-            notificationPrompt(true, "Unable to import festival file :(");
-        }
-    }
+
 
     public void noStarsClicked() {
         popularity = 0;
@@ -168,7 +161,7 @@ public class FestivalplannerController {
         if (amountOfArtistsAdded <= 16) {
             artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
         } else {
-            notificationPrompt(true, "Maximum amount of artists reached!");
+            NotificationPromptController.notificationPrompt(true, "Maximum amount of artists reached!");
         }
     }
 
@@ -176,7 +169,7 @@ public class FestivalplannerController {
     public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            notificationPrompt(true, "Make sure to fill out all fields!");
+            NotificationPromptController.notificationPrompt(true, "Make sure to fill out all fields!");
             return;
         }
 
@@ -197,26 +190,36 @@ public class FestivalplannerController {
     }
 
     @FXML
+    public void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
+            Serializer.DeserializeFestival();
+            NotificationPromptController.notificationPrompt(false, "Successfully import festival file :)");
+        } catch (Exception e) {
+            NotificationPromptController.notificationPrompt(true, "Unable to import festival file :(");
+        }
+    }
+
+    @FXML
     public void onSaveFestivalButton() {
         if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            notificationPrompt(false, "Make sure to fill in all fields!");
+            NotificationPromptController.notificationPrompt(true, "Make sure to fill out all fields!");
             return;
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
             if(visitorCount > 20) {
-                notificationPrompt(false, "Can't add more than 20 visitors!");
+                NotificationPromptController.notificationPrompt(true, "Can't add more than 20 visitors!");
                 return;
             }
         } catch (Exception e) {
-            notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
+            NotificationPromptController.notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
             return;
         }
         for (int i = 0; i < visitorCount; i++) {
             visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
         festivalName = festivalNameTextfield.getText();
-        notificationPrompt(false, "Successfully saved festival information :)");
+        NotificationPromptController.notificationPrompt(false, "Successfully saved festival information :)");
     }
 
     @FXML
@@ -338,9 +341,10 @@ public class FestivalplannerController {
         Map map = new Map(blocks);
         try {
             Serializer.Serialize(map);
-            notificationPrompt(false, "Successfully exported map file :)");
+            NotificationPromptController.notificationPrompt(false, "Successfully exported map file :)");
+
         } catch (Exception e) {
-            notificationPrompt(true, "Unable to export map file :(");
+            NotificationPromptController.notificationPrompt(true, "Unable to export map file :(");
         }
     }
 
@@ -350,9 +354,9 @@ public class FestivalplannerController {
             Map map = Serializer.DeserializeMap();
             ArrayList<Block> importedBlocks = map.getBlocks();
             drawMap(new FXGraphics2D(mapCanvas.getGraphicsContext2D()), importedBlocks);
-            notificationPrompt(false, "Successfully imported map file :)");
+            NotificationPromptController.notificationPrompt(false, "Successfully imported map file :)");
         } catch (Exception e) {
-            notificationPrompt(true, "Unable to import map file :(");
+            NotificationPromptController.notificationPrompt(true, "Unable to import map file :(");
         }
     }
 
@@ -375,21 +379,6 @@ public class FestivalplannerController {
             mapMakerIsClicked = true;
         } else {
             mapMakerIsClicked = false;
-        }
-    }
-
-    //OTHER
-    public void notificationPrompt(boolean error, String message) {
-        if (error) {
-            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
-            alert1.setTitle("Error");
-            alert1.setHeaderText("Error");
-            alert1.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-            alert.setTitle("Information");
-            alert.setHeaderText("Information");
-            alert.showAndWait();
         }
     }
 }
