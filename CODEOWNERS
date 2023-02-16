@@ -1,1 +1,8 @@
-@Maersel
+#* @Maersel
+
+#*.java @Maersel
+
+#TEMPORARY
+* @GertieMeneer
+
+*.java @GertieMeneer
