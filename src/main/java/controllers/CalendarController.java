@@ -1,7 +1,5 @@
 package controllers;
 
-import classes.Artist;
-
 import java.util.ArrayList;
 
 public class CalendarController {
