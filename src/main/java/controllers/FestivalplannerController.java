@@ -2,64 +2,40 @@ package controllers;
 
 import classes.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.image.*;
-import javafx.stage.*;
+import org.jfree.fx.FXGraphics2D;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.Desktop;
-import java.io.File;
+import java.awt.*;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 
 public class FestivalplannerController {
+    //FXML Components
+    @FXML
+    public Button saveFestival;
+    @FXML
+    public Canvas mapCanvas;
+    @FXML
+    public Canvas mapCanvasMaker;
     @FXML
     public Button addArtistButton;
     @FXML
     public TextField amountOfVisitorsTextfield;
     @FXML
-    public Button confirmVisitorsButton;
-    @FXML
     public TextField festivalNameTextfield;
-    @FXML
-    public Button confirmFestivalNameButton;
     @FXML
     public TextField startingTimeTextfield;
     @FXML
-    public TextField artistNameTextfield1;
-    @FXML
     public TextField setDurationTextfield;
     @FXML
-    private Button addEventButton;
-    @FXML
-    private TabPane tabPane;
-
-    // Schedule/main tab controller
-    @FXML
-    void onAddEditEventButton(ActionEvent event) throws IOException {
-        tabPane.getSelectionModel().select(1);
-    }
-
-    // File editor/generator controller
-
-
-    private Desktop desktop = Desktop.getDesktop();
-    @FXML
-    private Button exportButton;
-    @FXML
-    private Button importButton;
+    private TextField podiumNameTextfield;
     @FXML
     private TextField artistNameTextfield;
     @FXML
@@ -74,100 +50,48 @@ public class FestivalplannerController {
     private SVGPath fourthStar;
     @FXML
     private SVGPath fifthStar;
+    @FXML
+    private ListView artistsListView;
+
+    //Actual attributes to save data
+    private boolean mapMakerIsClicked = false;
+    private Color[] blockColors = {Color.BLUE, Color.RED, Color.YELLOW, Color.LIGHT_GRAY};
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private Block lastBlockChanged = null;
+    private int blockColorCounter = 0;
     private int popularity = 0;
     private boolean popularitySelected = false;
     private int amountOfArtistsAdded = 0;
-    @FXML
-    private Label artistLabel1;
-    @FXML
-    private Label artistLabel2;
-    @FXML
-    private Label artistLabel3;
-    @FXML
-    private Label artistLabel4;
-    @FXML
-    private Label artistLabel5;
-    @FXML
-    private Label artistLabel6;
-    @FXML
-    private Label artistLabel7;
-    @FXML
-    private Label artistLabel8;
-    @FXML
-    private Label artistLabel9;
-    @FXML
-    private Label artistLabel10;
-    @FXML
-    private Label artistLabel11;
-    @FXML
-    private Label artistLabel12;
-    @FXML
-    private Label artistLabel13;
-    @FXML
-    private Label artistLabel14;
-    @FXML
-    private Label artistLabel15;
-    @FXML
-    private Label artistLabel16;
-
     private int visitorCount;
     private String festivalName;
+    private ArrayList<Artist> artists = new ArrayList<>();
+    private ArrayList<Visitor> visitors = new ArrayList<>();
+    private ArrayList<Song> songs = new ArrayList<>();
+    private boolean firstMapCanvas = true;
 
-    private List<Artist> artists = new ArrayList<>();
 
+    //SCHEDULE MAKER
     @FXML
-    void onExportButton(ActionEvent event) {
-        System.out.println("exporting");
+    void onExportButton() {
+        Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
+        System.out.println(artists);
 
-//        Song song = new Song();
-        ArrayList<Song> songs = new ArrayList<>();
-        ArrayList<Visitor> visitors = new ArrayList<>();
-        for (int i = 0; i < visitorCount; i++) {
-            visitors.add(new Visitor());
-        }
-
-        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
-
-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
-
-        ArrayList<Performance> performances = new ArrayList<>();
-        performances.add(performance);
-
-        Festival festival = new Festival(visitors.size(), festivalName, performances);
-
-        try {
+        try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-        } catch(IOException e) {
-
-        }
-    }
-
+            NotificationPromptController.notificationPrompt(false, "Successfully exported festival file :)");
+        } catch (IOException e) {
+            NotificationPromptController.notificationPrompt(false, "Unable to import festival file :(");
     @FXML
-    void onImportButton(ActionEvent event) {
-//        System.out.println("importing");
-
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Pick a file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
-//        System.out.println("filechooser created");
-
-//        System.out.println("handle method started");
-        List<File> list =
-                fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
-//        System.out.println("opened filechooser");
-        if (list != null) {
-            for (File file : list) {
-                try {
-                    desktop.open(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(
-                            getClass().getName()).log(
-                            Level.SEVERE, null, ex
-                    );
-                }
-            }
+    void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
+            Serializer.DeserializeFestival();
+            notificationPrompt(false, "Successfully import festival file :)");
+        } catch (Exception e) {
+            notificationPrompt(true, "Unable to import festival file :(");
         }
     }
+
+
 
     public void noStarsClicked() {
         popularity = 0;
@@ -180,7 +104,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFirstStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFirstStarClicked() {
         popularity = 1;
         popularitySelected = true;
 
@@ -192,7 +116,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onSecondStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onSecondStarClicked() {
         popularity = 2;
         popularitySelected = true;
 
@@ -204,7 +128,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onThirdStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onThirdStarClicked() {
         popularity = 3;
         popularitySelected = true;
 
@@ -216,7 +140,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFourthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFourthStarClicked() {
         popularity = 4;
         popularitySelected = true;
 
@@ -228,7 +152,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onFifthStarClicked(javafx.scene.input.MouseEvent event) {
+    public void onFifthStarClicked() {
         popularity = 5;
         popularitySelected = true;
 
@@ -239,115 +163,73 @@ public class FestivalplannerController {
         fifthStar.setStyle("-fx-fill: yellow");
     }
 
-    private void addArtistToList(String name, String genre, int popularity) {
+    private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));
-
-            switch (amountOfArtistsAdded) {
-                case 1 -> {
-                    artistLabel1.setOpacity(1);
-                    artistLabel1.setText(name);
-                }
-                case 2 -> {
-                    artistLabel2.setOpacity(1);
-                    artistLabel2.setText(name);
-                }
-                case 3 -> {
-                    artistLabel3.setOpacity(1);
-                    artistLabel3.setText(name);
-                }
-                case 4 -> {
-                    artistLabel4.setOpacity(1);
-                    artistLabel4.setText(name);
-                }
-                case 5 -> {
-                    artistLabel5.setOpacity(1);
-                    artistLabel5.setText(name);
-                }
-                case 6 -> {
-                    artistLabel6.setOpacity(1);
-                    artistLabel6.setText(name);
-                }
-                case 7 -> {
-                    artistLabel7.setOpacity(1);
-                    artistLabel7.setText(name);
-                }
-                case 8 -> {
-                    artistLabel8.setOpacity(1);
-                    artistLabel8.setText(name);
-                }
-                case 9 -> {
-                    artistLabel9.setOpacity(1);
-                    artistLabel9.setText(name);
-                }
-                case 10 -> {
-                    artistLabel10.setOpacity(1);
-                    artistLabel10.setText(name);
-                }
-                case 11 -> {
-                    artistLabel11.setOpacity(1);
-                    artistLabel11.setText(name);
-                }
-                case 12 -> {
-                    artistLabel12.setOpacity(1);
-                    artistLabel12.setText(name);
-                }
-                case 13 -> {
-                    artistLabel13.setOpacity(1);
-                    artistLabel13.setText(name);
-                }
-                case 14 -> {
-                    artistLabel14.setOpacity(1);
-                    artistLabel14.setText(name);
-                }
-                case 15 -> {
-                    artistLabel15.setOpacity(1);
-                    artistLabel15.setText(name);
-                }
-                case 16 -> {
-                    artistLabel16.setOpacity(1);
-                    artistLabel16.setText(name);
-                }
-            }
+            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration), podiumNameTextfield.getText()));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Maximum amount of artists reached!");
-
-            alert.showAndWait();
+            NotificationPromptController.notificationPrompt(true, "Maximum amount of artists reached!");
         }
-
     }
 
     @FXML
-    public void onAddArtistButton(ActionEvent actionEvent) {
+    public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||
                 setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches("[a-zA-Z]+")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Make sure to fill out all fields!");
-
-            noStarsClicked();
-
-            alert.showAndWait();
-
+            NotificationPromptController.notificationPrompt(true, "Make sure to fill out all fields!");
             return;
         }
 
         amountOfArtistsAdded++;
-        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);
+        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), setDurationTextfield.getText(), podiumNameTextfield.getText());
+
+        for (Artist a : artists) {
+            if (!artistsListView.getItems().contains(a.getName())) {
+                artistsListView.getItems().add(a.getName());
+            }
+        }
         artistNameTextfield.clear();
         genreTextfield.clear();
         startingTimeTextfield.clear();
         setDurationTextfield.clear();
+        podiumNameTextfield.clear();
         noStarsClicked();
-
     }
 
     @FXML
-    public void onHoverOverFirstStar(MouseEvent event) {
+    public void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
+            Serializer.DeserializeFestival();
+            NotificationPromptController.notificationPrompt(false, "Successfully import festival file :)");
+        } catch (Exception e) {
+            NotificationPromptController.notificationPrompt(true, "Unable to import festival file :(");
+        }
+    }
+
+    @FXML
+    public void onSaveFestivalButton() {
+        if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
+            NotificationPromptController.notificationPrompt(true, "Make sure to fill out all fields!");
+            return;
+        }
+        try {
+            visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+            if(visitorCount > 20) {
+                NotificationPromptController.notificationPrompt(true, "Can't add more than 20 visitors!");
+                return;
+            }
+        } catch (Exception e) {
+            NotificationPromptController.notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
+            return;
+        }
+        for (int i = 0; i < visitorCount; i++) {
+            visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
+        }
+        festivalName = festivalNameTextfield.getText();
+        NotificationPromptController.notificationPrompt(false, "Successfully saved festival information :)");
+    }
+
+    @FXML
+    public void onHoverOverFirstStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: white");
@@ -358,7 +240,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverSecondStar(MouseEvent event) {
+    public void onHoverOverSecondStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -369,7 +251,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverThirdStar(MouseEvent event) {
+    public void onHoverOverThirdStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -380,7 +262,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverFourthStar(MouseEvent event) {
+    public void onHoverOverFourthStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -391,7 +273,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onHoverOverFifthStar(MouseEvent event) {
+    public void onHoverOverFifthStar() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: yellow");
             secondStar.setStyle("-fx-fill: yellow");
@@ -402,7 +284,7 @@ public class FestivalplannerController {
     }
 
     @FXML
-    public void onMouseNotOnStars(MouseEvent event) {
+    public void onMouseNotOnStars() {
         if (!popularitySelected) {
             firstStar.setStyle("-fx-fill: white");
             secondStar.setStyle("-fx-fill: white");
@@ -410,16 +292,111 @@ public class FestivalplannerController {
             fourthStar.setStyle("-fx-fill: white");
             fifthStar.setStyle("-fx-fill: white");
         }
+    }
 
+    //MAP MAKER
+    public void drawMap(FXGraphics2D graphics2DMap, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            block.changeSizeOfBlock(20, 20);
+            graphics2DMap.setColor(block.getColor());
+            graphics2DMap.fill(block);
+            graphics2DMap.setColor(Color.BLACK);
+            graphics2DMap.draw(block);
+        }
+    }
+
+    private void mousePressed(MouseEvent event) {
+        for (Block block : blocks) {
+            if (block.contains(event.getX(), event.getY())) {
+                if (lastBlockChanged == null) {
+                    blockColorCounter = 0;
+                    block.setColor(blockColors[blockColorCounter]);
+                    updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    lastBlockChanged = block;
+                } else {
+                    if (blockColorCounter >= 4) {
+                        blockColorCounter = 0;
+                    }
+                    block.setColor(blockColors[blockColorCounter]);
+                    updateBlock(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), block);
+                    blockColorCounter++;
+                    break;
+                }
+            }
+
+        }
+    }
+
+    public void updateBlock(FXGraphics2D graphics2DMapMaker, Block block) {
+        block.changeSizeOfBlock(19, 19);
+        graphics2DMapMaker.setColor(block.getColor());
+        graphics2DMapMaker.fill(block);
+    }
+
+    public void updateBlocks(FXGraphics2D graphics2DMapMaker, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            graphics2DMapMaker.setColor(Color.LIGHT_GRAY);
+            graphics2DMapMaker.fill(block);
+            graphics2DMapMaker.setColor(Color.BLACK);
+            graphics2DMapMaker.draw(block);
+        }
     }
 
     @FXML
-    public void onConfirmVisitorsButton(ActionEvent actionEvent) {
-        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+    public void btnExportMapMaker() {
+        Map map = new Map(blocks);
+        try {
+            Serializer.Serialize(map);
+            NotificationPromptController.notificationPrompt(false, "Successfully exported map file :)");
+
+        } catch (Exception e) {
+            NotificationPromptController.notificationPrompt(true, "Unable to export map file :(");
+        }
     }
 
     @FXML
-    public void onConfirmFestivalNameButton(ActionEvent actionEvent) {
-        festivalName = confirmFestivalNameButton.getText();
+    public void btnImportMapMaker() {
+        try {
+            Map map = Serializer.DeserializeMap();
+            ArrayList<Block> importedBlocks = map.getBlocks();
+            drawMap(new FXGraphics2D(mapCanvas.getGraphicsContext2D()), importedBlocks);
+            NotificationPromptController.notificationPrompt(false, "Successfully imported map file :)");
+        } catch (Exception e) {
+            NotificationPromptController.notificationPrompt(true, "Unable to import map file :(");
+        }
+    }
+
+    @FXML
+    public void mapMakerTabClicked() {
+        FXGraphics2D graphics2DMapMaker = new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D());
+        if (!mapMakerIsClicked) {
+            int y = 1;
+            for (int j = 1; j + 20 < mapCanvasMaker.getHeight(); j = j + 20) {
+                for (int i = 1; i + 20 < mapCanvasMaker.getWidth(); i = i + 20) {
+                    blocks.add(new Block(20, 20, i, j, Color.LIGHT_GRAY));
+                }
+            }
+            updateBlocks(new FXGraphics2D(mapCanvasMaker.getGraphicsContext2D()), blocks);
+
+            if (firstMapCanvas) {
+                mapCanvasMaker.setOnMousePressed(e -> mousePressed(e));
+                firstMapCanvas = false;
+            }
+            mapMakerIsClicked = true;
+        } else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    //OTHER
+    public void notificationPrompt(boolean error, String message) {
+        if (error) {
+            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+            alert1.setTitle("Error");
+            alert1.setHeaderText("Error");
+            alert1.showAndWait();
+        } else {
+            mapMakerIsClicked = false;
+        }
     }
 }

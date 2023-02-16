@@ -11,9 +11,11 @@ public class Artist implements Serializable {
     private int setDurationInMinutes;
     private String genre;
     private Genre genreInEnum;
+    private String podium;
 
 
-    public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes) {
+    public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes, String podium) {
+        this.podium = podium;
         this.setStartingTime = setStartingTime;
         this.setDurationInMinutes = setDurationInMinutes;
         this.name = name;
@@ -27,5 +29,9 @@ public class Artist implements Serializable {
                 "name='" + name + '\'' +
                 ", popularity=" + popularity +
                 '}';
+    }
+
+    public String getName() {
+        return name;
     }
 }

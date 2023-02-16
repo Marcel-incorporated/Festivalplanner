@@ -5,32 +5,25 @@ import java.util.ArrayList;
 
 public class Festival implements Serializable {
     private ArrayList<Visitor> visitorList;
-    private String startTime;
-    private String endTime;
     private String name;
-    private ArrayList<Performance> performances = new ArrayList<>();
-    private int numberOfVisitors;
+    private ArrayList<Artist> artists = new ArrayList<>();
 
-    public Festival(int numberOfVisitors, String name, ArrayList<Performance> performances) {
-        this.visitorList = new ArrayList<>();
-        this.numberOfVisitors = numberOfVisitors;
+    public Festival(ArrayList<Visitor> visitors, String name, ArrayList<Artist> artists) {
+        this.visitorList = visitors;
         this.name = name;
-        this.performances = performances;
+        this.artists = artists;
     }
 
-    public void addToVisitorList(Visitor visitor) {
-        visitorList.add(visitor);
+    public ArrayList<Artist> getArtists() {
+        return this.artists;
     }
 
     @Override
     public String toString() {
         return "Festival{" +
                 "visitorList=" + visitorList +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
                 ", name='" + name + '\'' +
-                ", performances=" + performances +
-                ", numberOfVisitors=" + numberOfVisitors +
+                ", artists=" + artists +
                 '}';
     }
 }
