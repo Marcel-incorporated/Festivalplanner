@@ -4,7 +4,7 @@ module com.example.festivalplanner {
     requires java.desktop;
     requires java.logging;
     requires datafaker;
-    requires fxgraphics2d;
+    requires org.jfree.fxgraphics2d;
 
     opens GUI to javafx.fxml;
     exports GUI;
