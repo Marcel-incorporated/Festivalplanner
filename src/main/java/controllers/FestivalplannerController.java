@@ -204,6 +204,10 @@ public class FestivalplannerController {
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+            if(visitorCount > 20) {
+                notificationPrompt(false, "Can't add more than 20 visitors!");
+                return;
+            }
         } catch (Exception e) {
             notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
             return;
