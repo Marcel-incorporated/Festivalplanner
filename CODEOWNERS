@@ -3,6 +3,6 @@
 *.java @Maersel
 
 #TEMPORARY
-* @GertieMeneer
+#* @GertieMeneer
 
-*.java @GertieMeneer
+#*.java @GertieMeneer
