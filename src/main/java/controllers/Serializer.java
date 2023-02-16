@@ -43,6 +43,7 @@ public class Serializer {
     }
 
     public static Festival DeserializeFestival() throws IOException, ClassNotFoundException {
+
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select the file");
@@ -57,6 +58,8 @@ public class Serializer {
             ois.close();
         }
         System.out.println(festival.toString());
+        CalendarController calendarController = new CalendarController(festival.getArtists());
+        System.out.println(calendarController.toString());
         return festival;
     }
 
