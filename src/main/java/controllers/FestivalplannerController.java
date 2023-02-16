@@ -81,7 +81,13 @@ public class FestivalplannerController {
             NotificationPromptController.notificationPrompt(false, "Successfully exported festival file :)");
         } catch (IOException e) {
             NotificationPromptController.notificationPrompt(false, "Unable to import festival file :(");
-
+    @FXML
+    void onImportButton() {
+        try {                                           //try importing file, showing error when unsuccessfull
+            Serializer.DeserializeFestival();
+            notificationPrompt(false, "Successfully import festival file :)");
+        } catch (Exception e) {
+            notificationPrompt(true, "Unable to import festival file :(");
         }
     }
 
@@ -377,6 +383,18 @@ public class FestivalplannerController {
                 firstMapCanvas = false;
             }
             mapMakerIsClicked = true;
+        } else {
+            mapMakerIsClicked = false;
+        }
+    }
+
+    //OTHER
+    public void notificationPrompt(boolean error, String message) {
+        if (error) {
+            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
+            alert1.setTitle("Error");
+            alert1.setHeaderText("Error");
+            alert1.showAndWait();
         } else {
             mapMakerIsClicked = false;
         }
