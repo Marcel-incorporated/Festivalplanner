@@ -7,13 +7,16 @@ import classes.Song;
 import classes.Visitor;
 
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
+import org.jfree.fx.FXGraphics2D;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class scheduleMakerController {
+
     @FXML
     public Button saveFestival;
     @FXML
@@ -84,16 +87,6 @@ public class scheduleMakerController {
             Serializer.Serialize(festival);
             notificationPrompt(false, "Successfully exported festival file :)");
         } catch (IOException e) {
-            notificationPrompt(true, "Unable to import festival file :(");
-        }
-    }
-
-    @FXML
-    void onImportButton() {
-        try {                                           //try importing file, showing error when unsuccessfull
-            Serializer.DeserializeFestival();
-            notificationPrompt(false, "Successfully import festival file :)");
-        } catch (Exception e) {
             notificationPrompt(true, "Unable to import festival file :(");
         }
     }
