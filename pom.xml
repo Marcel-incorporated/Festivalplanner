@@ -43,6 +43,11 @@
             <artifactId>datafaker</artifactId>
             <version>1.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>fxgraphics2d</artifactId>
+            <version>1.8</version>
+        </dependency>
 
     </dependencies>
 
