@@ -34,4 +34,28 @@ public class Artist implements Serializable {
     public String getName() {
         return name;
     }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public String getSetStartingTime() {
+        return setStartingTime;
+    }
+
+    public int getSetDurationInMinutes() {
+        return setDurationInMinutes;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public Genre getGenreInEnum() {
+        return genreInEnum;
+    }
+
+    public String getPodium() {
+        return podium;
+    }
 }
