@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
-import org.jfree.fx.FXGraphics2D;
 
 import java.io.IOException;
 import java.util.ArrayList;

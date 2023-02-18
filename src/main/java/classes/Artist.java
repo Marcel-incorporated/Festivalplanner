@@ -23,11 +23,17 @@ public class Artist implements Serializable {
 //        this.songs = songs;
         this.genre = genre;
     }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "name='" + name + '\'' +
                 ", popularity=" + popularity +
+                ", setStartingTime='" + setStartingTime + '\'' +
+                ", setDurationInMinutes=" + setDurationInMinutes +
+                ", genre='" + genre + '\'' +
+                ", genreInEnum=" + genreInEnum +
+                ", podium='" + podium + '\'' +
                 '}';
     }
 
