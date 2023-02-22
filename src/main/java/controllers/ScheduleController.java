@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class ScheduleController {
 
+    private ScheduleMakerController scheduleMakerController = new ScheduleMakerController();
+
     private ArrayList<Rectangle2D> blocksToDraw = new ArrayList<>();
     private int xBlock = 0;
     private int yBlock = 0;
@@ -22,17 +24,23 @@ public class ScheduleController {
     public Canvas canvasSchedule;
     @FXML
     void onImportButton() {
-
         Festival festivalObject = null;
 
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
-            notificationPrompt(false, "Successfully import festival file :)");
+            NotificationPromptController.notification(false, "Successfully import festival file :)");
         } catch (Exception e) {
-            notificationPrompt(true, "Unable to import festival file :(");
+            NotificationPromptController.notification(true, "Unable to import festival file :(");
         }
 
         ArrayList<Artist> allArtists = festivalObject.getArtists();
+//        System.out.println(allArtists.size());
+        ArtistArrayListController.artists.addAll(allArtists);
+//        scheduleMakerController.refreshList();
+//        scheduleMakerController.setArtists(allArtists);
+//        System.out.println(ArtistArrayListController.artists.size());
+//        scheduleMakerController.artists.add
+//        scheduleMakerController.updateListView();
 
         calculateBlockToDraw(allArtists);
 
@@ -306,20 +314,6 @@ public class ScheduleController {
             if (i == 4){
                 i = 0;
             }
-        }
-    }
-
-    public void notificationPrompt(boolean error, String message) {
-        if (error) {
-            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
-            alert1.setTitle("Error");
-            alert1.setHeaderText("Error");
-            alert1.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-            alert.setTitle("Information");
-            alert.setHeaderText("Information");
-            alert.showAndWait();
         }
     }
 }
