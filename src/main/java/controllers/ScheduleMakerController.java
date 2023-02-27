@@ -13,7 +13,8 @@ import javafx.scene.shape.SVGPath;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class scheduleMakerController {
+public class ScheduleMakerController {
+
     @FXML
     public Button saveFestival;
     @FXML
@@ -39,9 +40,7 @@ public class scheduleMakerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    
-    private ListView<String> artistsListView;
-
+    public ListView<String> artistsListView;
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
@@ -52,7 +51,7 @@ public class scheduleMakerController {
     private int amountOfArtistsAdded = 0;
     private int visitorCount;
     private String festivalName;
-    private ArrayList<Artist> artists = new ArrayList<>();
+    public ArrayList<Artist> artists;
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
     private String selectedStage;
@@ -76,25 +75,25 @@ public class scheduleMakerController {
     }
 
     @FXML
-    void onExportButton() {
-        Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
-        System.out.println(artists);
-
-        try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
-            Serializer.Serialize(festival);
-            notificationPrompt(false, "Successfully exported festival file :)");
-        } catch (IOException e) {
-            notificationPrompt(true, "Unable to import festival file :(");
+    public void refreshList() {
+//        System.out.println(ArtistArrayListController.artists.size());
+        for (Artist a:ArtistArrayListController.artists) {
+            if (!artistsListView.getItems().contains(a.getName())) {
+                artistsListView.getItems().add(a.getName());
+            }
         }
     }
 
     @FXML
-    void onImportButton() {
-        try {                                           //try importing file, showing error when unsuccessfull
-            Serializer.DeserializeFestival();
-            notificationPrompt(false, "Successfully import festival file :)");
-        } catch (Exception e) {
-            notificationPrompt(true, "Unable to import festival file :(");
+    void onExportButton() {
+        Festival festival = new Festival(visitors, festivalName, ArtistArrayListController.artists);      //create festival object with all saved information from user
+        System.out.println(ArtistArrayListController.artists);
+
+        try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
+            Serializer.Serialize(festival);
+            NotificationPromptController.notification(false, "Successfully exported festival file :)");
+        } catch (IOException e) {
+            NotificationPromptController.notification(true, "Unable to import festival file :(");
         }
     }
 
@@ -170,16 +169,16 @@ public class scheduleMakerController {
 
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
+            ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
         } else {
-            notificationPrompt(true, "Maximum amount of artists reached!");
+            NotificationPromptController.notification(true, "Maximum amount of artists reached!");
         }
     }
 
     @FXML
     public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0) {
-            notificationPrompt(true, "Make sure to fill out all fields!");
+            NotificationPromptController.notification(true, "Make sure to fill out all fields!");
             return;
         }
 
@@ -189,7 +188,7 @@ public class scheduleMakerController {
                 durationChoicebox.getSelectionModel().getSelectedItem(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
 
 
-        for (Artist a : artists) {
+        for (Artist a : ArtistArrayListController.artists) {
             if (!artistsListView.getItems().contains(a.getName())) {
                 artistsListView.getItems().add(a.getName());
             }
@@ -205,24 +204,24 @@ public class scheduleMakerController {
     @FXML
     public void onSaveFestivalButton() {
         if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            notificationPrompt(false, "Make sure to fill in all fields!");
+            NotificationPromptController.notification(false, "Make sure to fill in all fields!");
             return;
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
             if(visitorCount > 20) {
-                notificationPrompt(false, "Can't add more than 20 visitors!");
+                NotificationPromptController.notification(false, "Can't add more than 20 visitors!");
                 return;
             }
         } catch (Exception e) {
-            notificationPrompt(true, "Value in box Visitor Count is supposed to be a number!");
+            NotificationPromptController.notification(true, "Value in box Visitor Count is supposed to be a number!");
             return;
         }
         for (int i = 0; i < visitorCount; i++) {
             visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
         festivalName = festivalNameTextfield.getText();
-        notificationPrompt(false, "Successfully saved festival information :)");
+        NotificationPromptController.notification(false, "Successfully saved festival information :)");
     }
 
     @FXML
@@ -288,21 +287,6 @@ public class scheduleMakerController {
             thirdStar.setStyle("-fx-fill: white");
             fourthStar.setStyle("-fx-fill: white");
             fifthStar.setStyle("-fx-fill: white");
-        }
-    }
-
-    //OTHER
-    public void notificationPrompt(boolean error, String message) {
-        if (error) {
-            Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
-            alert1.setTitle("Error");
-            alert1.setHeaderText("Error");
-            alert1.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-            alert.setTitle("Information");
-            alert.setHeaderText("Information");
-            alert.showAndWait();
         }
     }
 }

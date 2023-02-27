@@ -23,15 +23,45 @@ public class Artist implements Serializable {
 //        this.songs = songs;
         this.genre = genre;
     }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "name='" + name + '\'' +
                 ", popularity=" + popularity +
+                ", setStartingTime='" + setStartingTime + '\'' +
+                ", setDurationInMinutes=" + setDurationInMinutes +
+                ", genre='" + genre + '\'' +
+                ", genreInEnum=" + genreInEnum +
+                ", podium='" + podium + '\'' +
                 '}';
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public String getSetStartingTime() {
+        return setStartingTime;
+    }
+
+    public int getSetDurationInMinutes() {
+        return setDurationInMinutes;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public Genre getGenreInEnum() {
+        return genreInEnum;
+    }
+
+    public String getPodium() {
+        return podium;
     }
 }

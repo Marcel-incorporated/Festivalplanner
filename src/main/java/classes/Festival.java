@@ -22,4 +22,8 @@ public class Festival implements Serializable {
                 ", artists=" + artists +
                 '}';
     }
+
+    public ArrayList<Artist> getArtists() {
+        return artists;
+    }
 }
