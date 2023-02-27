@@ -24,19 +24,6 @@ public class Artist implements Serializable {
         this.genre = genre;
     }
 
-    @Override
-    public String toString() {
-        return "Artist{" +
-                "name='" + name + '\'' +
-                ", popularity=" + popularity +
-                ", setStartingTime='" + setStartingTime + '\'' +
-                ", setDurationInMinutes=" + setDurationInMinutes +
-                ", genre='" + genre + '\'' +
-                ", genreInEnum=" + genreInEnum +
-                ", podium='" + podium + '\'' +
-                '}';
-    }
-
     public String getName() {
         return name;
     }
@@ -63,5 +50,37 @@ public class Artist implements Serializable {
 
     public String getPodium() {
         return podium;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setSetStartingTime(String setStartingTime) {
+        this.setStartingTime = setStartingTime;
+    }
+
+    public void setSetDurationInMinutes(int setDurationInMinutes) {
+        this.setDurationInMinutes = setDurationInMinutes;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setGenreInEnum(Genre genreInEnum) {
+        this.genreInEnum = genreInEnum;
+    }
+
+    public void setPodium(String podium) {
+        this.podium = podium;
+    }
+
+    public String toString() {
+        return name;
     }
 }

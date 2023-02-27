@@ -17,6 +17,7 @@ public class ScheduleController {
     private ScheduleMakerController scheduleMakerController = new ScheduleMakerController();
 
     private ArrayList<Rectangle2D> blocksToDraw = new ArrayList<>();
+    private ArrayList<String> artistNames = new ArrayList<>();
     private int xBlock = 0;
     private int yBlock = 0;
 
@@ -98,19 +99,23 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+200));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 15));
+                    artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+28));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 30));
+                    artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+42));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 45));
+                    artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+56));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 60));
+                    artistNames.add(artist.getName());
                 }
             }
 
@@ -159,19 +164,19 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+14));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 15));
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+28));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 30));
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+42));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 45));
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+56));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 60));
                 }
             }
 
@@ -220,19 +225,19 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+14));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 15));
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+28));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 30));
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+42));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 45));
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+56));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 60));
                 }
             }
 
@@ -281,25 +286,27 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+14));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 15));
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+28));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 30));
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+42));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 45));
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, yBlock+56));
+                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 60));
                 }
             }
         }
     }
 
     public void draw(FXGraphics2D graphics) {
+
+        graphics.setStroke(new BasicStroke(2));
 
         Color[] colors = {Color.red, Color.blue, Color.GREEN, Color.YELLOW};
 
@@ -309,6 +316,12 @@ public class ScheduleController {
 
             graphics.setPaint(colors[i]);
             graphics.fill(block);
+            if (i == 0 || i == 1) {
+                graphics.setPaint(Color.white);
+            } else {
+                graphics.setPaint(Color.black);
+            }
+            graphics.drawString(artistNames.get(blocksToDraw.indexOf(block)), (int) block.getX(), ((int) block.getY() + 10));
             i++;
 
             if (i == 4){
