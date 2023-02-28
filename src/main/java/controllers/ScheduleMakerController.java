@@ -6,12 +6,15 @@ import classes.Festival;
 import classes.Song;
 import classes.Visitor;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ScheduleMakerController {
 
@@ -40,7 +43,7 @@ public class ScheduleMakerController {
     @FXML
     private SVGPath fifthStar;
     @FXML
-    public ListView<String> artistsListView;
+    public ListView<Artist> artistsListView;
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
@@ -57,10 +60,10 @@ public class ScheduleMakerController {
     private String selectedStage;
 
 
-
     //SCHEDULE MAKER
     @FXML
     public void initialize() {
+
         startTimeChoicebox.getItems().addAll("10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00",
                 "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30",
                 "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00", "01:30", "02:00", "02:30");
@@ -72,14 +75,73 @@ public class ScheduleMakerController {
 
         stagePickerChoicebox.getItems().addAll("Main stage", "Stage 2", "Stage 3", "Stage 4");
         stagePickerChoicebox.setValue("Main stage");
+
+        //Code for editing and deleting artists
+        artistsListView.setCellFactory(lv -> {
+
+            ListCell<Artist> cell = new ListCell<>();
+
+            ContextMenu contextMenu = new ContextMenu();
+
+
+            MenuItem editItem = new MenuItem();
+            editItem.textProperty().bind(Bindings.format("Edit \"%s\"", cell.itemProperty()));
+            editItem.setOnAction(event -> {
+                Artist item = cell.getItem();
+
+                // code to edit item...
+                try {
+                    openArtistEditDialog(item);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            MenuItem deleteItem = new MenuItem();
+            deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty()));
+            deleteItem.setOnAction(event -> artistsListView.getItems().remove(cell.getItem()));
+            contextMenu.getItems().addAll(editItem, deleteItem);
+
+            if (!cell.itemProperty().toString().isEmpty()) {
+                cell.textProperty().bind(cell.itemProperty().asString());
+            }
+
+
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+            return cell;
+        });
+    }
+
+    private void openArtistEditDialog(Artist item) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/editArtistDialog.fxml"));
+        DialogPane editArtistDialogPane = fxmlLoader.load();
+
+        editArtistDialogController editArtistDialogController = fxmlLoader.getController();
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editArtistDialogPane);
+        dialog.setTitle("Edit artist");
+
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.get() == ButtonType.OK) {
+            editArtistDialogController.editArtist(item);
+            artistsListView.getItems().remove(item);
+            refreshList();
+        }
     }
 
     @FXML
     public void refreshList() {
 //        System.out.println(ArtistArrayListController.artists.size());
-        for (Artist a:ArtistArrayListController.artists) {
-            if (!artistsListView.getItems().contains(a.getName())) {
-                artistsListView.getItems().add(a.getName());
+        for (Artist a : ArtistArrayListController.artists) {
+            if (!artistsListView.getItems().contains(a)) {
+                artistsListView.getItems().add(a);
             }
         }
     }
@@ -169,7 +231,12 @@ public class ScheduleMakerController {
 
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
-            ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
+            if (duration.equals("120 minutes")) {
+                ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 3)), podiumName));
+            } else {
+                ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
+            }
+
         } else {
             NotificationPromptController.notification(true, "Maximum amount of artists reached!");
         }
@@ -189,8 +256,8 @@ public class ScheduleMakerController {
 
 
         for (Artist a : ArtistArrayListController.artists) {
-            if (!artistsListView.getItems().contains(a.getName())) {
-                artistsListView.getItems().add(a.getName());
+            if (!artistsListView.getItems().contains(a)) {
+                artistsListView.getItems().add(a);
             }
         }
         artistNameTextfield.clear();
@@ -209,7 +276,7 @@ public class ScheduleMakerController {
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
-            if(visitorCount > 20) {
+            if (visitorCount > 20) {
                 NotificationPromptController.notification(false, "Can't add more than 20 visitors!");
                 return;
             }

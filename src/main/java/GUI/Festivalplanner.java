@@ -14,6 +14,7 @@ public class Festivalplanner extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("Festivalplanner");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
