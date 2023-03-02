@@ -373,13 +373,7 @@ public class ScheduleController {
         for (Rectangle2D block : blocksToDraw) {
             graphics.setPaint(colors[i]);
             graphics.fill(block);
-
-            if (i == 0 || i == 1) {
-                graphics.setPaint(Color.white);
-            } else {
-                graphics.setPaint(Color.black);
-            }
-            graphics.drawString(artistNames.get(blocksToDraw.indexOf(block)), (int) block.getX(), ((int) block.getY() + 10));
+            
             i++;
 
             if (i == 4){
