@@ -13,6 +13,7 @@ import org.jfree.fx.FXGraphics2D;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ScheduleController {
 
@@ -25,6 +26,11 @@ public class ScheduleController {
 
     @FXML
     public Canvas canvasSchedule;
+
+    HashMap<Rectangle2D, Artist> blocksConnectedToArtist = new HashMap<Rectangle2D, Artist>();
+
+    ArrayList<Artist> allArtists = new ArrayList<>();
+
     @FXML
     void onImportButton() {
         Festival festivalObject = null;
@@ -36,7 +42,7 @@ public class ScheduleController {
             NotificationPromptController.notification(true, "Unable to import festival file :(");
         }
 
-        ArrayList<Artist> allArtists = festivalObject.getArtists();
+        allArtists = festivalObject.getArtists();
 //        System.out.println(allArtists.size());
         ArtistArrayListController.artists.addAll(allArtists);
 //        scheduleMakerController.refreshList();
@@ -101,22 +107,34 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 15));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 15);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                     artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 30));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 30);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                     artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 45));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 45);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                     artistNames.add(artist.getName());
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock + 1, yBlock, 98, 60));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 60);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                     artistNames.add(artist.getName());
                 }
             }
@@ -166,19 +184,31 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 15));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 15);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 30));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 30);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 45));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 45);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 60));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 60);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
             }
 
@@ -227,19 +257,31 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 15));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 15);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 30));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 30);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 45));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 45);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 100, 60));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 60);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
             }
 
@@ -288,19 +330,31 @@ public class ScheduleController {
                 }
 
                 if (artist.getSetDurationInMinutes() == 30){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 15));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 15);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 60){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 30));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 30);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 90){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 45));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 45);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
 
                 if (artist.getSetDurationInMinutes() == 120){
-                    blocksToDraw.add(new Rectangle2D.Double(xBlock, yBlock, 98, 60));
+                    Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 60);
+
+                    blocksConnectedToArtist.put(block, artist);
+                    blocksToDraw.add(block);
                 }
             }
         }
@@ -335,8 +389,11 @@ public class ScheduleController {
             if (block.contains(event.getX(), event.getY()))
             {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                // add info to alertbox
-                alert.setContentText("This is a confirmmation alert");
+
+                Artist artist = blocksConnectedToArtist.get(block);
+
+                alert.setContentText("Name: " + artist.getName() + "\n" + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" + "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
+
                 alert.showAndWait();
             }
         }
