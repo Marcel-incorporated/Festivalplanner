@@ -1,11 +1,13 @@
 package controllers;
 
 import classes.Artist;
+import classes.Block;
 import classes.Festival;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
@@ -310,22 +312,32 @@ public class ScheduleController {
 
         Color[] colors = {Color.red, Color.blue, Color.GREEN, Color.YELLOW};
 
+        canvasSchedule.setOnMousePressed(e -> mousePressed(e));
+
         int i = 0;
 
         for (Rectangle2D block : blocksToDraw) {
-
             graphics.setPaint(colors[i]);
             graphics.fill(block);
-            if (i == 0 || i == 1) {
-                graphics.setPaint(Color.white);
-            } else {
-                graphics.setPaint(Color.black);
-            }
-            graphics.drawString(artistNames.get(blocksToDraw.indexOf(block)), (int) block.getX(), ((int) block.getY() + 10));
+
             i++;
 
             if (i == 4){
                 i = 0;
+            }
+        }
+    }
+
+    private void mousePressed(MouseEvent event)
+    {
+        for (Rectangle2D block : blocksToDraw)
+        {
+            if (block.contains(event.getX(), event.getY()))
+            {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                // add info to alertbox
+                alert.setContentText("This is a confirmmation alert");
+                alert.showAndWait();
             }
         }
     }
