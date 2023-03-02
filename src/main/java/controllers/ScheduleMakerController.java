@@ -7,6 +7,7 @@ import classes.Song;
 import classes.Visitor;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -54,7 +55,6 @@ public class ScheduleMakerController {
     private int amountOfArtistsAdded = 0;
     private int visitorCount;
     private String festivalName;
-    public ArrayList<Artist> artists;
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
     private String selectedStage;
@@ -78,34 +78,22 @@ public class ScheduleMakerController {
 
         //Code for editing and deleting artists
         artistsListView.setCellFactory(lv -> {
-
             ListCell<Artist> cell = new ListCell<>();
 
             ContextMenu contextMenu = new ContextMenu();
-
 
             MenuItem editItem = new MenuItem();
             editItem.textProperty().bind(Bindings.format("Edit \"%s\"", cell.itemProperty()));
             editItem.setOnAction(event -> {
                 Artist item = cell.getItem();
-
                 // code to edit item...
-                try {
-                    openArtistEditDialog(item);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
             });
+
             MenuItem deleteItem = new MenuItem();
             deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty()));
             deleteItem.setOnAction(event -> artistsListView.getItems().remove(cell.getItem()));
+
             contextMenu.getItems().addAll(editItem, deleteItem);
-
-            if (!cell.itemProperty().toString().isEmpty()) {
-                cell.textProperty().bind(cell.itemProperty().asString());
-            }
-
 
             cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
                 if (isNowEmpty) {
@@ -114,8 +102,22 @@ public class ScheduleMakerController {
                     cell.setContextMenu(contextMenu);
                 }
             });
+
+            cell.textProperty().bind(new StringBinding() {
+                {
+                    bind(cell.itemProperty());
+                }
+
+                @Override
+                protected String computeValue() {
+                    Artist artist = cell.getItem();
+                    return artist == null ? "" : artist.toString();
+                }
+            });
+
             return cell;
         });
+
     }
 
     private void openArtistEditDialog(Artist item) throws IOException {
