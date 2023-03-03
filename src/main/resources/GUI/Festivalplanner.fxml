@@ -10,6 +10,9 @@
         <Tab fx:id="scheduleMakerTab" text="Schedule maker">
             <fx:include source="ScheduleMakerTab.fxml" />
         </Tab>
+        <Tab fx:id="mapTab" text="Map">
+            <fx:include source="MapTab.fxml" />
+        </Tab>
         <Tab fx:id="simulatorTab" text="Simulator">
             <fx:include source="SimulatorTab.fxml" />
         </Tab>
