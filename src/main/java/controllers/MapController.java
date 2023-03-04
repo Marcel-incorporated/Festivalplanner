@@ -37,7 +37,7 @@ public class MapController {
     }
 
     public void update(double deltaTime) {
-        System.out.println("updated");
+        // do nothing 'cause it's only a map view
     }
 
     public void draw(Graphics2D g) {
