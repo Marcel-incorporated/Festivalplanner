@@ -18,8 +18,6 @@ public class MapController {
     private Map map;
     @FXML
     public void initialize() throws FileNotFoundException {
-        System.out.println("map init");
-
         map = new Map("map.json");
 
         FXGraphics2D g2d = new FXGraphics2D(canvasMap.getGraphicsContext2D());
