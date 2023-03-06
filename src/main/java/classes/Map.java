@@ -14,12 +14,9 @@ import java.util.ArrayList;
 public class Map {
 	private int width;
 	private int height;
-
 	private int tileHeight;
 	private int tileWidth;
-
 	private ArrayList<BufferedImage> tiles = new ArrayList<>();
-
 	private int[][] map;
 
 	public Map(String fileName) throws FileNotFoundException {

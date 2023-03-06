@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Artist implements Serializable {
     private String name;
     private int popularity;
-//    private ArrayList<Song> songs = new ArrayList<>();
     private String setStartingTime;
     private int setDurationInMinutes;
     private String genre;
@@ -20,7 +19,6 @@ public class Artist implements Serializable {
         this.setDurationInMinutes = setDurationInMinutes;
         this.name = name;
         this.popularity = popularity;
-//        this.songs = songs;
         this.genre = genre;
     }
 

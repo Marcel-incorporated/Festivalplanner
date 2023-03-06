@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Festival implements Serializable {
     private ArrayList<Visitor> visitorList;
     private String name;
-    private ArrayList<Artist> artists = new ArrayList<>();
+    private ArrayList<Artist> artists;
 
     public Festival(ArrayList<Visitor> visitors, String name, ArrayList<Artist> artists) {
         this.visitorList = visitors;

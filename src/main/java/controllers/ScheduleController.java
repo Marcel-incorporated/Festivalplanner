@@ -1,9 +1,7 @@
 package controllers;
 
 import classes.Artist;
-import classes.Block;
 import classes.Festival;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
@@ -16,9 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ScheduleController {
-
-    private ScheduleMakerController scheduleMakerController = new ScheduleMakerController();
-
     private ArrayList<Rectangle2D> blocksToDraw = new ArrayList<>();
     private ArrayList<String> artistNames = new ArrayList<>();
     private int xBlock = 0;
@@ -38,22 +33,13 @@ public class ScheduleController {
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
             NotificationPromptController.notification(false, "Successfully import festival file :)");
+            allArtists = festivalObject.getArtists();
+            ArtistArrayListController.artists.addAll(allArtists);
+            calculateBlockToDraw(allArtists);
+            draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
         } catch (Exception e) {
             NotificationPromptController.notification(true, "Unable to import festival file :(");
         }
-
-        allArtists = festivalObject.getArtists();
-//        System.out.println(allArtists.size());
-        ArtistArrayListController.artists.addAll(allArtists);
-//        scheduleMakerController.refreshList();
-//        scheduleMakerController.setArtists(allArtists);
-//        System.out.println(ArtistArrayListController.artists.size());
-//        scheduleMakerController.artists.add
-//        scheduleMakerController.updateListView();
-
-        calculateBlockToDraw(allArtists);
-
-        draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
     }
 
     public void calculateBlockToDraw(ArrayList<Artist> allArtists) {

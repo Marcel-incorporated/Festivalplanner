@@ -3,8 +3,7 @@ package classes;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class Block extends Rectangle2D.Double
-{
+public class Block extends Rectangle2D.Double {
     private double width;
     private double height;
     private double x;
@@ -20,8 +19,7 @@ public class Block extends Rectangle2D.Double
         setRect(x, y, width, height);
     }
 
-    public void setPos(double x, double y)
-    {
+    public void setPos(double x, double y) {
         this.x = x;
         this.y = y;
         setRect(x, y, width, height);

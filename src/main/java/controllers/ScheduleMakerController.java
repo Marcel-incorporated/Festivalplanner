@@ -57,10 +57,7 @@ public class ScheduleMakerController {
     private String festivalName;
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
-    private String selectedStage;
 
-
-    //SCHEDULE MAKER
     @FXML
     public void initialize() {
 
@@ -140,7 +137,6 @@ public class ScheduleMakerController {
 
     @FXML
     public void refreshList() {
-//        System.out.println(ArtistArrayListController.artists.size());
         for (Artist a : ArtistArrayListController.artists) {
             if (!artistsListView.getItems().contains(a)) {
                 artistsListView.getItems().add(a);
@@ -152,7 +148,6 @@ public class ScheduleMakerController {
     void onExportButton() {
         Festival festival = new Festival(visitors, festivalName, ArtistArrayListController.artists);      //create festival object with all saved information from user
         System.out.println(ArtistArrayListController.artists);
-
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
             NotificationPromptController.notification(false, "Successfully exported festival file :)");
@@ -161,75 +156,7 @@ public class ScheduleMakerController {
         }
     }
 
-    public void noStarsClicked() {
-        popularity = 0;
 
-        firstStar.setStyle("-fx-fill: white");
-        secondStar.setStyle("-fx-fill: white");
-        thirdStar.setStyle("-fx-fill: white");
-        fourthStar.setStyle("-fx-fill: white");
-        fifthStar.setStyle("-fx-fill: white");
-    }
-
-    @FXML
-    public void onFirstStarClicked() {
-        popularity = 1;
-        popularitySelected = true;
-
-        firstStar.setStyle("-fx-fill: yellow");
-        secondStar.setStyle("-fx-fill: white");
-        thirdStar.setStyle("-fx-fill: white");
-        fourthStar.setStyle("-fx-fill: white");
-        fifthStar.setStyle("-fx-fill: white");
-    }
-
-    @FXML
-    public void onSecondStarClicked() {
-        popularity = 2;
-        popularitySelected = true;
-
-        firstStar.setStyle("-fx-fill: yellow");
-        secondStar.setStyle("-fx-fill: yellow");
-        thirdStar.setStyle("-fx-fill: white");
-        fourthStar.setStyle("-fx-fill: white");
-        fifthStar.setStyle("-fx-fill: white");
-    }
-
-    @FXML
-    public void onThirdStarClicked() {
-        popularity = 3;
-        popularitySelected = true;
-
-        firstStar.setStyle("-fx-fill: yellow");
-        secondStar.setStyle("-fx-fill: yellow");
-        thirdStar.setStyle("-fx-fill: yellow");
-        fourthStar.setStyle("-fx-fill: white");
-        fifthStar.setStyle("-fx-fill: white");
-    }
-
-    @FXML
-    public void onFourthStarClicked() {
-        popularity = 4;
-        popularitySelected = true;
-
-        firstStar.setStyle("-fx-fill: yellow");
-        secondStar.setStyle("-fx-fill: yellow");
-        thirdStar.setStyle("-fx-fill: yellow");
-        fourthStar.setStyle("-fx-fill: yellow");
-        fifthStar.setStyle("-fx-fill: white");
-    }
-
-    @FXML
-    public void onFifthStarClicked() {
-        popularity = 5;
-        popularitySelected = true;
-
-        firstStar.setStyle("-fx-fill: yellow");
-        secondStar.setStyle("-fx-fill: yellow");
-        thirdStar.setStyle("-fx-fill: yellow");
-        fourthStar.setStyle("-fx-fill: yellow");
-        fifthStar.setStyle("-fx-fill: yellow");
-    }
 
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
@@ -238,7 +165,6 @@ public class ScheduleMakerController {
             } else {
                 ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
             }
-
         } else {
             NotificationPromptController.notification(true, "Maximum amount of artists reached!");
         }
@@ -250,13 +176,9 @@ public class ScheduleMakerController {
             NotificationPromptController.notification(true, "Make sure to fill out all fields!");
             return;
         }
-
         amountOfArtistsAdded++;
-
         addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startTimeChoicebox.getSelectionModel().getSelectedItem(),
                 durationChoicebox.getSelectionModel().getSelectedItem(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
-
-
         for (Artist a : ArtistArrayListController.artists) {
             if (!artistsListView.getItems().contains(a)) {
                 artistsListView.getItems().add(a);
@@ -357,5 +279,75 @@ public class ScheduleMakerController {
             fourthStar.setStyle("-fx-fill: white");
             fifthStar.setStyle("-fx-fill: white");
         }
+    }
+
+    public void noStarsClicked() {
+        popularity = 0;
+
+        firstStar.setStyle("-fx-fill: white");
+        secondStar.setStyle("-fx-fill: white");
+        thirdStar.setStyle("-fx-fill: white");
+        fourthStar.setStyle("-fx-fill: white");
+        fifthStar.setStyle("-fx-fill: white");
+    }
+
+    @FXML
+    public void onFirstStarClicked() {
+        popularity = 1;
+        popularitySelected = true;
+
+        firstStar.setStyle("-fx-fill: yellow");
+        secondStar.setStyle("-fx-fill: white");
+        thirdStar.setStyle("-fx-fill: white");
+        fourthStar.setStyle("-fx-fill: white");
+        fifthStar.setStyle("-fx-fill: white");
+    }
+
+    @FXML
+    public void onSecondStarClicked() {
+        popularity = 2;
+        popularitySelected = true;
+
+        firstStar.setStyle("-fx-fill: yellow");
+        secondStar.setStyle("-fx-fill: yellow");
+        thirdStar.setStyle("-fx-fill: white");
+        fourthStar.setStyle("-fx-fill: white");
+        fifthStar.setStyle("-fx-fill: white");
+    }
+
+    @FXML
+    public void onThirdStarClicked() {
+        popularity = 3;
+        popularitySelected = true;
+
+        firstStar.setStyle("-fx-fill: yellow");
+        secondStar.setStyle("-fx-fill: yellow");
+        thirdStar.setStyle("-fx-fill: yellow");
+        fourthStar.setStyle("-fx-fill: white");
+        fifthStar.setStyle("-fx-fill: white");
+    }
+
+    @FXML
+    public void onFourthStarClicked() {
+        popularity = 4;
+        popularitySelected = true;
+
+        firstStar.setStyle("-fx-fill: yellow");
+        secondStar.setStyle("-fx-fill: yellow");
+        thirdStar.setStyle("-fx-fill: yellow");
+        fourthStar.setStyle("-fx-fill: yellow");
+        fifthStar.setStyle("-fx-fill: white");
+    }
+
+    @FXML
+    public void onFifthStarClicked() {
+        popularity = 5;
+        popularitySelected = true;
+
+        firstStar.setStyle("-fx-fill: yellow");
+        secondStar.setStyle("-fx-fill: yellow");
+        thirdStar.setStyle("-fx-fill: yellow");
+        fourthStar.setStyle("-fx-fill: yellow");
+        fifthStar.setStyle("-fx-fill: yellow");
     }
 }

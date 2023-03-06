@@ -11,39 +11,27 @@ import javafx.scene.shape.SVGPath;
 import java.util.Optional;
 
 public class editArtistDialogController {
-
     @FXML
     private TextField artistNameTextfield;
-
     @FXML
     private ChoiceBox<String> durationChoicebox;
-
     @FXML
     private SVGPath fifthStar;
-
     @FXML
     private SVGPath firstStar;
-
     @FXML
     private SVGPath fourthStar;
-
     @FXML
     private TextField genreTextfield;
-
     @FXML
     private SVGPath secondStar;
-
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
-
     @FXML
     private ChoiceBox<String> startTimeChoicebox;
-
     @FXML
     private SVGPath thirdStar;
-
     private Artist artist;
-
     private int popularity = 0;
     private boolean popularitySelected = false;
 

@@ -10,8 +10,6 @@ public class Visitor implements Serializable {
     private String gender;
     private String email;
 
-    private List<Visitor> visitorList;
-
     public Visitor() {
         Faker faker = new Faker();
         this.name = faker.name().firstName() + " " + faker.name().lastName();

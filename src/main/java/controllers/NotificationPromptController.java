@@ -3,7 +3,6 @@ package controllers;
 import javafx.scene.control.Alert;
 
 public class NotificationPromptController {
-
     public static void notification(boolean error, String message) {
         if (error) {
             Alert alert1 = new Alert(Alert.AlertType.ERROR, message);
