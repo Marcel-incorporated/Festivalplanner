@@ -39,8 +39,6 @@ public class MapController {
     }
 
     public void draw(Graphics2D g) {
-        g.setBackground(Color.black);
-        g.clearRect(0,0,(int)canvasMap.getWidth(), (int)canvasMap.getHeight());
         map.draw(g);
     }
 }
