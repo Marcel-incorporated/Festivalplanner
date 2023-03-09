@@ -11,6 +11,6 @@
       <Button layoutX="845.0" layoutY="535.0" mnemonicParsing="false" onAction="#onStopButton" text="Stop" />
       <Button layoutX="845.0" layoutY="510.0" mnemonicParsing="false" onAction="#onStartButton" text="Start" />
       <Label id="statusLabel" fx:id="statusLabel" layoutX="755.0" layoutY="514.0" prefHeight="17.0" prefWidth="88.0" text="Status: stopped" textFill="#0d0d0d" />
-      <Label fx:id="timeLabel" layoutX="796.0" layoutY="539.0" prefHeight="17.0" prefWidth="41.0" />
+      <Label fx:id="timeLabel" layoutX="796.0" layoutY="539.0" prefHeight="17.0" prefWidth="41.0" text="10:00" />
    </children>
 </AnchorPane>

@@ -10,22 +10,22 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import javafx.scene.control.Label;
 
-public class SimulatorController {
+public class SimulatorController extends Thread implements Runnable  {
 
     @FXML
     public Canvas simMap;
     @FXML
     public Canvas timerCanvas;
     @FXML
-    private Label statusLabel;
+    private Label statusLabel = new Label();
     @FXML
     private Label timeLabel;
-
+    private AnimationTimer animationTimer;
+    private double timer;
     private Map map;
-    private int minutes;
-    private int hours;
-    private boolean run;
-    private boolean updateTime = true;
+    private int minutes = 00;
+    private int hours = 10;
+    private boolean execute = false;
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -33,51 +33,65 @@ public class SimulatorController {
 
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
         draw(g2d);
-        new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             long last = -1;
             @Override
             public void handle(long now) {
                 if(last == -1)
                     last = now;
-                update((now - last) / 1000000000.0);
+                double deltaTime = (now-last) /1000000000.0;
+                update(deltaTime);
                 last = now;
             }
-        }.start();
-
+        };
     }
 
     public void update(double deltaTime) {
-//        System.out.println("update sim");
-        if(run && updateTime) {
+        timer += deltaTime;
+        if(timer > 1) {
+            timer = 0;
             updateTime();
-            updateTime = false;
         }
     }
 
     public void draw(Graphics2D g) {
         map.draw(g);
         Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
-
     }
 
     private void updateTime() {
-        if(run) {
-            statusLabel.setText("Status: started");
+            if(minutes == 59) {
+                minutes = 00;
+                if(hours == 23) {
+                    hours = 00;
+                } else {
+                    hours++;
+                }
+                if(hours == 3) {
+                    animationTimer.stop();
+                    statusLabel.setText("Status: stopped");
+                    hours = 10;
+                    minutes = 0;
+                } else {
+                }
+            } else {
+                minutes++;
+            }
             timeLabel.setText("" + hours + ":" + minutes);
         }
-        else {
-            statusLabel.setText("Status: stopped");
 
-        }
-    }
 
     @FXML
     public void onStartButton() {
-        run = true;
+        execute = true;
+        animationTimer.start();
+        statusLabel.setText("Status: started");
     }
 
     @FXML
     public void onStopButton() {
-        run = false;
+        execute = false;
+        animationTimer.stop();
+        statusLabel.setText("Status: stopped");
     }
 }
