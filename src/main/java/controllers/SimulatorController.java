@@ -27,13 +27,24 @@ public class SimulatorController extends Thread implements Runnable  {
     private int hours = 10;
     private boolean execute = false;
 
+    public Canvas bottom;
+    private Map bottomMap;
+
     @FXML
     public void initialize() throws FileNotFoundException {
         map = new Map("map.json");
+        bottomMap = new Map("bottom.json");
 
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
         draw(g2d);
-        animationTimer = new AnimationTimer() {
+        animationTimer = new AnimationTimer();
+
+        FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
+
+        drawMap(g2d);
+        drawBottom(bottomDrawer);
+
+        new AnimationTimer() {
             long last = -1;
             @Override
             public void handle(long now) {
@@ -52,9 +63,11 @@ public class SimulatorController extends Thread implements Runnable  {
             timer = 0;
             updateTime();
         }
+
     }
 
-    public void draw(Graphics2D g) {
+
+    public void drawMap(Graphics2D g) {
         map.draw(g);
         Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
@@ -88,10 +101,26 @@ public class SimulatorController extends Thread implements Runnable  {
         statusLabel.setText("Status: started");
     }
 
+    private void updateTime() {
+        if(run) {
+            statusLabel.setText("Status: started");
+            timeLabel.setText("" + hours + ":" + minutes);
+        }
+        else {
+            statusLabel.setText("Status: stopped");
+
+        }
+    }
+
+
     @FXML
     public void onStopButton() {
         execute = false;
         animationTimer.stop();
         statusLabel.setText("Status: stopped");
+    }
+    
+    public void drawBottom(Graphics2D g) {
+        bottomMap.draw(g);
     }
 }
