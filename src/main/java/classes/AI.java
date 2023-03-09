@@ -11,6 +11,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AI {
@@ -24,6 +25,7 @@ public class AI {
     private int tileWidth;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
     private BufferedImage image;
+
 
     public AI(Point2D position) throws FileNotFoundException {
         this.position = position;
