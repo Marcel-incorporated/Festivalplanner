@@ -5,6 +5,7 @@
 
 <AnchorPane prefHeight="571.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SimulatorController">
    <children>
+      <Canvas id="bottom" fx:id="bottom" height="560.0" layoutX="2.0" layoutY="5.0" width="896.0" />
       <Canvas id="simMap" fx:id="simMap" height="560.0" layoutX="2.0" layoutY="5.0" width="896.0" />
    </children>
 </AnchorPane>

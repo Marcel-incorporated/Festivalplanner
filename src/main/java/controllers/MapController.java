@@ -15,12 +15,22 @@ public class MapController {
     @FXML
     public Canvas canvasMap;
 
+    @FXML
+    public Canvas bottom;
+
     private Map map;
+    private Map bottomMap;
     @FXML
     public void initialize() throws FileNotFoundException {
         map = new Map("map.json");
+        bottomMap = new Map("bottom.json");
 
         FXGraphics2D g2d = new FXGraphics2D(canvasMap.getGraphicsContext2D());
+        FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
+
+        drawMap(g2d);
+        drawBottom(bottomDrawer);
+
         new AnimationTimer() {
             long last = -1;
             @Override
@@ -29,7 +39,6 @@ public class MapController {
                     last = now;
                 update((now - last) / 1000000000.0);
                 last = now;
-                draw(g2d);
             }
         }.start();
     }
@@ -38,7 +47,10 @@ public class MapController {
         // do nothing 'cause it's only a map view
     }
 
-    public void draw(Graphics2D g) {
+    public void drawMap(Graphics2D g) {
         map.draw(g);
+    }
+    public void drawBottom(Graphics2D g) {
+        bottomMap.draw(g);
     }
 }
