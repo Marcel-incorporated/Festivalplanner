@@ -36,15 +36,13 @@ public class SimulatorController extends Thread implements Runnable  {
         bottomMap = new Map("bottom.json");
 
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
-        draw(g2d);
-        animationTimer = new AnimationTimer();
 
         FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
 
         drawMap(g2d);
         drawBottom(bottomDrawer);
 
-        new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             long last = -1;
             @Override
             public void handle(long now) {
@@ -99,17 +97,6 @@ public class SimulatorController extends Thread implements Runnable  {
         execute = true;
         animationTimer.start();
         statusLabel.setText("Status: started");
-    }
-
-    private void updateTime() {
-        if(run) {
-            statusLabel.setText("Status: started");
-            timeLabel.setText("" + hours + ":" + minutes);
-        }
-        else {
-            statusLabel.setText("Status: stopped");
-
-        }
     }
 
 
