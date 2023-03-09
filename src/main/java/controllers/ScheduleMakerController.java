@@ -62,6 +62,7 @@ public class ScheduleMakerController {
 
     //SCHEDULE MAKER
     @FXML
+
     public void initialize() {
 
         startTimeChoicebox.getItems().addAll("10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00",
@@ -96,7 +97,8 @@ public class ScheduleMakerController {
 
             MenuItem deleteItem = new MenuItem();
             deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty()));
-            deleteItem.setOnAction(event -> artistsListView.getItems().remove(cell.getItem()));
+            deleteItem.setOnAction(event -> deleteArtist(cell.getItem(), cell));
+
 
             contextMenu.getItems().addAll(editItem, deleteItem);
 
@@ -123,6 +125,11 @@ public class ScheduleMakerController {
             return cell;
         });
 
+    }
+
+    private void deleteArtist(Artist artist, Cell<Artist> cell) {
+        artistsListView.getItems().remove(cell.getItem());
+        ArtistArrayListController.artists.remove(artist);
     }
 
     private void openArtistEditDialog(Artist item) throws IOException {
