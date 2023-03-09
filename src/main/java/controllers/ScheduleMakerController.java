@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -146,12 +147,12 @@ public class ScheduleMakerController {
         if (clickedButton.get() == ButtonType.OK) {
             editArtistDialogController.editArtist(item);
             artistsListView.getItems().remove(item);
-            refreshList();
+            onRefreshListButton();
         }
     }
 
     @FXML
-    public void refreshList() {
+    public void onRefreshListButton() {
 //        System.out.println(ArtistArrayListController.artists.size());
         for (Artist a : ArtistArrayListController.artists) {
             if (!artistsListView.getItems().contains(a)) {
@@ -163,7 +164,6 @@ public class ScheduleMakerController {
     @FXML
     void onExportButton() {
         Festival festival = new Festival(visitors, festivalName, ArtistArrayListController.artists);      //create festival object with all saved information from user
-        System.out.println(ArtistArrayListController.artists);
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
@@ -285,13 +285,13 @@ public class ScheduleMakerController {
     @FXML
     public void onSaveFestivalButton() {
         if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            NotificationPromptController.notification(false, "Make sure to fill in all fields!");
+            NotificationPromptController.notification(true, "Make sure to fill in all fields!");
             return;
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
             if (visitorCount > 20) {
-                NotificationPromptController.notification(false, "Can't add more than 20 visitors!");
+                NotificationPromptController.notification(true, "Can't add more than 20 visitors!");
                 return;
             }
         } catch (Exception e) {

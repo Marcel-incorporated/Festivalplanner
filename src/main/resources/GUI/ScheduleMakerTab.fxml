@@ -49,7 +49,7 @@
         <Label layoutX="355.0" layoutY="107.0" text="Popularity" />
       <ChoiceBox fx:id="startTimeChoicebox" layoutX="522.0" layoutY="39.0" prefHeight="25.0" prefWidth="90.0" />
       <ChoiceBox fx:id="durationChoicebox" layoutX="522.0" layoutY="79.0" prefHeight="25.0" prefWidth="90.0" />
-      <Button layoutX="830.0" layoutY="424.0" mnemonicParsing="false" onAction="#refreshList" text="Refresh" />
+      <Button layoutX="830.0" layoutY="424.0" mnemonicParsing="false" onAction="#onRefreshListButton" text="Refresh" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
