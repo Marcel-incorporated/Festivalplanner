@@ -87,6 +87,11 @@ public class ScheduleMakerController {
             editItem.setOnAction(event -> {
                 Artist item = cell.getItem();
                 // code to edit item...
+                try {
+                    openArtistEditDialog(item);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
             MenuItem deleteItem = new MenuItem();
