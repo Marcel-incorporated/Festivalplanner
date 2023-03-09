@@ -16,14 +16,19 @@ public class Serializer {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Choose a directory to save file");
         File selectedDirectory = directoryChooser.showDialog(stage);
-        File dir = new File(selectedDirectory.getAbsolutePath());
-        FileOutputStream fos = new FileOutputStream(dir + "/planning.txt");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(festival);
+        try {
+            File dir = new File(selectedDirectory.getAbsolutePath());
+            FileOutputStream fos = new FileOutputStream(dir + "/planning.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(festival);
 
-        if (oos != null) {
-            oos.close();
+            if (oos != null) {
+                oos.close();
+            }
+        } catch (Exception e) {
+            throw new IOException();
         }
+
     }
 
     public static Festival DeserializeFestival() throws IOException, ClassNotFoundException {

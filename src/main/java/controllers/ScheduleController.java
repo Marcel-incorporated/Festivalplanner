@@ -38,22 +38,13 @@ public class ScheduleController {
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
             NotificationPromptController.notification(false, "Successfully import festival file :)");
+            allArtists = festivalObject.getArtists();
+            ArtistArrayListController.artists.addAll(allArtists);
+            calculateBlockToDraw(allArtists);
+            draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
         } catch (Exception e) {
             NotificationPromptController.notification(true, "Unable to import festival file :(");
         }
-
-        allArtists = festivalObject.getArtists();
-//        System.out.println(allArtists.size());
-        ArtistArrayListController.artists.addAll(allArtists);
-//        scheduleMakerController.refreshList();
-//        scheduleMakerController.setArtists(allArtists);
-//        System.out.println(ArtistArrayListController.artists.size());
-//        scheduleMakerController.artists.add
-//        scheduleMakerController.updateListView();
-
-        calculateBlockToDraw(allArtists);
-
-        draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
     }
 
     public void calculateBlockToDraw(ArrayList<Artist> allArtists) {
