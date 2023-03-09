@@ -8,14 +8,26 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import javafx.scene.control.Label;
 
-public class SimulatorController {
+public class SimulatorController extends Thread implements Runnable  {
 
     @FXML
     public Canvas simMap;
     @FXML
-    public Canvas bottom;
+    public Canvas timerCanvas;
+    @FXML
+    private Label statusLabel = new Label();
+    @FXML
+    private Label timeLabel;
+    private AnimationTimer animationTimer;
+    private double timer;
     private Map map;
+    private int minutes = 00;
+    private int hours = 10;
+    private boolean execute = false;
+
+    public Canvas bottom;
     private Map bottomMap;
 
     @FXML
@@ -24,6 +36,9 @@ public class SimulatorController {
         bottomMap = new Map("bottom.json");
 
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
+        draw(g2d);
+        animationTimer = new AnimationTimer();
+
         FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
 
         drawMap(g2d);
@@ -35,19 +50,76 @@ public class SimulatorController {
             public void handle(long now) {
                 if(last == -1)
                     last = now;
-                update((now - last) / 1000000000.0);
+                double deltaTime = (now-last) /1000000000.0;
+                update(deltaTime);
                 last = now;
             }
-        }.start();
+        };
     }
 
     public void update(double deltaTime) {
-        System.out.println("update sim");
+        timer += deltaTime;
+        if(timer > 1) {
+            timer = 0;
+            updateTime();
+        }
+
     }
+
 
     public void drawMap(Graphics2D g) {
         map.draw(g);
+        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
+
+    private void updateTime() {
+            if(minutes == 59) {
+                minutes = 00;
+                if(hours == 23) {
+                    hours = 00;
+                } else {
+                    hours++;
+                }
+                if(hours == 3) {
+                    animationTimer.stop();
+                    statusLabel.setText("Status: stopped");
+                    hours = 10;
+                    minutes = 0;
+                } else {
+                }
+            } else {
+                minutes++;
+            }
+            timeLabel.setText("" + hours + ":" + minutes);
+        }
+
+
+    @FXML
+    public void onStartButton() {
+        execute = true;
+        animationTimer.start();
+        statusLabel.setText("Status: started");
+    }
+
+    private void updateTime() {
+        if(run) {
+            statusLabel.setText("Status: started");
+            timeLabel.setText("" + hours + ":" + minutes);
+        }
+        else {
+            statusLabel.setText("Status: stopped");
+
+        }
+    }
+
+
+    @FXML
+    public void onStopButton() {
+        execute = false;
+        animationTimer.stop();
+        statusLabel.setText("Status: stopped");
+    }
+    
     public void drawBottom(Graphics2D g) {
         bottomMap.draw(g);
     }
