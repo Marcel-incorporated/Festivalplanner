@@ -75,11 +75,8 @@ public class Map {
 					continue;
 
 				g2d.drawImage(
-					tiles.get(map[y][x]),
-					AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight),
-					null);
+					tiles.get(map[y][x]-1), AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight), null);
 			}
 		}
 	}
-
 }
