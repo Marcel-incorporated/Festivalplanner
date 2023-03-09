@@ -2,15 +2,13 @@ package classes;
 
 import javax.imageio.ImageIO;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Map {
@@ -37,14 +35,23 @@ public class Map {
 
 		//load the tilemap
 		try {
-			BufferedImage tilemap = ImageIO.read(getClass().getClassLoader().getResourceAsStream(root.getJsonObject("tilemap").getString("file")));
+			// Get the tileset JSON object
+			JsonArray tilesets = root.getJsonArray("tilesets");
+			JsonObject tileset = tilesets.getJsonObject(0);
 
-			tileHeight = root.getJsonObject("tilemap").getJsonObject("tile").getInt("height");
-			tileWidth = root.getJsonObject("tilemap").getJsonObject("tile").getInt("width");
+			// Get the file name of the tilemap
+			String fileNameTileMap = tileset.getString("image");
 
-			for(int y = 0; y < tilemap.getHeight(); y += tileHeight) {
-				for(int x = 0; x < tilemap.getWidth(); x += tileWidth) {
-					tiles.add(tilemap.getSubimage(x, y, tileWidth, tileHeight));
+			// Load the tilemap image
+			InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileNameTileMap);
+			BufferedImage tilemapImage = ImageIO.read(inputStream);
+
+			tileHeight = tileset.getInt("tileheight");
+			tileWidth = tileset.getInt("tilewidth");
+
+			for(int y = 0; y < tilemapImage.getHeight(); y += tileHeight) {
+				for(int x = 0; x < tilemapImage.getWidth(); x += tileWidth) {
+					tiles.add(tilemapImage.getSubimage(x, y, tileWidth, tileHeight));
 				}
 			}
 		} catch (IOException e) {
@@ -52,9 +59,11 @@ public class Map {
 		}
 
 		map = new int[height][width];
-		for(int y = 0; y < height; y++) {
-			for(int x = 0; x < width; x++) {
-				map[y][x] = root.getJsonArray("map").getJsonArray(y).getInt(x);
+		JsonArray layers = root.getJsonArray("layers");
+		JsonArray data = layers.getJsonObject(0).getJsonArray("data");
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				map[y][x] = data.getInt(y * width + x);
 			}
 		}
 	}
@@ -66,11 +75,8 @@ public class Map {
 					continue;
 
 				g2d.drawImage(
-					tiles.get(map[y][x]),
-					AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight),
-					null);
+					tiles.get(map[y][x]-1), AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight), null);
 			}
 		}
 	}
-
 }
