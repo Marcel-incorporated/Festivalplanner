@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ScheduleController">
+    <children>
+        <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
+            <image>
+                <Image url="@images/scheduleBackground.png" />
+            </image>
+        </ImageView>
+      <Canvas id="canvasSchedule" fx:id="canvasSchedule" height="529.0" layoutX="93.0" layoutY="36.0" width="799.0" />
+        <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutX="6.0" layoutY="6.0" maxHeight="28.0" maxWidth="87.0" mnemonicParsing="false" onAction="#onImportButton" prefHeight="22.0" prefWidth="87.0" style="-fx-background-color: #ECE6DB;">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/importButton.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+<!--        <ListView><fx:include source="ScheduleTab.fxml"/></ListView>-->
+    </children>
+</AnchorPane>

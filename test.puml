@@ -1,0 +1,251 @@
+@startuml
+class controllers.Serializer {
+- Desktop desktop
++ {static} void Serialize(Festival)
++ {static} Festival DeserializeFestival()
+}
+class classes.Festival {
+- ArrayList<Visitor> visitorList
+- String name
+- ArrayList<Artist> artists
++ <<Create>> Festival(ArrayList<Visitor>,String,ArrayList<Artist>)
++ String toString()
++ ArrayList<Artist> getArtists()
+}
+class classes.Block {
+- double width
+- double height
+- double x
+- double y
+- Color color
++ <<Create>> Block(double,double,double,double,Color)
++ void setPos(double,double)
++ void changeSizeOfBlock(double,double)
++ Color getColor()
++ void setColor(Color)
++ String toString()
+}
+class controllers.ScheduleMakerController {
++ Button saveFestival
++ Button addArtistButton
++ TextField amountOfVisitorsTextfield
++ TextField festivalNameTextfield
++ ChoiceBox<String> startTimeChoicebox
++ ChoiceBox<String> durationChoicebox
+- TextField artistNameTextfield
+- TextField genreTextfield
+- SVGPath firstStar
+- SVGPath secondStar
+- SVGPath thirdStar
+- SVGPath fourthStar
+- SVGPath fifthStar
++ ListView<Artist> artistsListView
+- ChoiceBox<String> stagePickerChoicebox
+- int popularity
+- boolean popularitySelected
+- int amountOfArtistsAdded
+- int visitorCount
+- String festivalName
+- ArrayList<Visitor> visitors
+- ArrayList<Song> songs
+- String selectedStage
++ void initialize()
+- void openArtistEditDialog(Artist)
++ void refreshList()
+~ void onExportButton()
++ void noStarsClicked()
++ void onFirstStarClicked()
++ void onSecondStarClicked()
++ void onThirdStarClicked()
++ void onFourthStarClicked()
++ void onFifthStarClicked()
+- void addArtistToList(String,String,int,String,String,String)
++ void onAddArtistButton()
++ void onSaveFestivalButton()
++ void onHoverOverFirstStar()
++ void onHoverOverSecondStar()
++ void onHoverOverThirdStar()
++ void onHoverOverFourthStar()
++ void onHoverOverFifthStar()
++ void onMouseNotOnStars()
+}
+class classes.Song {
+- String name
+- int length
+- String genre
+- int id
++ <<Create>> Song(String,int,String,int)
++ String toString()
+}
+enum classes.Genre {
++  POP
++  ROCK
++  METAL
++  HIPHOP
++  JAZZ
++  EDM
++  COUNTRY
++  CLASSICAL
+}
+class GUI.Festivalplanner {
++ void start(Stage)
++ {static} void main(String[])
+}
+class controllers.MapController {
++ Canvas canvasMap
++ Canvas bottom
+- Map map
+- Map bottomMap
++ void initialize()
++ void update(double)
++ void drawMap(Graphics2D)
++ void drawBottom(Graphics2D)
+}
+class controllers.FestivalplannerController {
++ Tab scheduleTab
++ Tab simulatorTab
++ Tab scheduleMakerTab
++ Tab mapTab
+}
+class controllers.editArtistDialogController {
+- TextField artistNameTextfield
+- ChoiceBox<String> durationChoicebox
+- SVGPath fifthStar
+- SVGPath firstStar
+- SVGPath fourthStar
+- TextField genreTextfield
+- SVGPath secondStar
+- ChoiceBox<String> stagePickerChoicebox
+- ChoiceBox<String> startTimeChoicebox
+- SVGPath thirdStar
+- Artist artist
+- int popularity
+- boolean popularitySelected
+~ void initialize()
+~ void editArtist(Artist)
++ void onHoverOverFirstStar()
++ void onHoverOverSecondStar()
++ void onHoverOverThirdStar()
++ void onHoverOverFourthStar()
++ void onHoverOverFifthStar()
++ void onMouseNotOnStars()
++ void noStarsClicked()
++ void onFirstStarClicked()
++ void onSecondStarClicked()
++ void onThirdStarClicked()
++ void onFourthStarClicked()
++ void onFifthStarClicked()
+}
+class controllers.ScheduleController {
+- ScheduleMakerController scheduleMakerController
+- ArrayList<Rectangle2D> blocksToDraw
+- ArrayList<String> artistNames
+- int xBlock
+- int yBlock
++ Canvas canvasSchedule
+~ HashMap<Rectangle2D,Artist> blocksConnectedToArtist
+~ ArrayList<Artist> allArtists
+~ void onImportButton()
++ void calculateBlockToDraw(ArrayList<Artist>)
++ void draw(FXGraphics2D)
+- void mousePressed(MouseEvent)
+}
+class classes.AI {
+- Point2D position
+- double speed
+- Point2D target
+- int width
+- int height
+- int tileHeight
+- int tileWidth
+- ArrayList<BufferedImage> tiles
+- BufferedImage image
++ <<Create>> AI(Point2D)
++ void draw(Graphics2D)
++ void update(ArrayList<AI>)
++ void setTarget(Point2D)
++ Point2D getPosition()
+}
+class classes.Map {
+- int width
+- int height
+- int tileHeight
+- int tileWidth
+- ArrayList<BufferedImage> tiles
+- int[][] map
++ <<Create>> Map(String)
++ void draw(Graphics2D)
+}
+class classes.Artist {
+- String name
+- int popularity
+- String setStartingTime
+- int setDurationInMinutes
+- String genre
+- Genre genreInEnum
+- String podium
++ <<Create>> Artist(String,String,int,String,int,String)
++ String getName()
++ int getPopularity()
++ String getSetStartingTime()
++ int getSetDurationInMinutes()
++ String getGenre()
++ Genre getGenreInEnum()
++ String getPodium()
++ void setName(String)
++ void setPopularity(int)
++ void setSetStartingTime(String)
++ void setSetDurationInMinutes(int)
++ void setGenre(String)
++ void setGenreInEnum(Genre)
++ void setPodium(String)
++ String toString()
+}
+class controllers.NotificationPromptController {
++ {static} void notification(boolean,String)
+}
+class controllers.ArtistArrayListController {
++ {static} ArrayList<Artist> artists
+}
+class controllers.SimulatorController {
++ Canvas simMap
++ Canvas timerCanvas
+- Label statusLabel
+- Label timeLabel
+- AnimationTimer animationTimer
+- double timer
+- Map map
+- int minutes
+- int hours
+- boolean execute
++ Canvas bottom
+- Map bottomMap
+- ArrayList<AI> ais
++ void initialize()
++ void update(double)
++ void drawMap(Graphics2D)
+- void updateTime()
++ void onStartButton()
++ void onStopButton()
++ void drawBottom(Graphics2D)
+}
+class classes.Visitor {
+- String name
+- int age
+- String gender
+- String email
+- List<Visitor> visitorList
++ <<Create>> Visitor()
++ String toString()
+}
+
+
+java.io.Serializable <|.. classes.Festival
+classes.Double <|-- classes.Block
+java.io.Serializable <|.. classes.Song
+javafx.application.Application <|-- GUI.Festivalplanner
+java.io.Serializable <|.. classes.Artist
+controllers.Runnable <|.. controllers.SimulatorController
+controllers.Thread <|-- controllers.SimulatorController
+java.io.Serializable <|.. classes.Visitor
+@enduml
