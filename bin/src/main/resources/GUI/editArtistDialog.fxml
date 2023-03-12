@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
+
+<DialogPane prefWidth="289.0" style="-fx-background-color: dd9e8d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.editArtistDialogController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="289.0" style="-fx-background-color: dd9e8d;">
+         <children>
+            <TextField fx:id="artistNameTextfield" layoutX="18.0" layoutY="27.0" prefHeight="25.0" prefWidth="161.0" promptText="Artist Name" />
+            <TextField fx:id="genreTextfield" layoutX="18.0" layoutY="65.0" prefHeight="25.0" prefWidth="161.0" promptText="Genre" />
+            <ChoiceBox fx:id="startTimeChoicebox" layoutX="191.0" layoutY="27.0" prefHeight="25.0" prefWidth="90.0" />
+            <ChoiceBox fx:id="durationChoicebox" layoutX="191.0" layoutY="65.0" prefHeight="25.0" prefWidth="90.0" />
+            <Label layoutX="191.0" layoutY="13.0" text="Start time" />
+            <Label layoutX="191.0" layoutY="51.0" text="Duration" />
+            <ChoiceBox fx:id="stagePickerChoicebox" layoutX="132.0" layoutY="113.0" prefWidth="149.0" />
+            <SVGPath fx:id="firstStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="15.0" layoutY="117.0" onMouseClicked="#onFirstStarClicked" onMouseEntered="#onHoverOverFirstStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+            <SVGPath fx:id="secondStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="36.0" layoutY="117.0" onMouseClicked="#onSecondStarClicked" onMouseEntered="#onHoverOverSecondStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+            <SVGPath fx:id="fifthStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="99.0" layoutY="117.0" onMouseClicked="#onFifthStarClicked" onMouseEntered="#onHoverOverFifthStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+            <SVGPath fx:id="fourthStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="78.0" layoutY="117.0" onMouseClicked="#onFourthStarClicked" onMouseEntered="#onHoverOverFourthStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+            <SVGPath fx:id="thirdStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="57.0" layoutY="117.0" onMouseClicked="#onThirdStarClicked" onMouseEntered="#onHoverOverThirdStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</DialogPane>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ScheduleMakerController">
+    <children>
+        <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
+            <image>
+                <Image url="@images/fileGeneratorBackground.png" />
+            </image>
+        </ImageView>
+        <Button layoutX="826.0" layoutY="530.0" mnemonicParsing="false" onAction="#onExportButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: ECE6DB;" text="Export " />
+        <Label layoutX="75.0" layoutY="14.0" />
+        <TextField fx:id="artistNameTextfield" layoutX="353.0" layoutY="39.0" prefHeight="25.0" prefWidth="161.0" promptText="Artist Name" />
+        <TextField fx:id="genreTextfield" layoutX="353.0" layoutY="79.0" prefHeight="25.0" prefWidth="161.0" promptText="Genre" />
+        <TextField fx:id="amountOfVisitorsTextfield" layoutX="14.0" layoutY="79.0" prefHeight="26.0" prefWidth="100.0" promptText="Visitor Count" />
+        <TextField fx:id="festivalNameTextfield" layoutX="14.0" layoutY="40.0" prefHeight="26.0" prefWidth="100.0" promptText="Festival Name" />
+        <SVGPath fx:id="firstStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="354.0" layoutY="125.0" onMouseClicked="#onFirstStarClicked" onMouseEntered="#onHoverOverFirstStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+        <SVGPath fx:id="secondStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="375.0" layoutY="125.0" onMouseClicked="#onSecondStarClicked" onMouseEntered="#onHoverOverSecondStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+        <SVGPath fx:id="fifthStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="437.0" layoutY="125.0" onMouseClicked="#onFifthStarClicked" onMouseEntered="#onHoverOverFifthStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+        <SVGPath fx:id="fourthStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="416.0" layoutY="125.0" onMouseClicked="#onFourthStarClicked" onMouseEntered="#onHoverOverFourthStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+        <SVGPath fx:id="thirdStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="395.0" layoutY="125.0" onMouseClicked="#onThirdStarClicked" onMouseEntered="#onHoverOverThirdStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+        <Button fx:id="addArtistButton" layoutX="355.0" layoutY="150.0" mnemonicParsing="false" onAction="#onAddArtistButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: ECE6DB;" text="Add Artist" />
+        <ImageView fitHeight="29.0" fitWidth="64.0" layoutX="824.0" layoutY="528.0">
+            <image>
+                <Image url="@images/6025ButtonOutline.png" />
+            </image>
+        </ImageView>
+      <ChoiceBox fx:id="stagePickerChoicebox" layoutX="463.0" layoutY="122.0" prefWidth="149.0" />
+        <Label layoutX="353.0" layoutY="7.0" text="Artist">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="7.0" text="Festival">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Button fx:id="saveFestival" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" onAction="#onSaveFestivalButton" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: ECE6DB;" text="Save Festival" />
+        <ListView fx:id="artistsListView" layoutX="618.0" layoutY="14.0" prefHeight="400.0" prefWidth="270.0" />
+        <Label layoutX="522.0" layoutY="23.0" text="Start time" />
+        <Label layoutX="522.0" layoutY="64.0" text="Duration" />
+        <Label layoutX="355.0" layoutY="107.0" text="Popularity" />
+      <ChoiceBox fx:id="startTimeChoicebox" layoutX="522.0" layoutY="39.0" prefHeight="25.0" prefWidth="90.0" />
+      <ChoiceBox fx:id="durationChoicebox" layoutX="522.0" layoutY="79.0" prefHeight="25.0" prefWidth="90.0" />
+      <Button layoutX="830.0" layoutY="424.0" mnemonicParsing="false" onAction="#refreshList" text="Refresh" />
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</AnchorPane>

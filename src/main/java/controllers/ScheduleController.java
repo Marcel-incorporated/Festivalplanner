@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class ScheduleController {
 
     private ScheduleMakerController scheduleMakerController = new ScheduleMakerController();
-
     private ArrayList<Rectangle2D> blocksToDraw = new ArrayList<>();
     private ArrayList<String> artistNames = new ArrayList<>();
     private int xBlock = 0;

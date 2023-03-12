@@ -56,7 +56,9 @@ public class SimulatorController extends Thread implements Runnable {
         saveAITypes();
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
-        ais.add(new AI(new Point2D.Double(664, 553)));
+
+        ais.add(new AI(new Point2D.Double(664, 552)));
+
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
         FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
         drawMap(g2d);
