@@ -33,6 +33,7 @@ public class ScheduleController {
     @FXML
     void onImportButton() {
         Festival festivalObject = null;
+        ArtistArrayListController.artists.clear();
 
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
