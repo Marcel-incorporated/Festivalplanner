@@ -18,7 +18,7 @@ public class MyAnimationTimer extends AnimationTimer {
     private Label timerLabel;
     private boolean pastMidnight = false;
     private int minutes = 0;
-    private int hours = 0;
+    private int hours = 10;
     private ArrayList<AI> ais;
     private Canvas simMap;
 
@@ -47,6 +47,10 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         if (elapsedForTimer >= 1_000_000_000) {
+            if (isPastMidnight() && getHours() == 3) {
+                stop();
+                resetTimer();
+            }
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
                 for (AI ai : ais) {
@@ -58,10 +62,7 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTimeForTimer = currentTime;
         }
 
-        if (isPastMidnight() && getHours() == 3) {
-            stop();
-            resetTimer();
-        }
+
     }
 
     public boolean isPastMidnight() {
@@ -71,7 +72,7 @@ public class MyAnimationTimer extends AnimationTimer {
     public void resetTimer() {
         simulatorController.setStatusLabel("Status: finished");
         minutes = 0;
-        hours = 0;
+        hours = 10;
     }
 
     public void addHour() {
