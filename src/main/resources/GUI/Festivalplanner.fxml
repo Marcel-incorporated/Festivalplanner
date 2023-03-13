@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FestivalplannerController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FestivalplannerController">
     <tabs>
         <Tab fx:id="scheduleTab" text="Schedule">
             <fx:include source="ScheduleTab.fxml" />

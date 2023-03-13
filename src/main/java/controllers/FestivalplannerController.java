@@ -9,4 +9,5 @@ public class FestivalplannerController {
     public Tab simulatorTab;
     public Tab scheduleMakerTab;
     public Tab mapTab;
+
 }
