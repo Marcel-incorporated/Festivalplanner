@@ -2,7 +2,9 @@ package controllers;
 
 import classes.AI;
 import classes.Map;
+import classes.MyAnimationTimer;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
@@ -31,7 +33,8 @@ public class SimulatorController extends Thread implements Runnable {
     private Label statusLabel = new Label();
     @FXML
     private Label timeLabel;
-    private AnimationTimer animationTimer;
+    //    private AnimationTimer animationTimer;
+    private MyAnimationTimer animationTimer;
     private double timer;
     private Map map;
     private int minutes = 00;
@@ -42,6 +45,8 @@ public class SimulatorController extends Thread implements Runnable {
     private int height;
     private int tileHeight;
     private int tileWidth;
+
+    private boolean pastMidnight = false;
     private ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private BufferedImage image;
     private ArrayList<AI> ais = new ArrayList<>();
@@ -64,17 +69,8 @@ public class SimulatorController extends Thread implements Runnable {
         drawMap(g2d);
         drawBottom(bottomDrawer);
 
-        animationTimer = new AnimationTimer() {
+        animationTimer = new MyAnimationTimer(timeLabel, ais, simMap) {
             long last = -1;
-
-            @Override
-            public void handle(long now) {
-                if (last == -1)
-                    last = now;
-                double deltaTime = (now - last) / 1000000000.0;
-                update(deltaTime);
-                last = now;
-            }
         };
     }
 
@@ -130,51 +126,27 @@ public class SimulatorController extends Thread implements Runnable {
         }
     }
 
-    public void update(double deltaTime) {
-        timer += deltaTime;
+    public void update() {
+//        timer += deltaTime;
 //        System.out.println(timer);
 
-        if (timer > 1.0) {
+//        if (timer >= 1) {
+        Platform.runLater(() -> {
             for (AI ai : ais) {
                 ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 ai.update(ais);
             }
-            timer = 0;
-            updateTime();
-        }
+        });
     }
-
 
     public void drawMap(Graphics2D g) {
         map.draw(g);
         Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
 
-    private void updateTime() {
-        if (minutes == 59) {
-            minutes = 00;
-            if (hours == 23) {
-                hours = 00;
-            } else {
-                hours++;
-            }
-            if (hours == 3) {
-                animationTimer.stop();
-                statusLabel.setText("Status: stopped");
-                hours = 10;
-                minutes = 0;
-            } else {
-            }
-        } else {
-            minutes++;
-        }
-        if (minutes < 10) {
-            timeLabel.setText("" + hours + ":0" + minutes);
-        } else {
-            timeLabel.setText("" + hours + ":" + minutes);
-        }
+    public void setStatusLabel(String text) {
+        statusLabel.setText(text);
     }
-
 
     @FXML
     public void onStartButton() {

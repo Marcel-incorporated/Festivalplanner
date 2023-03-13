@@ -84,7 +84,7 @@ public class AI {
 
     public void draw(Graphics2D g) {
         AffineTransform tx = new AffineTransform();
-        tx.translate(position.getX() - image.getWidth() / 2, position.getY() - image.getHeight() / 2);
+        tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
 
         image = tiles.get(16);
         g.drawImage(image, tx, null);
