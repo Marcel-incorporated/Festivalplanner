@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="571.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SimulatorController">
+   <children>
+      <Canvas id="bottom" fx:id="bottom" height="560.0" layoutX="2.0" layoutY="5.0" width="896.0" />
+      <Canvas id="simMap" fx:id="simMap" height="560.0" layoutX="2.0" layoutY="5.0" width="896.0" />
+      <Canvas id="timerCanvas" fx:id="timerCanvas" height="560.0" width="896.0" />
+      <Button layoutX="845.0" layoutY="535.0" mnemonicParsing="false" onAction="#onStopButton" text="Stop" />
+      <Button layoutX="845.0" layoutY="510.0" mnemonicParsing="false" onAction="#onStartButton" text="Start" />
+      <Label id="statusLabel" fx:id="statusLabel" layoutX="755.0" layoutY="514.0" prefHeight="17.0" prefWidth="88.0" text="Status: stopped" textFill="#0d0d0d" />
+      <Label fx:id="timeLabel" layoutX="796.0" layoutY="539.0" prefHeight="17.0" prefWidth="41.0" text="10:00" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,247 @@
+Index: src/main/java/controllers/Serializer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controllers;\r\n\r\nimport classes.Festival;\r\nimport javafx.stage.DirectoryChooser;\r\nimport javafx.stage.FileChooser;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.*;\r\n\r\npublic class Serializer {\r\n\r\n    public static void Serialize(Festival festival) throws IOException {\r\n\r\n        Stage stage = new Stage();\r\n        DirectoryChooser directoryChooser = new DirectoryChooser();\r\n        directoryChooser.setInitialDirectory(new File(\"src\"));\r\n        File selectedDirectory = directoryChooser.showDialog(stage);\r\n        File file = new File(selectedDirectory.getAbsolutePath());\r\n//        System.out.println(selectedDirectory.getAbsolutePath());\r\n        FileOutputStream fos = new FileOutputStream(file + \"/planning.txt\");\r\n        ObjectOutputStream oos = new ObjectOutputStream(fos);\r\n        oos.writeObject(festival);\r\n\r\n        if (oos != null) {\r\n            oos.close();\r\n        }\r\n    }\r\n\r\n    public static Festival Deserialize() throws IOException, ClassNotFoundException {\r\n\r\n        FileInputStream fis = new FileInputStream(\"planning. txt\");\r\n        ObjectInputStream ois = new ObjectInputStream(fis);\r\n        Festival festival = (Festival) ois.readObject();\r\n\r\n        if (ois != null) {\r\n            ois.close();\r\n        }\r\n\r\n        return festival;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controllers/Serializer.java b/src/main/java/controllers/Serializer.java
+--- a/src/main/java/controllers/Serializer.java	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/java/controllers/Serializer.java	(date 1675941770758)
+@@ -10,10 +10,8 @@
+ public class Serializer {
+ 
+     public static void Serialize(Festival festival) throws IOException {
+-
+         Stage stage = new Stage();
+         DirectoryChooser directoryChooser = new DirectoryChooser();
+-        directoryChooser.setInitialDirectory(new File("src"));
+         File selectedDirectory = directoryChooser.showDialog(stage);
+         File file = new File(selectedDirectory.getAbsolutePath());
+ //        System.out.println(selectedDirectory.getAbsolutePath());
+@@ -28,7 +26,7 @@
+ 
+     public static Festival Deserialize() throws IOException, ClassNotFoundException {
+ 
+-        FileInputStream fis = new FileInputStream("planning. txt");
++        FileInputStream fis = new FileInputStream("planning.txt");
+         ObjectInputStream ois = new ObjectInputStream(fis);
+         Festival festival = (Festival) ois.readObject();
+ 
+Index: src/main/resources/GUI/Festivalplanner.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.control.Tab?>\r\n<?import javafx.scene.control.TabPane?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.shape.SVGPath?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<TabPane fx:id=\"tabPane\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"600.0\" prefWidth=\"900.0\" tabClosingPolicy=\"UNAVAILABLE\" xmlns=\"http://javafx.com/javafx/19\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"controllers.FestivalplannerController\">\r\n  <tabs>\r\n    <Tab text=\"Schedule\">\r\n      <content>\r\n        <AnchorPane minHeight=\"0.0\" minWidth=\"0.0\" prefHeight=\"571.0\" prefWidth=\"900.0\">\r\n               <padding>\r\n                  <Insets bottom=\"5.0\" left=\"5.0\" right=\"5.0\" top=\"5.0\" />\r\n               </padding>\r\n               <children>\r\n                  <ImageView fitHeight=\"561.0\" fitWidth=\"890.0\" layoutX=\"5.0\" layoutY=\"5.0\">\r\n                     <image>\r\n                        <Image url=\"@images/scheduleBackground.png\" />\r\n                     </image></ImageView>\r\n                  <Button fx:id=\"addEventButton\" contentDisplay=\"CENTER\" graphicTextGap=\"0.0\" layoutX=\"6.0\" layoutY=\"6.0\" maxHeight=\"28.0\" maxWidth=\"87.0\" mnemonicParsing=\"false\" onAction=\"#onAddEditEventButton\" prefHeight=\"28.0\" prefWidth=\"87.0\" style=\"-fx-background-color: #ECE6DB;\">\r\n                     <graphic>\r\n                        <ImageView fitHeight=\"17.0\" fitWidth=\"55.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/editAddEventButton.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                     </graphic></Button>\r\n               </children>\r\n        </AnchorPane>\r\n      </content>\r\n    </Tab>\r\n      <Tab text=\"File generator\">\r\n        <content>\r\n          <AnchorPane minHeight=\"0.0\" minWidth=\"0.0\" prefHeight=\"180.0\" prefWidth=\"200.0\">\r\n               <children>\r\n                  <ImageView fitHeight=\"561.0\" fitWidth=\"890.0\" layoutX=\"5.0\" layoutY=\"5.0\">\r\n                     <image>\r\n                        <Image url=\"@images/fileGeneratorBackground.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ScrollPane layoutX=\"636.0\" layoutY=\"14.0\" prefHeight=\"400.0\" prefWidth=\"250.0\">\r\n                    <content>\r\n                      <AnchorPane minHeight=\"0.0\" minWidth=\"0.0\" prefHeight=\"505.0\" prefWidth=\"248.0\">\r\n                           <children>\r\n                              <Label fx:id=\"artistLabel1\" graphicTextGap=\"5.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel2\" graphicTextGap=\"5.0\" layoutY=\"31.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel3\" graphicTextGap=\"5.0\" layoutY=\"62.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel4\" graphicTextGap=\"5.0\" layoutY=\"93.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel5\" graphicTextGap=\"5.0\" layoutY=\"124.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel6\" graphicTextGap=\"5.0\" layoutY=\"155.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel7\" graphicTextGap=\"5.0\" layoutY=\"186.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel8\" graphicTextGap=\"5.0\" layoutY=\"217.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel9\" graphicTextGap=\"5.0\" layoutY=\"248.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel10\" graphicTextGap=\"5.0\" layoutY=\"279.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel11\" graphicTextGap=\"5.0\" layoutY=\"310.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel12\" graphicTextGap=\"5.0\" layoutY=\"341.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel13\" graphicTextGap=\"5.0\" layoutY=\"372.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel14\" graphicTextGap=\"5.0\" layoutY=\"403.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel15\" graphicTextGap=\"5.0\" layoutY=\"434.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                              <Label fx:id=\"artistLabel16\" graphicTextGap=\"5.0\" layoutY=\"465.0\" opacity=\"0.0\" prefHeight=\"30.0\" prefWidth=\"235.0\" style=\"-fx-border-color: black; -fx-background-color: ECE6DB;\" textAlignment=\"CENTER\">\r\n                                 <font>\r\n                                    <Font name=\"System Bold\" size=\"12.0\" />\r\n                                 </font>\r\n                              </Label>\r\n                           </children>\r\n                        </AnchorPane>\r\n                    </content>\r\n                  </ScrollPane>\r\n                  <Button fx:id=\"exportButton\" layoutX=\"826.0\" layoutY=\"530.0\" mnemonicParsing=\"false\" onAction=\"#onExportButton\" prefHeight=\"25.0\" prefWidth=\"60.0\" style=\"-fx-background-color: ECE6DB;\" text=\"Export \" />\r\n                  <Button fx:id=\"importButton\" layoutX=\"761.0\" layoutY=\"530.0\" mnemonicParsing=\"false\" onAction=\"#onImportButton\" prefHeight=\"25.0\" prefWidth=\"60.0\" style=\"-fx-background-color: ECE6DB;\" text=\"Import\" />\r\n                  <ImageView fitHeight=\"134.0\" fitWidth=\"173.0\" layoutX=\"14.0\" layoutY=\"14.0\">\r\n                     <image>\r\n                        <Image url=\"@images/artistGenrePop.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"404.0\" fitWidth=\"254.0\" layoutX=\"634.0\" layoutY=\"12.0\">\r\n                     <image>\r\n                        <Image url=\"@images/scrollPaneOutline.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <TextField fx:id=\"artistNameTextfield\" layoutX=\"20.0\" layoutY=\"39.0\" prefHeight=\"25.0\" prefWidth=\"161.0\" promptText=\"artist\" />\r\n                  <TextField fx:id=\"genreTextfield\" layoutX=\"20.0\" layoutY=\"91.0\" prefHeight=\"25.0\" prefWidth=\"161.0\" promptText=\"genre\" />\r\n                  <TextField fx:id=\"amountOfVisitorsTextfield\" layoutX=\"20.0\" layoutY=\"239.0\" prefHeight=\"26.0\" prefWidth=\"100.0\" promptText=\"visitor count\" />\r\n                  <TextField fx:id=\"festivalNameTextfield\" layoutX=\"21.0\" layoutY=\"305.0\" prefHeight=\"26.0\" prefWidth=\"100.0\" promptText=\"festival name\" />\r\n                  <TextField fx:id=\"startingTimeTextfield\" layoutX=\"187.0\" layoutY=\"39.0\" prefHeight=\"25.0\" prefWidth=\"108.0\" promptText=\"xx:xx\" />\r\n                  <TextField fx:id=\"setDurationTextfield\" layoutX=\"187.0\" layoutY=\"91.0\" prefHeight=\"25.0\" prefWidth=\"108.0\" promptText=\"minutes\" />\r\n                  <SVGPath fx:id=\"firstStar\" content=\"M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218\" fill=\"WHITE\" layoutX=\"21.0\" layoutY=\"150.0\" onMouseClicked=\"#onFirstStarClicked\" onMouseEntered=\"#onHoverOverFirstStar\" onMouseExited=\"#onMouseNotOnStars\" stroke=\"#ffffff00\" />\r\n                  <SVGPath fx:id=\"secondStar\" content=\"M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218\" fill=\"WHITE\" layoutX=\"42.0\" layoutY=\"150.0\" onMouseClicked=\"#onSecondStarClicked\" onMouseEntered=\"#onHoverOverSecondStar\" onMouseExited=\"#onMouseNotOnStars\" stroke=\"#ffffff00\" />\r\n                  <SVGPath fx:id=\"fifthStar\" content=\"M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218\" fill=\"WHITE\" layoutX=\"105.0\" layoutY=\"150.0\" onMouseClicked=\"#onFifthStarClicked\" onMouseEntered=\"#onHoverOverFifthStar\" onMouseExited=\"#onMouseNotOnStars\" stroke=\"#ffffff00\" />\r\n                  <SVGPath fx:id=\"fourthStar\" content=\"M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218\" fill=\"WHITE\" layoutX=\"84.0\" layoutY=\"150.0\" onMouseClicked=\"#onFourthStarClicked\" onMouseEntered=\"#onHoverOverFourthStar\" onMouseExited=\"#onMouseNotOnStars\" stroke=\"#ffffff00\" />\r\n                  <SVGPath fx:id=\"thirdStar\" content=\"M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218\" fill=\"WHITE\" layoutX=\"63.0\" layoutY=\"150.0\" onMouseClicked=\"#onThirdStarClicked\" onMouseEntered=\"#onHoverOverThirdStar\" onMouseExited=\"#onMouseNotOnStars\" stroke=\"#ffffff00\" />\r\n                  <Button fx:id=\"addArtistButton\" layoutX=\"20.0\" layoutY=\"176.0\" mnemonicParsing=\"false\" onAction=\"#onAddArtistButton\" prefHeight=\"25.0\" prefWidth=\"60.0\" style=\"-fx-background-color: ECE6DB;\" text=\"Add\" />\r\n                  <Button fx:id=\"confirmVisitorsButton\" layoutX=\"130.0\" layoutY=\"239.0\" mnemonicParsing=\"false\" onAction=\"#onConfirmVisitorsButton\" prefHeight=\"25.0\" prefWidth=\"60.0\" style=\"-fx-background-color: ECE6DB;\" text=\"Confirm\" />\r\n                  <Button fx:id=\"confirmFestivalNameButton\" layoutX=\"130.0\" layoutY=\"305.0\" mnemonicParsing=\"false\" onAction=\"#onConfirmFestivalNameButton\" prefHeight=\"25.0\" prefWidth=\"60.0\" style=\"-fx-background-color: ECE6DB;\" text=\"Confirm\" />\r\n                  <ImageView fitHeight=\"29.0\" fitWidth=\"64.0\" layoutX=\"18.0\" layoutY=\"174.0\">\r\n                     <image>\r\n                        <Image url=\"@images/6025ButtonOutline.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"29.0\" fitWidth=\"64.0\" layoutX=\"824.0\" layoutY=\"528.0\">\r\n                     <image>\r\n                        <Image url=\"@images/6025ButtonOutline.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"29.0\" fitWidth=\"64.0\" layoutX=\"759.0\" layoutY=\"528.0\">\r\n                     <image>\r\n                        <Image url=\"@images/6025ButtonOutline.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"66.0\" fitWidth=\"182.0\" layoutX=\"14.0\" layoutY=\"210.0\">\r\n                     <image>\r\n                        <Image url=\"@images/amountOfVisitors.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"66.0\" fitWidth=\"182.0\" layoutX=\"15.0\" layoutY=\"276.0\">\r\n                     <image>\r\n                        <Image url=\"@images/festivalName.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n                  <ImageView fitHeight=\"100.0\" fitWidth=\"112.0\" layoutX=\"185.0\" layoutY=\"18.0\">\r\n                     <image>\r\n                        <Image url=\"@images/startingTimeSetDuration.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"5.0\" left=\"5.0\" right=\"5.0\" top=\"5.0\" />\r\n               </padding>\r\n            </AnchorPane>\r\n        </content>\r\n      </Tab>\r\n      <Tab text=\"Map\">\r\n        <content>\r\n          <AnchorPane minHeight=\"0.0\" minWidth=\"0.0\" prefHeight=\"571.0\" prefWidth=\"900.0\" />\r\n        </content>\r\n      </Tab>\r\n    <Tab text=\"Simulator\" />\r\n  </tabs>\r\n</TabPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/GUI/Festivalplanner.fxml b/src/main/resources/GUI/Festivalplanner.fxml
+--- a/src/main/resources/GUI/Festivalplanner.fxml	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/resources/GUI/Festivalplanner.fxml	(date 1675942029417)
+@@ -1,19 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
+-<?import javafx.geometry.Insets?>
+-<?import javafx.scene.control.Button?>
+-<?import javafx.scene.control.Label?>
+-<?import javafx.scene.control.ScrollPane?>
+-<?import javafx.scene.control.Tab?>
+-<?import javafx.scene.control.TabPane?>
+-<?import javafx.scene.control.TextField?>
+-<?import javafx.scene.image.Image?>
+-<?import javafx.scene.image.ImageView?>
+-<?import javafx.scene.layout.AnchorPane?>
+-<?import javafx.scene.shape.SVGPath?>
+-<?import javafx.scene.text.Font?>
++<?import javafx.geometry.*?>
++<?import javafx.scene.control.*?>
++<?import javafx.scene.image.*?>
++<?import javafx.scene.layout.*?>
++<?import javafx.scene.shape.*?>
++<?import javafx.scene.text.*?>
+ 
+-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FestivalplannerController">
++<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FestivalplannerController">
+   <tabs>
+     <Tab text="Schedule">
+       <content>
+@@ -38,7 +32,7 @@
+         </AnchorPane>
+       </content>
+     </Tab>
+-      <Tab text="File generator">
++      <Tab text="File Generator">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <children>
+@@ -151,7 +145,7 @@
+                   <TextField fx:id="genreTextfield" layoutX="20.0" layoutY="91.0" prefHeight="25.0" prefWidth="161.0" promptText="genre" />
+                   <TextField fx:id="amountOfVisitorsTextfield" layoutX="20.0" layoutY="239.0" prefHeight="26.0" prefWidth="100.0" promptText="visitor count" />
+                   <TextField fx:id="festivalNameTextfield" layoutX="21.0" layoutY="305.0" prefHeight="26.0" prefWidth="100.0" promptText="festival name" />
+-                  <TextField fx:id="startingTimeTextfield" layoutX="187.0" layoutY="39.0" prefHeight="25.0" prefWidth="108.0" promptText="xx:xx" />
++                  <TextField fx:id="startingTimeTextfield" layoutX="187.0" layoutY="39.0" pickOnBounds="false" prefHeight="25.0" prefWidth="108.0" promptText="xx:xx" />
+                   <TextField fx:id="setDurationTextfield" layoutX="187.0" layoutY="91.0" prefHeight="25.0" prefWidth="108.0" promptText="minutes" />
+                   <SVGPath fx:id="firstStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="21.0" layoutY="150.0" onMouseClicked="#onFirstStarClicked" onMouseEntered="#onHoverOverFirstStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+                   <SVGPath fx:id="secondStar" content="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218" fill="WHITE" layoutX="42.0" layoutY="150.0" onMouseClicked="#onSecondStarClicked" onMouseEntered="#onHoverOverSecondStar" onMouseExited="#onMouseNotOnStars" stroke="#ffffff00" />
+@@ -191,6 +185,7 @@
+                         <Image url="@images/startingTimeSetDuration.png" />
+                      </image>
+                   </ImageView>
++                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="303.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
+                </children>
+                <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+Index: src/main/java/controllers/FestivalplannerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controllers;\r\n\r\nimport classes.*;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.shape.SVGPath;\r\nimport javafx.scene.image.*;\r\nimport javafx.stage.*;\r\n\r\nimport java.lang.reflect.Array;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.awt.Desktop;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.logging.Level;\r\nimport java.util.logging.Logger;\r\n\r\n\r\npublic class FestivalplannerController {\r\n    @FXML\r\n    public Button addArtistButton;\r\n    @FXML\r\n    public TextField amountOfVisitorsTextfield;\r\n    @FXML\r\n    public Button confirmVisitorsButton;\r\n    @FXML\r\n    public TextField festivalNameTextfield;\r\n    @FXML\r\n    public Button confirmFestivalNameButton;\r\n    @FXML\r\n    public TextField startingTimeTextfield;\r\n    @FXML\r\n    public TextField artistNameTextfield1;\r\n    @FXML\r\n    public TextField setDurationTextfield;\r\n    @FXML\r\n    private Button addEventButton;\r\n    @FXML\r\n    private TabPane tabPane;\r\n\r\n    // Schedule/main tab controller\r\n    @FXML\r\n    void onAddEditEventButton(ActionEvent event) throws IOException {\r\n        tabPane.getSelectionModel().select(1);\r\n    }\r\n\r\n    // File editor/generator controller\r\n\r\n\r\n    private Desktop desktop = Desktop.getDesktop();\r\n    @FXML\r\n    private Button exportButton;\r\n    @FXML\r\n    private Button importButton;\r\n    @FXML\r\n    private TextField artistNameTextfield;\r\n    @FXML\r\n    private TextField genreTextfield;\r\n    @FXML\r\n    private SVGPath firstStar;\r\n    @FXML\r\n    private SVGPath secondStar;\r\n    @FXML\r\n    private SVGPath thirdStar;\r\n    @FXML\r\n    private SVGPath fourthStar;\r\n    @FXML\r\n    private SVGPath fifthStar;\r\n    private int popularity = 0;\r\n    private boolean popularitySelected = false;\r\n    private int amountOfArtistsAdded = 0;\r\n    @FXML\r\n    private Label artistLabel1;\r\n    @FXML\r\n    private Label artistLabel2;\r\n    @FXML\r\n    private Label artistLabel3;\r\n    @FXML\r\n    private Label artistLabel4;\r\n    @FXML\r\n    private Label artistLabel5;\r\n    @FXML\r\n    private Label artistLabel6;\r\n    @FXML\r\n    private Label artistLabel7;\r\n    @FXML\r\n    private Label artistLabel8;\r\n    @FXML\r\n    private Label artistLabel9;\r\n    @FXML\r\n    private Label artistLabel10;\r\n    @FXML\r\n    private Label artistLabel11;\r\n    @FXML\r\n    private Label artistLabel12;\r\n    @FXML\r\n    private Label artistLabel13;\r\n    @FXML\r\n    private Label artistLabel14;\r\n    @FXML\r\n    private Label artistLabel15;\r\n    @FXML\r\n    private Label artistLabel16;\r\n\r\n    private int visitorCount;\r\n    private String festivalName;\r\n\r\n    private List<Artist> artists = new ArrayList<>();\r\n\r\n    @FXML\r\n    void onExportButton(ActionEvent event) {\r\n        System.out.println(\"exporting\");\r\n\r\n//        Song song = new Song();\r\n        ArrayList<Song> songs = new ArrayList<>();\r\n        ArrayList<Visitor> visitors = new ArrayList<>();\r\n        for (int i = 0; i < visitorCount; i++) {\r\n            visitors.add(new Visitor());\r\n        }\r\n\r\n        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));\r\n\r\n        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), \"\");\r\n\r\n        ArrayList<Performance> performances = new ArrayList<>();\r\n        performances.add(performance);\r\n\r\n        Festival festival = new Festival(visitors.size(), festivalName, performances);\r\n\r\n        try {\r\n            Serializer.Serialize(festival);\r\n        } catch(IOException e) {\r\n\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void onImportButton(ActionEvent event) {\r\n//        System.out.println(\"importing\");\r\n\r\n        final FileChooser fileChooser = new FileChooser();\r\n        fileChooser.setTitle(\"Pick a file\");\r\n        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(\"Text file\", \"*.txt\"));\r\n//        System.out.println(\"filechooser created\");\r\n\r\n//        System.out.println(\"handle method started\");\r\n        List<File> list =\r\n                fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());\r\n//        System.out.println(\"opened filechooser\");\r\n        if (list != null) {\r\n            for (File file : list) {\r\n                try {\r\n                    desktop.open(file);\r\n                } catch (IOException ex) {\r\n                    Logger.getLogger(\r\n                            getClass().getName()).log(\r\n                            Level.SEVERE, null, ex\r\n                    );\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    public void noStarsClicked() {\r\n        popularity = 0;\r\n\r\n        firstStar.setStyle(\"-fx-fill: white\");\r\n        secondStar.setStyle(\"-fx-fill: white\");\r\n        thirdStar.setStyle(\"-fx-fill: white\");\r\n        fourthStar.setStyle(\"-fx-fill: white\");\r\n        fifthStar.setStyle(\"-fx-fill: white\");\r\n    }\r\n\r\n    @FXML\r\n    public void onFirstStarClicked(javafx.scene.input.MouseEvent event) {\r\n        popularity = 1;\r\n        popularitySelected = true;\r\n\r\n        firstStar.setStyle(\"-fx-fill: yellow\");\r\n        secondStar.setStyle(\"-fx-fill: white\");\r\n        thirdStar.setStyle(\"-fx-fill: white\");\r\n        fourthStar.setStyle(\"-fx-fill: white\");\r\n        fifthStar.setStyle(\"-fx-fill: white\");\r\n    }\r\n\r\n    @FXML\r\n    public void onSecondStarClicked(javafx.scene.input.MouseEvent event) {\r\n        popularity = 2;\r\n        popularitySelected = true;\r\n\r\n        firstStar.setStyle(\"-fx-fill: yellow\");\r\n        secondStar.setStyle(\"-fx-fill: yellow\");\r\n        thirdStar.setStyle(\"-fx-fill: white\");\r\n        fourthStar.setStyle(\"-fx-fill: white\");\r\n        fifthStar.setStyle(\"-fx-fill: white\");\r\n    }\r\n\r\n    @FXML\r\n    public void onThirdStarClicked(javafx.scene.input.MouseEvent event) {\r\n        popularity = 3;\r\n        popularitySelected = true;\r\n\r\n        firstStar.setStyle(\"-fx-fill: yellow\");\r\n        secondStar.setStyle(\"-fx-fill: yellow\");\r\n        thirdStar.setStyle(\"-fx-fill: yellow\");\r\n        fourthStar.setStyle(\"-fx-fill: white\");\r\n        fifthStar.setStyle(\"-fx-fill: white\");\r\n    }\r\n\r\n    @FXML\r\n    public void onFourthStarClicked(javafx.scene.input.MouseEvent event) {\r\n        popularity = 4;\r\n        popularitySelected = true;\r\n\r\n        firstStar.setStyle(\"-fx-fill: yellow\");\r\n        secondStar.setStyle(\"-fx-fill: yellow\");\r\n        thirdStar.setStyle(\"-fx-fill: yellow\");\r\n        fourthStar.setStyle(\"-fx-fill: yellow\");\r\n        fifthStar.setStyle(\"-fx-fill: white\");\r\n    }\r\n\r\n    @FXML\r\n    public void onFifthStarClicked(javafx.scene.input.MouseEvent event) {\r\n        popularity = 5;\r\n        popularitySelected = true;\r\n\r\n        firstStar.setStyle(\"-fx-fill: yellow\");\r\n        secondStar.setStyle(\"-fx-fill: yellow\");\r\n        thirdStar.setStyle(\"-fx-fill: yellow\");\r\n        fourthStar.setStyle(\"-fx-fill: yellow\");\r\n        fifthStar.setStyle(\"-fx-fill: yellow\");\r\n    }\r\n\r\n    private void addArtistToList(String name, String genre, int popularity) {\r\n        if (amountOfArtistsAdded <= 16) {\r\n            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));\r\n\r\n            switch (amountOfArtistsAdded) {\r\n                case 1 -> {\r\n                    artistLabel1.setOpacity(1);\r\n                    artistLabel1.setText(name);\r\n                }\r\n                case 2 -> {\r\n                    artistLabel2.setOpacity(1);\r\n                    artistLabel2.setText(name);\r\n                }\r\n                case 3 -> {\r\n                    artistLabel3.setOpacity(1);\r\n                    artistLabel3.setText(name);\r\n                }\r\n                case 4 -> {\r\n                    artistLabel4.setOpacity(1);\r\n                    artistLabel4.setText(name);\r\n                }\r\n                case 5 -> {\r\n                    artistLabel5.setOpacity(1);\r\n                    artistLabel5.setText(name);\r\n                }\r\n                case 6 -> {\r\n                    artistLabel6.setOpacity(1);\r\n                    artistLabel6.setText(name);\r\n                }\r\n                case 7 -> {\r\n                    artistLabel7.setOpacity(1);\r\n                    artistLabel7.setText(name);\r\n                }\r\n                case 8 -> {\r\n                    artistLabel8.setOpacity(1);\r\n                    artistLabel8.setText(name);\r\n                }\r\n                case 9 -> {\r\n                    artistLabel9.setOpacity(1);\r\n                    artistLabel9.setText(name);\r\n                }\r\n                case 10 -> {\r\n                    artistLabel10.setOpacity(1);\r\n                    artistLabel10.setText(name);\r\n                }\r\n                case 11 -> {\r\n                    artistLabel11.setOpacity(1);\r\n                    artistLabel11.setText(name);\r\n                }\r\n                case 12 -> {\r\n                    artistLabel12.setOpacity(1);\r\n                    artistLabel12.setText(name);\r\n                }\r\n                case 13 -> {\r\n                    artistLabel13.setOpacity(1);\r\n                    artistLabel13.setText(name);\r\n                }\r\n                case 14 -> {\r\n                    artistLabel14.setOpacity(1);\r\n                    artistLabel14.setText(name);\r\n                }\r\n                case 15 -> {\r\n                    artistLabel15.setOpacity(1);\r\n                    artistLabel15.setText(name);\r\n                }\r\n                case 16 -> {\r\n                    artistLabel16.setOpacity(1);\r\n                    artistLabel16.setText(name);\r\n                }\r\n            }\r\n        } else {\r\n            Alert alert = new Alert(Alert.AlertType.ERROR);\r\n            alert.setTitle(\"Error\");\r\n            alert.setHeaderText(\"Error\");\r\n            alert.setContentText(\"Maximum amount of artists reached!\");\r\n\r\n            alert.showAndWait();\r\n        }\r\n\r\n    }\r\n\r\n    @FXML\r\n    public void onAddArtistButton(ActionEvent actionEvent) {\r\n        if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0 ||\r\n                setDurationTextfield.getText().isEmpty() || startingTimeTextfield.getText().isEmpty() || setDurationTextfield.getText().matches(\"[a-zA-Z]+\")) {\r\n            Alert alert = new Alert(Alert.AlertType.ERROR);\r\n            alert.setTitle(\"Error\");\r\n            alert.setHeaderText(\"Error\");\r\n            alert.setContentText(\"Make sure to fill out all fields!\");\r\n\r\n            noStarsClicked();\r\n\r\n            alert.showAndWait();\r\n\r\n            return;\r\n        }\r\n\r\n        amountOfArtistsAdded++;\r\n        addArtistToList(artistNameTextfield.getText(), genreTextfield.getText(), popularity);\r\n        artistNameTextfield.clear();\r\n        genreTextfield.clear();\r\n        startingTimeTextfield.clear();\r\n        setDurationTextfield.clear();\r\n        noStarsClicked();\r\n\r\n    }\r\n\r\n    @FXML\r\n    public void onHoverOverFirstStar(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: yellow\");\r\n            secondStar.setStyle(\"-fx-fill: white\");\r\n            thirdStar.setStyle(\"-fx-fill: white\");\r\n            fourthStar.setStyle(\"-fx-fill: white\");\r\n            fifthStar.setStyle(\"-fx-fill: white\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    public void onHoverOverSecondStar(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: yellow\");\r\n            secondStar.setStyle(\"-fx-fill: yellow\");\r\n            thirdStar.setStyle(\"-fx-fill: white\");\r\n            fourthStar.setStyle(\"-fx-fill: white\");\r\n            fifthStar.setStyle(\"-fx-fill: white\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    public void onHoverOverThirdStar(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: yellow\");\r\n            secondStar.setStyle(\"-fx-fill: yellow\");\r\n            thirdStar.setStyle(\"-fx-fill: yellow\");\r\n            fourthStar.setStyle(\"-fx-fill: white\");\r\n            fifthStar.setStyle(\"-fx-fill: white\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    public void onHoverOverFourthStar(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: yellow\");\r\n            secondStar.setStyle(\"-fx-fill: yellow\");\r\n            thirdStar.setStyle(\"-fx-fill: yellow\");\r\n            fourthStar.setStyle(\"-fx-fill: yellow\");\r\n            fifthStar.setStyle(\"-fx-fill: white\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    public void onHoverOverFifthStar(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: yellow\");\r\n            secondStar.setStyle(\"-fx-fill: yellow\");\r\n            thirdStar.setStyle(\"-fx-fill: yellow\");\r\n            fourthStar.setStyle(\"-fx-fill: yellow\");\r\n            fifthStar.setStyle(\"-fx-fill: yellow\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    public void onMouseNotOnStars(MouseEvent event) {\r\n        if (!popularitySelected) {\r\n            firstStar.setStyle(\"-fx-fill: white\");\r\n            secondStar.setStyle(\"-fx-fill: white\");\r\n            thirdStar.setStyle(\"-fx-fill: white\");\r\n            fourthStar.setStyle(\"-fx-fill: white\");\r\n            fifthStar.setStyle(\"-fx-fill: white\");\r\n        }\r\n\r\n    }\r\n\r\n    @FXML\r\n    public void onConfirmVisitorsButton(ActionEvent actionEvent) {\r\n        visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());\r\n    }\r\n\r\n    @FXML\r\n    public void onConfirmFestivalNameButton(ActionEvent actionEvent) {\r\n        festivalName = confirmFestivalNameButton.getText();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controllers/FestivalplannerController.java b/src/main/java/controllers/FestivalplannerController.java
+--- a/src/main/java/controllers/FestivalplannerController.java	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/java/controllers/FestivalplannerController.java	(date 1675941770748)
+@@ -113,31 +113,30 @@
+     private int visitorCount;
+     private String festivalName;
+ 
+-    private List<Artist> artists = new ArrayList<>();
++    private ArrayList<Artist> artists = new ArrayList<>();
++    private ArrayList<Performance> performances = new ArrayList<>();
++    private ArrayList<Visitor> visitors = new ArrayList<>();
+ 
+     @FXML
+     void onExportButton(ActionEvent event) {
+         System.out.println("exporting");
+ 
+ //        Song song = new Song();
+-        ArrayList<Song> songs = new ArrayList<>();
+-        ArrayList<Visitor> visitors = new ArrayList<>();
++//        ArrayList<Song> songs = new ArrayList<>();
++
+         for (int i = 0; i < visitorCount; i++) {
+             visitors.add(new Visitor());
+         }
+ 
+-        Artist artist = new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()));
+-
+-        Performance performance = new Performance(artist, startingTimeTextfield.getText(), setDurationTextfield.getText(), "");
++        for (Artist a : artists) {
++            performances.add(new Performance(a, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText()), "yes"));
++        }
+ 
+-        ArrayList<Performance> performances = new ArrayList<>();
+-        performances.add(performance);
+-
+-        Festival festival = new Festival(visitors.size(), festivalName, performances);
++        Festival festival = new Festival(visitors, festivalName, performances);
+ 
+         try {
+             Serializer.Serialize(festival);
+-        } catch(IOException e) {
++        } catch (IOException e) {
+ 
+         }
+     }
+@@ -241,8 +240,7 @@
+ 
+     private void addArtistToList(String name, String genre, int popularity) {
+         if (amountOfArtistsAdded <= 16) {
+-            artists.add(new Artist(name, genre, popularity, startingTimeTextfield.getText(), Integer.parseInt(setDurationTextfield.getText())));
+-
++            artists.add(new Artist(name, genre, popularity));
+             switch (amountOfArtistsAdded) {
+                 case 1 -> {
+                     artistLabel1.setOpacity(1);
+@@ -343,7 +341,6 @@
+         startingTimeTextfield.clear();
+         setDurationTextfield.clear();
+         noStarsClicked();
+-
+     }
+ 
+     @FXML
+Index: src/main/java/classes/Festival.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package classes;\r\n\r\nimport java.io.Serializable;\r\nimport java.util.ArrayList;\r\n\r\npublic class Festival implements Serializable {\r\n    private ArrayList<Visitor> visitorList;\r\n    private String startTime;\r\n    private String endTime;\r\n    private String name;\r\n    private ArrayList<Performance> performances = new ArrayList<>();\r\n    private int numberOfVisitors;\r\n\r\n    public Festival(int numberOfVisitors, String name, ArrayList<Performance> performances) {\r\n        this.visitorList = new ArrayList<>();\r\n        this.numberOfVisitors = numberOfVisitors;\r\n        this.name = name;\r\n        this.performances = performances;\r\n    }\r\n\r\n    public void addToVisitorList(Visitor visitor) {\r\n        visitorList.add(visitor);\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Festival{\" +\r\n                \"visitorList=\" + visitorList +\r\n                \", startTime='\" + startTime + '\\'' +\r\n                \", endTime='\" + endTime + '\\'' +\r\n                \", name='\" + name + '\\'' +\r\n                \", performances=\" + performances +\r\n                \", numberOfVisitors=\" + numberOfVisitors +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/classes/Festival.java b/src/main/java/classes/Festival.java
+--- a/src/main/java/classes/Festival.java	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/java/classes/Festival.java	(date 1675941382468)
+@@ -2,6 +2,7 @@
+ 
+ import java.io.Serializable;
+ import java.util.ArrayList;
++import java.util.Arrays;
+ 
+ public class Festival implements Serializable {
+     private ArrayList<Visitor> visitorList;
+@@ -11,9 +12,9 @@
+     private ArrayList<Performance> performances = new ArrayList<>();
+     private int numberOfVisitors;
+ 
+-    public Festival(int numberOfVisitors, String name, ArrayList<Performance> performances) {
+-        this.visitorList = new ArrayList<>();
+-        this.numberOfVisitors = numberOfVisitors;
++    public Festival(ArrayList<Visitor> visitors, String name, ArrayList<Performance> performances) {
++        this.visitorList = visitors;
++        this.numberOfVisitors = this.visitorList.size();
+         this.name = name;
+         this.performances = performances;
+     }
+Index: src/main/java/classes/Performance.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package classes;\r\n\r\nimport java.io.Serializable;\r\n\r\npublic class Performance implements Serializable {\r\n    private Artist artist;\r\n    private String startPerformance;\r\n    private String endPerformance;\r\n    private String podium;\r\n\r\n    public Performance(Artist artist, String startPerformance, String endPerformance, String podium) {\r\n        this.artist = artist;\r\n        this.startPerformance = startPerformance;\r\n        this.endPerformance = endPerformance;\r\n        this.podium = podium;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Performance{\" +\r\n                \"artist=\" + artist +\r\n                \", startPerformance='\" + startPerformance + '\\'' +\r\n                \", endPerformance='\" + endPerformance + '\\'' +\r\n                \", podium='\" + podium + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/classes/Performance.java b/src/main/java/classes/Performance.java
+--- a/src/main/java/classes/Performance.java	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/java/classes/Performance.java	(date 1675936883878)
+@@ -8,7 +8,7 @@
+     private String endPerformance;
+     private String podium;
+ 
+-    public Performance(Artist artist, String startPerformance, String endPerformance, String podium) {
++    public Performance(Artist artist, String startPerformance, int Duration, String podium) {
+         this.artist = artist;
+         this.startPerformance = startPerformance;
+         this.endPerformance = endPerformance;
+Index: src/main/java/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Main.java b/src/main/java/Main.java
+new file mode 100644
+--- /dev/null	(date 1675942372331)
++++ b/src/main/java/Main.java	(date 1675942372331)
+@@ -0,0 +1,5 @@
++public class Main {
++    public static void main(String[] args) {
++        System.out.println("Hello stupid world!");
++    }
++}
+Index: src/main/java/classes/Artist.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package classes;\r\n\r\nimport java.io.Serializable;\r\nimport java.util.ArrayList;\r\n\r\npublic class Artist implements Serializable {\r\n    private String name;\r\n    private int popularity;\r\n//    private ArrayList<Song> songs = new ArrayList<>();\r\n    private String setStartingTime;\r\n    private int setDurationInMinutes;\r\n    private String genre;\r\n    private Genre genreInEnum;\r\n\r\n\r\n    public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes) {\r\n        this.setStartingTime = setStartingTime;\r\n        this.setDurationInMinutes = setDurationInMinutes;\r\n        this.name = name;\r\n        this.popularity = popularity;\r\n//        this.songs = songs;\r\n        this.genre = genre;\r\n    }\r\n    @Override\r\n    public String toString() {\r\n        return \"Artist{\" +\r\n                \"name='\" + name + '\\'' +\r\n                \", popularity=\" + popularity +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/classes/Artist.java b/src/main/java/classes/Artist.java
+--- a/src/main/java/classes/Artist.java	(revision c5ba25b2591a57248fd9def846ee8305a90771f8)
++++ b/src/main/java/classes/Artist.java	(date 1675936500744)
+@@ -13,7 +13,7 @@
+     private Genre genreInEnum;
+ 
+ 
+-    public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes) {
++    public Artist(String name, String genre, int popularity) {
+         this.setStartingTime = setStartingTime;
+         this.setDurationInMinutes = setDurationInMinutes;
+         this.name = name;
