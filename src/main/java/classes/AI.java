@@ -25,10 +25,13 @@ public class AI {
     private int indexFollow = 1945;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
     private BufferedImage image;
+    private ArrayList<BufferedImage> colorTiles;
 
-    public AI(Point2D position) throws FileNotFoundException {
+    public AI(Point2D position, ArrayList<BufferedImage> colorTiles) throws FileNotFoundException {
         this.position = position;
         this.target = new Point2D.Double(Math.random() * 1000, Math.random() * 1000);
+
+        this.colorTiles = colorTiles;
 
         JsonReader reader = null;
 
@@ -70,7 +73,7 @@ public class AI {
             e.printStackTrace();
         }
 
-        image = tiles.get(16);
+        image = colorTiles.get(0);
 
     }
 
@@ -86,7 +89,7 @@ public class AI {
         AffineTransform tx = new AffineTransform();
         tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
 
-        image = tiles.get(16);
+        image = colorTiles.get(0);
         g.drawImage(image, tx, null);
 
         if (lastTx != null){
