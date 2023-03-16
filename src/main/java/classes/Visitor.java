@@ -2,15 +2,18 @@ package classes;
 
 import java.io.Serializable;
 import java.util.List;
+
+import interfaces.animated;
 import net.datafaker.Faker;
 
-public class Visitor implements Serializable {
+public class Visitor implements Serializable, animated {
     private String name;
     private int age;
     private String gender;
     private String email;
 
     private List<Visitor> visitorList;
+    private int animationStatus = 1;
 
     public Visitor() {
         Faker faker = new Faker();
@@ -25,6 +28,20 @@ public class Visitor implements Serializable {
     }
 
     @Override
+    public void update() {
+        if (animationStatus < 4) {
+            animationStatus++;
+        } else {
+            animationStatus = 1;
+        }
+    }
+
+    @Override
+    public int getAnimationStatus() {
+        return animationStatus;
+    }
+
+    @Override
     public String toString() {
         return "classes.Visitor{" +
                 "name='" + name + '\'' +
@@ -33,5 +50,6 @@ public class Visitor implements Serializable {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 
 }

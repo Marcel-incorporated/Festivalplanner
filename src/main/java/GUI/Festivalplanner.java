@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Festivalplanner extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Festivalplanner.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML/Festivalplanner.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("Festivalplanner");
         stage.setScene(scene);

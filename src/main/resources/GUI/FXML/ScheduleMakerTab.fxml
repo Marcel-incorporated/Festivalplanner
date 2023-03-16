@@ -11,7 +11,7 @@
     <children>
         <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
             <image>
-                <Image url="@images/fileGeneratorBackground.png" />
+                <Image url="GUI/UI-assets/fileGeneratorBackground.png" />
             </image>
         </ImageView>
         <Button layoutX="826.0" layoutY="530.0" mnemonicParsing="false" onAction="#onExportButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: ECE6DB;" text="Export " />
@@ -28,7 +28,7 @@
         <Button fx:id="addArtistButton" layoutX="355.0" layoutY="150.0" mnemonicParsing="false" onAction="#onAddArtistButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: ECE6DB;" text="Add Artist" />
         <ImageView fitHeight="29.0" fitWidth="64.0" layoutX="824.0" layoutY="528.0">
             <image>
-                <Image url="@images/6025ButtonOutline.png" />
+                <Image url="GUI/UI-assets/6025ButtonOutline.png" />
             </image>
         </ImageView>
       <ChoiceBox fx:id="stagePickerChoicebox" layoutX="463.0" layoutY="122.0" prefWidth="149.0" />

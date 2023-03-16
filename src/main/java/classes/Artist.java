@@ -1,17 +1,20 @@
 package classes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class Artist implements Serializable {
+import interfaces.animated;
+
+public class Artist implements Serializable, animated {
     private String name;
     private int popularity;
-//    private ArrayList<Song> songs = new ArrayList<>();
+    //    private ArrayList<Song> songs = new ArrayList<>();
     private String setStartingTime;
     private int setDurationInMinutes;
     private String genre;
     private Genre genreInEnum;
     private String podium;
+
+    private int animationStatus = 1;
 
 
     public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes, String podium) {
@@ -22,6 +25,20 @@ public class Artist implements Serializable {
         this.popularity = popularity;
 //        this.songs = songs;
         this.genre = genre;
+    }
+
+    @Override
+    public void update() {
+        if (animationStatus < 4) {
+            animationStatus++;
+        } else {
+            animationStatus = 1;
+        }
+    }
+
+    @Override
+    public int getAnimationStatus() {
+        return animationStatus;
     }
 
     public String getName() {
@@ -83,4 +100,6 @@ public class Artist implements Serializable {
     public String toString() {
         return name;
     }
+
+
 }

@@ -9,7 +9,7 @@
     <children>
         <ImageView fitHeight="561.0" fitWidth="890.0" layoutX="5.0" layoutY="5.0">
             <image>
-                <Image url="@images/scheduleBackground.png" />
+                <Image url="@../UI-assets/scheduleBackground.png" />
             </image>
         </ImageView>
       <Canvas id="canvasSchedule" fx:id="canvasSchedule" height="529.0" layoutX="93.0" layoutY="36.0" width="799.0" />
@@ -17,7 +17,7 @@
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/importButton.png" />
+                        <Image url="@../UI-assets/importButton.png" />
                     </image>
                 </ImageView>
             </graphic>
