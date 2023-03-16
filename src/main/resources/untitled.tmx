@@ -4,7 +4,7 @@
   <export target="map.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="96" columns="16">
-  <image source="bomb_party_v3.png" trans="ff00ff" width="256" height="96"/>
+  <image source="simulator-assets/bomb_party_v3.png" trans="ff00ff" width="256" height="96"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="56" height="35">
   <data encoding="csv">

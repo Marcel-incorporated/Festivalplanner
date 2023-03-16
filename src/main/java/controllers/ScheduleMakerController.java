@@ -6,7 +6,6 @@ import classes.Festival;
 import classes.Song;
 import classes.Visitor;
 
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
@@ -16,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -137,7 +135,7 @@ public class ScheduleMakerController {
     }
 
     private void openArtistEditDialog(Artist item) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/editArtistDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/FXML/editArtistDialog.fxml"));
         DialogPane editArtistDialogPane = fxmlLoader.load();
 
         editArtistDialogController editArtistDialogController = fxmlLoader.getController();
