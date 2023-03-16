@@ -62,8 +62,6 @@ public class SimulatorController extends Thread implements Runnable {
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
 
-        ais.add(new AI(new Point2D.Double(664, 552)));
-
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
         FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
         drawMap(g2d);
@@ -124,6 +122,8 @@ public class SimulatorController extends Thread implements Runnable {
         for (int i = 64; i <= 73; i++) {
             goldAI.add(image = aisImage.get(i));
         }
+
+        ais.add(new AI(new Point2D.Double(664, 552), greenAI));
     }
 
     public void update() {
