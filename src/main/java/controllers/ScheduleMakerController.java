@@ -5,7 +5,6 @@ import classes.Artist;
 import classes.Festival;
 import classes.Song;
 import classes.Visitor;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
@@ -13,13 +12,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.shape.SVGPath;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class ScheduleMakerController {
-
+    //FXML attributen
     @FXML
     public Button saveFestival;
     @FXML
@@ -49,8 +47,7 @@ public class ScheduleMakerController {
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
 
-    //Actual attributes to save data
-
+    //Klasse attributen
     private int popularity = 0;
     private boolean popularitySelected = false;
     private int amountOfArtistsAdded = 0;
@@ -61,8 +58,6 @@ public class ScheduleMakerController {
     private String selectedStage;
     private ObservableList<Artist> artistsObservableList = artistsListView.getItems();
 
-
-    //SCHEDULE MAKER
     @FXML
 
     public void initialize() {
@@ -79,7 +74,7 @@ public class ScheduleMakerController {
         stagePickerChoicebox.getItems().addAll("Main stage", "Stage 2", "Stage 3", "Stage 4");
         stagePickerChoicebox.setValue("Main stage");
 
-        //Code for editing and deleting artists
+        //Code voor bewerken en verwijderen artiesten
         artistsListView.setCellFactory(lv -> {
             ListCell<Artist> cell = new ListCell<>();
 
@@ -89,7 +84,7 @@ public class ScheduleMakerController {
             editItem.textProperty().bind(Bindings.format("Edit \"%s\"", cell.itemProperty()));
             editItem.setOnAction(event -> {
                 Artist item = cell.getItem();
-                // code to edit item...
+                //code om item te bewerken
                 try {
                     openArtistEditDialog(item);
                 } catch (IOException e) {
@@ -154,7 +149,6 @@ public class ScheduleMakerController {
 
     @FXML
     public void onRefreshListButton() {
-//        System.out.println(ArtistArrayListController.artists.size());
         artistsObservableList.clear();
         for (Artist a : ArtistArrayListController.artists) {
             if (!artistsObservableList.contains(a)) {

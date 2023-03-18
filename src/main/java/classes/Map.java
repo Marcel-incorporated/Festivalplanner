@@ -14,12 +14,9 @@ import java.util.ArrayList;
 public class Map {
 	private int width;
 	private int height;
-
 	private int tileHeight;
 	private int tileWidth;
-
 	private ArrayList<BufferedImage> tiles = new ArrayList<>();
-
 	private int[][] map;
 
 	public Map(String fileName) throws FileNotFoundException {
@@ -33,16 +30,16 @@ public class Map {
 		this.width = root.getInt("width");
 		this.height = root.getInt("height");
 
-		//load the tilemap
+		//Laad de tegelmap
 		try {
-			// Get the tileset JSON object
+			//Haal de tegelset JSON object op
 			JsonArray tilesets = root.getJsonArray("tilesets");
 			JsonObject tileset = tilesets.getJsonObject(0);
 
-			// Get the file name of the tilemap
+			//Haal bestandsnaam van de tegelmap op
 			String fileNameTileMap = tileset.getString("image");
 
-			// Load the tilemap image
+			//Laad de tegelmap afbeelding
 			InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileNameTileMap);
 			BufferedImage tilemapImage = ImageIO.read(inputStream);
 

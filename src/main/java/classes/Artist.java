@@ -13,9 +13,7 @@ public class Artist implements Serializable, animated {
     private String genre;
     private Genre genreInEnum;
     private String podium;
-
     private int animationStatus = 1;
-
 
     public Artist(String name, String genre, int popularity, String setStartingTime, int setDurationInMinutes, String podium) {
         this.podium = podium;
