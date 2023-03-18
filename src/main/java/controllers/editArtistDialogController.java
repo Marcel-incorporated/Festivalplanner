@@ -2,48 +2,35 @@ package controllers;
 
 import classes.Artist;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
 
-import java.util.Optional;
-
 public class editArtistDialogController {
-
+    //FXML attributen
     @FXML
     private TextField artistNameTextfield;
-
     @FXML
     private ChoiceBox<String> durationChoicebox;
-
     @FXML
     private SVGPath fifthStar;
-
     @FXML
     private SVGPath firstStar;
-
     @FXML
     private SVGPath fourthStar;
-
     @FXML
     private TextField genreTextfield;
-
     @FXML
     private SVGPath secondStar;
-
     @FXML
     private ChoiceBox<String> stagePickerChoicebox;
-
     @FXML
     private ChoiceBox<String> startTimeChoicebox;
-
     @FXML
     private SVGPath thirdStar;
 
+    //Klasse attributen
     private Artist artist;
-
     private int popularity = 0;
     private boolean popularitySelected = false;
 

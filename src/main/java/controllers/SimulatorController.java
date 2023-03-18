@@ -4,20 +4,15 @@ import classes.AI;
 import classes.Map;
 import classes.Matrix;
 import classes.MyAnimationTimer;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-
 import javafx.scene.control.Label;
-
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -25,7 +20,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 public class SimulatorController extends Thread implements Runnable {
-
+    //FXML attributen
     @FXML
     public Canvas simMap;
     @FXML
@@ -34,16 +29,16 @@ public class SimulatorController extends Thread implements Runnable {
     private Label statusLabel = new Label();
     @FXML
     private Label timeLabel;
-    //    private AnimationTimer animationTimer;
-    private MyAnimationTimer animationTimer;
-    private double timer;
-    private Map map;
-    private int minutes = 00;
-    private int hours = 10;
     @FXML
     public Canvas bottom;
     @FXML
     public Canvas pathFinding;
+
+    //Klasse attributen
+    private MyAnimationTimer animationTimer;
+    private Map map;
+    private int minutes = 00;
+    private int hours = 10;
     private Map bottomMap;
     private Map pathFindingMap;
     private int width;
@@ -51,7 +46,6 @@ public class SimulatorController extends Thread implements Runnable {
     private int tileHeight;
     private int tileWidth;
     private Matrix orangeShopPath;
-
     private boolean pastMidnight = false;
     private ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private BufferedImage image;
@@ -92,16 +86,16 @@ public class SimulatorController extends Thread implements Runnable {
         this.width = root.getInt("width");
         this.height = root.getInt("height");
 
-        //load the tilemap
+        //Laad de tegelmap
         try {
-            // Get the tileset JSON object
+            //Haal de tegelmap JSON object op
             JsonArray tilesets = root.getJsonArray("tilesets");
             JsonObject tileset = tilesets.getJsonObject(0);
 
-            // Get the file name of the tilemap
+            //Haal de bestandsnaam van de tegelmap op
             String fileNameTileMap = tileset.getString("image");
 
-            // Load the tilemap image
+            //Laad de tegelmap afbeelding
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileNameTileMap);
             BufferedImage tilemapImage = ImageIO.read(inputStream);
 
@@ -137,12 +131,6 @@ public class SimulatorController extends Thread implements Runnable {
     }
 
     public void update() {
-//        timer += deltaTime;
-//        System.out.println(timer);
-
-//        if (timer >= 1) {
-
-
         Platform.runLater(() -> {
             for (AI ai : ais) {
                 ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
@@ -155,7 +143,7 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawMap(Graphics2D g) {
         map.draw(g);
-        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
+//        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
 
     public void setStatusLabel(String text) {

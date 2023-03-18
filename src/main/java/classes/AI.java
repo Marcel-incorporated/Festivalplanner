@@ -4,11 +4,9 @@ import javax.imageio.ImageIO;
 import javax.json.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,9 +42,9 @@ public class AI {
         this.width = root.getInt("width");
         this.height = root.getInt("height");
 
-        //load the tilemap
+        //Laad de tegelmap
         try {
-            // Get the tileset JSON object
+            //Haal de tegelset JSON object op
             JsonArray tilesets = root.getJsonArray("tilesets");
             JsonObject tileset = tilesets.getJsonObject(0);
 
@@ -56,10 +54,10 @@ public class AI {
             JsonArray jsonArray = layer.getJsonArray("data");
             mapArray = getIntArray(jsonArray);
 
-            // Get the file name of the tilemap
+            //Haal bestandsnaam van de tegelmap op
             String fileNameTileMap = tileset.getString("image");
 
-            // Load the tilemap image
+            //Laad de tegelmap afbeelding
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileNameTileMap);
             BufferedImage tilemapImage = ImageIO.read(inputStream);
 
