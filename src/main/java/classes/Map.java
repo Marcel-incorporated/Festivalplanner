@@ -74,8 +74,20 @@ public class Map {
 				if(map[y][x] < 0)
 					continue;
 
-				g2d.drawImage(
-					tiles.get(map[y][x]-1), AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight), null);
+				g2d.drawImage(tiles.get(map[y][x]-1), AffineTransform.getTranslateInstance(x*tileWidth, y*tileHeight), null);
+			}
+		}
+	}
+
+	public void drawMatrix(Graphics2D g2d, Matrix matrix) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				if(map[y][x] < 0)
+					continue;
+
+				g2d.setColor(Color.YELLOW);
+				int value = matrix.get(y, x);
+				g2d.drawString(value + "", x*tileWidth+4,y*tileHeight+12);
 			}
 		}
 	}
