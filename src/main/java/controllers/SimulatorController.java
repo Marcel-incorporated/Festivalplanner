@@ -130,14 +130,16 @@ public class SimulatorController extends Thread implements Runnable {
         ais.add(new AI(new Point2D.Double(664, 552), greenAI));
     }
 
-//    public void update() {
-//        Platform.runLater(() -> {
-//            for (AI ai : ais) {
-//                ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
-//                ai.update(ais);
-//            }
-//        });
-//    }
+    public void update() {
+        Platform.runLater(() -> {
+            for (AI ai : ais) {
+                ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                makeOrangeShopPath();
+                ai.setPathFindingMatrix(orangeShopPath);
+                ai.update(ais);
+            }
+        });
+    }
 
     public void drawMap(Graphics2D g) {
         map.draw(g);
@@ -167,7 +169,7 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawPathFinding(Graphics2D g) {
         makeOrangeShopPath();
-        pathFindingMap.drawMatrix(g, orangeShopPath);
+        //pathFindingMap.drawMatrix(g, orangeShopPath);
     }
 
     public void makeOrangeShopPath(){
