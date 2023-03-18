@@ -141,9 +141,13 @@ public class SimulatorController extends Thread implements Runnable {
 //        System.out.println(timer);
 
 //        if (timer >= 1) {
+
+
         Platform.runLater(() -> {
             for (AI ai : ais) {
                 ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                makeOrangeShopPath();
+                ai.setPathFindingMatrix(orangeShopPath);
                 ai.update(ais);
             }
         });
@@ -177,7 +181,7 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawPathFinding(Graphics2D g) {
         makeOrangeShopPath();
-        pathFindingMap.drawMatrix(g, orangeShopPath);
+        //pathFindingMap.drawMatrix(g, orangeShopPath);
     }
 
     public void makeOrangeShopPath(){

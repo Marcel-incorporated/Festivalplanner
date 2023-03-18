@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AI {
     private Point2D position;
@@ -22,20 +23,21 @@ public class AI {
     private int tileHeight;
     private int tileWidth;
     private ArrayList<Integer> mapArray;
-    private int indexFollow = 1945;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
     private BufferedImage image;
     private ArrayList<BufferedImage> colorTiles;
+    private int indexPosition;
+    private Matrix pathFindingMatrix;
 
     public AI(Point2D position, ArrayList<BufferedImage> colorTiles) throws FileNotFoundException {
         this.position = position;
         this.target = new Point2D.Double(Math.random() * 1000, Math.random() * 1000);
-
         this.colorTiles = colorTiles;
+        this.indexPosition = 1945;
 
         JsonReader reader = null;
 
-        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "map.json");
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "collision.json");
         reader = Json.createReader(new FileInputStream(file));
         JsonObject root = reader.readObject();
 
@@ -101,20 +103,103 @@ public class AI {
     }
 
     public void update(ArrayList<AI> others) {
+
+        // TODO ais mogen niet collide met elkaar
+
         for (AI other : others) {
 
-            int nextValue = mapArray.get(indexFollow-56);
+            int north = -999;
+            int south = -999;
+            int west = -999;
+            int east = -999;
 
-            indexFollow = indexFollow-56;
+            boolean isDone = false;
 
-            System.out.println(nextValue);
+            if (!(indexPosition - 56 < 0) && !(indexPosition - 56 > 1959)){
+                north = mapArray.get(indexPosition-56);
+            }
+            if (!(indexPosition + 56 > 1959)){
+                south = mapArray.get(indexPosition+56);
+            }
+            if (!(indexPosition - 1 < 0) && !(indexPosition - 1 > 1959)){
+                west = mapArray.get(indexPosition-1);
+            }
+            if (!(indexPosition + 1 > 1959)){
+                east = mapArray.get(indexPosition+1);
+            }
 
-            if (nextValue == 3){
-                System.out.println("grass infront we have to stop now!");
+//             north = - 56
+//             south = + 56
+//             west = - 1
+//             east = + 1
+
+//            System.out.println(north);
+//            System.out.println(south);
+//            System.out.println(west);
+//            System.out.println(east);
+
+            // height="560.0" width="896.0" canvas
+
+            // als er geen pathfinding matrix geset is
+            if (other.getPathFindingMatrix() == null){
+
+                // TODO
+                //  soms is ie op eens weg geen idee waarom ?
+                //  De AI gaat schuin dus van een vak op eens naar een links boven, rechts boven, links onder of rechts onder.
+                //  Dit mag niet mag alleen links, rechts, omhoog en omlaag.
+                //  Doet heel veel de zelfde moves links rechts
+
+                // krijg een random move kijk of dit kan en voer deze uit
+                do {
+                    int move = getRandomMove();
+
+                    switch (move){
+                        case 1:
+                            System.out.println("north");
+                            if (north != -999 && north != 45 && !(position.getY() - 16 < 0)){
+                                indexPosition -= 56;
+                                position = new Point2D.Double(position.getX(), position.getY() - 16);
+                                other.setTarget(position);
+                                isDone = true;
+                            }
+                        case 2:
+
+
+                            System.out.println("east");
+                            if (east != -999 && east != 45 && !(position.getX() + 16 > 896)){
+                                indexPosition += 1;
+                                position = new Point2D.Double(position.getX() + 16, position.getY());
+                                other.setTarget(position);
+                                isDone = true;
+                            }
+                        case 3:
+
+                        case 4:
+                            System.out.println("west");
+                            if (west != -999 && west != 45 && !(position.getX() - 16 < 0)){
+                                indexPosition -= 1;
+                                position = new Point2D.Double(position.getX() - 16, position.getY());
+                                other.setTarget(position);
+                                isDone = true;
+                            }
+                    }
+                } while (isDone == false);
+                System.out.println(position.toString());
             }
             else{
-                position = new Point2D.Double(position.getX(), position.getY() - 16);
-                other.setTarget(position);
+                int x;
+                int y;
+
+                int[] cords = getMatrixXY(indexPosition);
+
+                x = cords[0];
+                y = cords[1];
+
+                // TODO
+                //  kijk om de cords vier kanten op noord zuid oost en west
+                //  controleer welk nummer het laagst is door in de other.getPathFindingMatrix() te kijken dit is een matrix
+                //  de laagste value is de stap die je wil maken den zei dit natuurlijk een 45 is in de mapArray de index waar je ben moet worden
+                //  bij gehouden met de indexPosition
             }
         }
     }
@@ -126,6 +211,47 @@ public class AI {
     public Point2D getPosition() {
         return position;
     }
+
+    public int getIndexPosition() {
+        return indexPosition;
+    }
+
+    public void setIndexPosition(int indexPosition) {
+        this.indexPosition = indexPosition;
+    }
+
+    public Matrix getPathFindingMatrix() {
+        return pathFindingMatrix;
+    }
+
+    public void setPathFindingMatrix(Matrix pathFindingMatrix) {
+        this.pathFindingMatrix = pathFindingMatrix;
+    }
+
+    public int getRandomMove() {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(2) + 1;
+        //System.out.println("Random number: " + randomNumber);
+        return randomNumber;
+    }
+
+    public int[] getMatrixXY(int number){
+        int[] coordinates = new int[2];
+
+        int x = 0;
+        int y = 0;
+
+        int row = 35;
+
+        y = number / 35;
+        x = number % 35;
+
+        coordinates[0] = x;
+        coordinates[1] = y;
+
+        return coordinates;
+    }
+
 }
 
 
