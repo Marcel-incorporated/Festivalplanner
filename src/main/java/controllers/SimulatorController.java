@@ -2,6 +2,7 @@ package controllers;
 
 import classes.AI;
 import classes.Map;
+import classes.Matrix;
 import classes.MyAnimationTimer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -39,12 +40,17 @@ public class SimulatorController extends Thread implements Runnable {
     private Map map;
     private int minutes = 00;
     private int hours = 10;
+    @FXML
     public Canvas bottom;
+    @FXML
+    public Canvas pathFinding;
     private Map bottomMap;
+    private Map pathFindingMap;
     private int width;
     private int height;
     private int tileHeight;
     private int tileWidth;
+    private Matrix orangeShopPath;
 
     private boolean pastMidnight = false;
     private ArrayList<BufferedImage> aisImage = new ArrayList<>();
@@ -61,11 +67,15 @@ public class SimulatorController extends Thread implements Runnable {
         saveAITypes();
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
+        pathFindingMap = new Map("pathFinding.json");
 
         FXGraphics2D g2d = new FXGraphics2D(simMap.getGraphicsContext2D());
         FXGraphics2D bottomDrawer = new FXGraphics2D(bottom.getGraphicsContext2D());
+        FXGraphics2D pathFinderDrawer = new FXGraphics2D(pathFinding.getGraphicsContext2D());
+
         drawMap(g2d);
         drawBottom(bottomDrawer);
+        drawPathFinding(pathFinderDrawer);
 
         animationTimer = new MyAnimationTimer(timeLabel, ais, simMap) {
             long last = -1;
@@ -163,5 +173,15 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawBottom(Graphics2D g) {
         bottomMap.draw(g);
+    }
+
+    public void drawPathFinding(Graphics2D g) {
+        makeOrangeShopPath();
+        pathFindingMap.drawMatrix(g, orangeShopPath);
+    }
+
+    public void makeOrangeShopPath(){
+        orangeShopPath = new Matrix(35, 56);
+        orangeShopPath.updateAround(5, 3, 0);
     }
 }
