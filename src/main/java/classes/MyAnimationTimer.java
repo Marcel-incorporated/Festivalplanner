@@ -6,8 +6,6 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class MyAnimationTimer extends AnimationTimer {
@@ -35,15 +33,15 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
             return;
         }
-        // Calculate elapsed time since last execution
+        //Bereken de verstreken tijd sinds de laatste keer
         long elapsed = currentTime - lastTime;
         long elapsedForTimer = currentTime - lastTimeForTimer;
 
-        if (elapsed >= 125_000_000) { // 125 milliseconds
-            // Execute the method here
+        if (elapsed >= 125_000_000) { // 125 milliseconden
+            //Roep methode aan
             myMethod();
 
-            // Schedule the next execution 125 milliseconds later
+            //Plan de volgende keer runnen 125 milliseconde later
             lastTime = currentTime;
         }
         if (elapsedForTimer >= 1_000_000_000) {
@@ -103,7 +101,7 @@ public class MyAnimationTimer extends AnimationTimer {
     }
 
     private void myMethod() {
-        // code to execute 8 times per second
+        //Code die 8 keer per seconde wordt uitgevoerd
 //        System.out.println("method");
     }
 }

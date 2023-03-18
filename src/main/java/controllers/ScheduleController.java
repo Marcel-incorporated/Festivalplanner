@@ -1,15 +1,11 @@
 package controllers;
 
 import classes.Artist;
-import classes.Block;
 import classes.Festival;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -17,17 +13,15 @@ import java.util.HashMap;
 
 public class ScheduleController {
 
+    @FXML
+    public Canvas canvasSchedule;
+
     private ScheduleMakerController scheduleMakerController = new ScheduleMakerController();
     private ArrayList<Rectangle2D> blocksToDraw = new ArrayList<>();
     private ArrayList<String> artistNames = new ArrayList<>();
     private int xBlock = 0;
     private int yBlock = 0;
-
-    @FXML
-    public Canvas canvasSchedule;
-
     HashMap<Rectangle2D, Artist> blocksConnectedToArtist = new HashMap<Rectangle2D, Artist>();
-
     ArrayList<Artist> allArtists = new ArrayList<>();
 
     @FXML
@@ -379,13 +373,8 @@ public class ScheduleController {
         {
             if (block.contains(event.getX(), event.getY()))
             {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
                 Artist artist = blocksConnectedToArtist.get(block);
-
-                alert.setContentText("Name: " + artist.getName() + "\n" + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" + "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
-
-                alert.showAndWait();
+                NotificationPromptController.notification(false, "Name: " + artist.getName() + "\n" + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" + "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
             }
         }
     }
