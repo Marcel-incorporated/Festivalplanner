@@ -52,8 +52,9 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
                 for (AI ai : ais) {
-                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                     ai.update(ais);
+                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                    System.out.println("test");
                 }
             });
 

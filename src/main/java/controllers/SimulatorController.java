@@ -4,6 +4,7 @@ import classes.AI;
 import classes.Map;
 import classes.Matrix;
 import classes.MyAnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
@@ -130,16 +131,16 @@ public class SimulatorController extends Thread implements Runnable {
         ais.add(new AI(new Point2D.Double(664, 552), greenAI));
     }
 
-    public void update() {
-        Platform.runLater(() -> {
-            for (AI ai : ais) {
-                ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
-                makeOrangeShopPath();
-                ai.setPathFindingMatrix(orangeShopPath);
-                ai.update(ais);
-            }
-        });
-    }
+//    public void update() {
+//        Platform.runLater(() -> {
+//            for (AI ai : ais) {
+//                makeOrangeShopPath();
+////                ai.setPathFindingMatrix(orangeShopPath);
+//                ai.update(ais);
+//                ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+//            }
+//        });
+//    }
 
     public void drawMap(Graphics2D g) {
         map.draw(g);

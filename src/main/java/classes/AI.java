@@ -88,14 +88,12 @@ public class AI {
     public void draw(Graphics2D g) {
         AffineTransform tx = new AffineTransform();
         tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
-
-        image = colorTiles.get(0);
-        g.drawImage(image, tx, null);
-
         if (lastTx != null){
             image = tiles.get(0);
             g.drawImage(image, lastTx, null);
         }
+        image = colorTiles.get(0);
+        g.drawImage(image, tx, null);
 
         lastTx = tx;
     }
@@ -142,7 +140,6 @@ public class AI {
             if (other.getPathFindingMatrix() == null){
 
                 // TODO
-                //  soms is ie op eens weg geen idee waarom ?
                 //  De AI gaat schuin dus van een vak op eens naar een links boven, rechts boven, links onder of rechts onder.
                 //  Dit mag niet mag alleen links, rechts, omhoog en omlaag.
                 //  Doet heel veel de zelfde moves links rechts
@@ -150,6 +147,7 @@ public class AI {
                 // krijg een random move kijk of dit kan en voer deze uit
                 do {
                     int move = getRandomMove();
+                    System.out.println(move);
 
                     switch (move){
                         case 1:
@@ -160,9 +158,8 @@ public class AI {
                                 other.setTarget(position);
                                 isDone = true;
                             }
+                            System.out.println(position);
                         case 2:
-
-
                             System.out.println("east");
                             if (east != -999 && east != 45 && !(position.getX() + 16 > 896)){
                                 indexPosition += 1;
@@ -170,7 +167,17 @@ public class AI {
                                 other.setTarget(position);
                                 isDone = true;
                             }
+                            System.out.println(position);
+
                         case 3:
+                            System.out.println("south");
+                            if (south != -999 && south != 45 && !(position.getY() + 16 > 896)){
+                                indexPosition +=56;
+                                position = new Point2D.Double(position.getX(), position.getY()+16);
+                                other.setTarget(position);
+                                isDone = true;
+                            }
+                            System.out.println(position);
 
                         case 4:
                             System.out.println("west");
@@ -180,9 +187,10 @@ public class AI {
                                 other.setTarget(position);
                                 isDone = true;
                             }
+                            System.out.println(position);
                     }
-                } while (isDone == false);
-                System.out.println(position.toString());
+                } while (!isDone);
+//                System.out.println(position.toString());
             }
             else{
                 int x;
@@ -201,6 +209,7 @@ public class AI {
             }
         }
     }
+
 
     public void setTarget(Point2D point) {
         this.target = point;
@@ -228,7 +237,7 @@ public class AI {
 
     public int getRandomMove() {
         Random rand = new Random();
-        int randomNumber = rand.nextInt(2) + 1;
+        int randomNumber = rand.nextInt(4) + 1;
         //System.out.println("Random number: " + randomNumber);
         return randomNumber;
     }
