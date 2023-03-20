@@ -53,6 +53,7 @@ public class SimulatorController extends Thread implements Runnable {
     private ArrayList<BufferedImage> purpleAI = new ArrayList<>();
     private ArrayList<BufferedImage> goldAI = new ArrayList<>();
 
+    private Festival festival = new Festival();
 
     @FXML
     public void initialize() throws FileNotFoundException {

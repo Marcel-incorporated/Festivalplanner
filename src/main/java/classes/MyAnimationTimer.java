@@ -63,11 +63,10 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
                 for (AI ai : ais) {
-                    ai.update(ais);
+                    ai.update();
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
-
             lastTimeForTimer = currentTime;
         }
 
@@ -114,5 +113,9 @@ public class MyAnimationTimer extends AnimationTimer {
     private void myMethod() {
         //Code die 8 keer per seconde wordt uitgevoerd
 //        System.out.println("method");
+    }
+
+    public static ArrayList<AI> getAI_Array() {
+        return realAIs;
     }
 }
