@@ -27,7 +27,7 @@ public class AI
     private ArrayList<BufferedImage> colorTiles;
     private int indexPosition;
     private Matrix pathFindingMatrix;
-    private boolean isDone = false;
+    private boolean isDone;
     private Point2D newpos;
 
 
@@ -116,6 +116,7 @@ public class AI
     {
         // TODO ais mogen niet collide met elkaar
 
+        isDone = false;
 
         int north = -999;
         int south = -999;
@@ -157,7 +158,7 @@ public class AI
                             } else {
                                 if(ai.position.getX() != position.getX() || ai.position.getY() != position.getY() - 16) {
                                     isDone = true;
-                                    indexPosition -= 1;
+                                    indexPosition -= 56;
                                 }
                             }
                         }
@@ -174,7 +175,7 @@ public class AI
                             } else {
                                 if(ai.position.getX() != position.getX() + 16 || ai.position.getY() != position.getY()) {
                                     isDone = true;
-                                    indexPosition -= 1;
+                                    indexPosition += 1;
                                 }
                             }
                         }
@@ -208,7 +209,7 @@ public class AI
                             } else {
                                 if(ai.position.getX() != position.getX() || ai.position.getY() != position.getY() + 16) {
                                     isDone = true;
-                                    indexPosition -= 1;
+                                    indexPosition += 56;
                                 }
                             }
                         }
