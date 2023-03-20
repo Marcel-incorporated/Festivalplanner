@@ -2,6 +2,7 @@ package controllers;
 
 import classes.Artist;
 import classes.Festival;
+import classes.Visitor;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
