@@ -1,9 +1,6 @@
 package controllers;
 
-import classes.AI;
-import classes.Map;
-import classes.Matrix;
-import classes.MyAnimationTimer;
+import classes.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -59,7 +56,8 @@ public class SimulatorController extends Thread implements Runnable {
 
     @FXML
     public void initialize() throws FileNotFoundException {
-        saveAITypes();
+        saveAITypes(); //slaat alle tegels op van tegelmap per AI type
+
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
         pathFindingMap = new Map("pathFinding.json");
@@ -75,6 +73,73 @@ public class SimulatorController extends Thread implements Runnable {
         animationTimer = new MyAnimationTimer(timeLabel, ais, simMap) {
             long last = -1;
         };
+    }
+
+
+
+    public void LoadAIs() throws FileNotFoundException
+    {
+        ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
+        ais.add(new AI(new Point2D.Double(664, 552), goldAI));
+        //ai's laden based on hoeveel visitors er zijn: maar werkt nog niet want andere klasses gay
+//        for (Visitor v : festival.getVisitorList())
+//        {
+//            int number = (int)((Math.random() * 4) - 1) + 1;
+//            switch(number) {
+//                case 1:
+//                    ais.add(new AI(new Point2D.Double(664, 552), goldAI));
+//                    break;
+//                case 2:
+//                    ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
+//                    break;
+//                case 3:
+//                    ais.add(new AI(new Point2D.Double(664, 552), greenAI));
+//                    break;
+//                case 4:
+//                    ais.add(new AI(new Point2D.Double(664, 552), blueAI));
+//                    break;
+//            }
+//        }
+    }
+
+    public void drawMap(Graphics2D g) {
+        map.draw(g);
+    }
+
+    public void setStatusLabel(String text) {
+        statusLabel.setText(text);
+    }
+
+    @FXML
+    public void onStartButton() throws FileNotFoundException
+    {
+        try {
+            LoadAIs();
+            animationTimer.start();
+            statusLabel.setText("Status: started");
+        } catch (Exception e) {
+            NotificationPromptController.notification(true, "Geen bezoekers gevonden om te laden :(");
+        }
+    }
+
+    @FXML
+    public void onStopButton() {
+        animationTimer.stop();
+        statusLabel.setText("Status: stopped");
+    }
+
+    public void drawBottom(Graphics2D g) {
+        bottomMap.draw(g);
+    }
+
+    public void drawPathFinding(Graphics2D g) {
+        makeOrangeShopPath();
+//        pathFindingMap.drawMatrix(g, orangeShopPath);
+    }
+
+    public void makeOrangeShopPath(){
+        orangeShopPath = new Matrix(35, 56);
+        orangeShopPath.updateAround(5, 3, 0);
     }
 
     public void saveAITypes() throws FileNotFoundException {
@@ -128,53 +193,5 @@ public class SimulatorController extends Thread implements Runnable {
             goldAI.add(image = aisImage.get(i));
         }
 
-        ais.add(new AI(new Point2D.Double(664, 552), greenAI));
-    }
-
-//    public void update() {
-//        Platform.runLater(() -> {
-//            for (AI ai : ais) {
-//                makeOrangeShopPath();
-////                ai.setPathFindingMatrix(orangeShopPath);
-//                ai.update(ais);
-//                ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
-//            }
-//        });
-//    }
-
-    public void drawMap(Graphics2D g) {
-        map.draw(g);
-//        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
-    }
-
-    public void setStatusLabel(String text) {
-        statusLabel.setText(text);
-    }
-
-    @FXML
-    public void onStartButton() {
-        animationTimer.start();
-        statusLabel.setText("Status: started");
-    }
-
-
-    @FXML
-    public void onStopButton() {
-        animationTimer.stop();
-        statusLabel.setText("Status: stopped");
-    }
-
-    public void drawBottom(Graphics2D g) {
-        bottomMap.draw(g);
-    }
-
-    public void drawPathFinding(Graphics2D g) {
-        makeOrangeShopPath();
-        //pathFindingMap.drawMatrix(g, orangeShopPath);
-    }
-
-    public void makeOrangeShopPath(){
-        orangeShopPath = new Matrix(35, 56);
-        orangeShopPath.updateAround(5, 3, 0);
     }
 }

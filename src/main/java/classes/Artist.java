@@ -3,7 +3,11 @@ package classes;
 import java.io.Serializable;
 
 import interfaces.animated;
+import javafx.scene.canvas.GraphicsContext;
 
+
+//Deze methode bevat informatie van elke artiest die op het podium komt.
+//Ook bevat deze klasse code voor het animeren van de Artiest.
 public class Artist implements Serializable, animated {
     private String name;
     private int popularity;
@@ -33,6 +37,10 @@ public class Artist implements Serializable, animated {
             animationStatus = 1;
         }
     }
+
+//    public void draw(GraphicsContext gc) {
+//
+//    }
 
     @Override
     public int getAnimationStatus() {

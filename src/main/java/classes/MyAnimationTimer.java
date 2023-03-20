@@ -1,5 +1,6 @@
 package classes;
 
+import controllers.ArtistArrayListController;
 import controllers.SimulatorController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
 import java.util.ArrayList;
 
+//Deze klasse
 public class MyAnimationTimer extends AnimationTimer {
 
     private long lastTime = 0;
@@ -19,6 +21,9 @@ public class MyAnimationTimer extends AnimationTimer {
     private int hours = 10;
     private ArrayList<AI> ais;
     private Canvas simMap;
+    private int counter = 10;
+    private static ArrayList<AI> realAIs = new ArrayList<>();
+    private int arrayAI_Index = 0;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
@@ -27,8 +32,6 @@ public class MyAnimationTimer extends AnimationTimer {
     }
     @Override
     public void handle(long currentTime) {
-
-//        System.out.println("handle method called");
         if (lastTime == 0) {
             lastTime = currentTime;
             return;
@@ -45,6 +48,14 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         if (elapsedForTimer >= 1_000_000_000) {
+//            counter++;
+//            if(counter > 10) {
+//                if (arrayAI_Index != ais.size()-1){
+//                    realAIs.add(ais.get(arrayAI_Index));
+//                    arrayAI_Index++;
+//                    counter = 0;
+//                }
+//            }
             if (isPastMidnight() && getHours() == 3) {
                 stop();
                 resetTimer();
