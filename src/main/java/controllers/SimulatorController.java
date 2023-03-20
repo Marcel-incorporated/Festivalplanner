@@ -133,16 +133,16 @@ public class SimulatorController extends Thread implements Runnable {
             int value = getRandom4();
 
             if (value == 1){
-                ais.add(new AI(new Point2D.Double(664, 552), greenAI));
+                ais.add(new AI(new Point2D.Double(664, 552), greenAI, i));
             }
             if (value == 2){
-                ais.add(new AI(new Point2D.Double(664, 552), goldAI));
+                ais.add(new AI(new Point2D.Double(664, 552), goldAI, i));
             }
             if (value == 3){
-                ais.add(new AI(new Point2D.Double(664, 552), blueAI));
+                ais.add(new AI(new Point2D.Double(664, 552), blueAI, i));
             }
             if (value == 4){
-                ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
+                ais.add(new AI(new Point2D.Double(664, 552), purpleAI, i));
             }
         }
     }
