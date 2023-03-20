@@ -18,7 +18,7 @@ public class MyAnimationTimer extends AnimationTimer {
     private int minutes = 0;
     private int hours = 10;
     private ArrayList<AI> ais;
-    private ArrayList<AI> realAis = new ArrayList<>();
+    public static ArrayList<AI> realAis = new ArrayList<>();
     private Canvas simMap;
     private int index;
     private int counter = 10;
