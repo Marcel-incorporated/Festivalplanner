@@ -139,58 +139,49 @@ public class AI {
             // als er geen pathfinding matrix geset is
             if (other.getPathFindingMatrix() == null){
 
-                // TODO
-                //  De AI gaat schuin dus van een vak op eens naar een links boven, rechts boven, links onder of rechts onder.
-                //  Dit mag niet mag alleen links, rechts, omhoog en omlaag.
-                //  Doet heel veel de zelfde moves links rechts
 
                 // krijg een random move kijk of dit kan en voer deze uit
                 do {
                     int move = getRandomMove();
-                    System.out.println(move);
-
                     switch (move){
                         case 1:
-                            System.out.println("north");
                             if (north != -999 && north != 45 && !(position.getY() - 16 < 0)){
                                 indexPosition -= 56;
                                 position = new Point2D.Double(position.getX(), position.getY() - 16);
                                 other.setTarget(position);
                                 isDone = true;
+//                                System.out.println("north");
                             }
-                            System.out.println(position);
+                            break;
                         case 2:
-                            System.out.println("east");
                             if (east != -999 && east != 45 && !(position.getX() + 16 > 896)){
                                 indexPosition += 1;
                                 position = new Point2D.Double(position.getX() + 16, position.getY());
                                 other.setTarget(position);
                                 isDone = true;
+//                                System.out.println("east");
                             }
-                            System.out.println(position);
-
+                            break;
                         case 3:
-                            System.out.println("south");
                             if (south != -999 && south != 45 && !(position.getY() + 16 > 896)){
                                 indexPosition +=56;
                                 position = new Point2D.Double(position.getX(), position.getY()+16);
                                 other.setTarget(position);
                                 isDone = true;
+//                                System.out.println("south");
                             }
-                            System.out.println(position);
-
+                            break;
                         case 4:
-                            System.out.println("west");
                             if (west != -999 && west != 45 && !(position.getX() - 16 < 0)){
                                 indexPosition -= 1;
                                 position = new Point2D.Double(position.getX() - 16, position.getY());
                                 other.setTarget(position);
                                 isDone = true;
+//                                System.out.println("west");
                             }
-                            System.out.println(position);
+                            break;
                     }
                 } while (!isDone);
-//                System.out.println(position.toString());
             }
             else{
                 int x;
