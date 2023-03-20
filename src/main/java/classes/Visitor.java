@@ -11,7 +11,6 @@ public class Visitor implements Serializable, animated {
     private int age;
     private String gender;
     private String email;
-
     private List<Visitor> visitorList;
     private int animationStatus = 1;
 

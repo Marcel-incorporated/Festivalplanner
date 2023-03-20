@@ -51,7 +51,7 @@ public class ScheduleMakerController {
     private int popularity = 0;
     private boolean popularitySelected = false;
     private int amountOfArtistsAdded = 0;
-    private int visitorCount;
+    public static int visitorCount;
     private String festivalName;
     private ArrayList<Visitor> visitors = new ArrayList<>();
     private ArrayList<Song> songs = new ArrayList<>();
@@ -286,6 +286,8 @@ public class ScheduleMakerController {
         }
         try {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
+            SimulatorController.visitorCount = visitorCount;
+            SimulatorController.saveAITypes();
             if (visitorCount > 20) {
                 NotificationPromptController.notification(true, "Can't add more than 20 visitors!");
                 return;
