@@ -374,7 +374,9 @@ public class ScheduleController {
             if (block.contains(event.getX(), event.getY()))
             {
                 Artist artist = blocksConnectedToArtist.get(block);
-                NotificationPromptController.notification(false, "Name: " + artist.getName() + "\n" + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" + "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
+                NotificationPromptController.notification(false, "Name: " + artist.getName() + "\n"
+                        + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" +
+                        "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
             }
         }
     }
