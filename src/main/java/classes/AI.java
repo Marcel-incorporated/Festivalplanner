@@ -85,12 +85,29 @@ public class AI {
         return intArray;
     }
 
+    public void draw(Graphics2D g) {
+        AffineTransform tx = new AffineTransform();
+        tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
+        if (lastTx != null){
+            image = tiles.get(0);
+            g.drawImage(image, lastTx, null);
+        }
+        image = colorTiles.get(0);
+        g.drawImage(image, tx, null);
+
+        lastTx = tx;
+    }
+
     public void update() {
+
+        // TODO ais mogen niet collide met elkaar
 
         int north = -999;
         int south = -999;
         int west = -999;
         int east = -999;
+
+        boolean isDone = false;
 
         if (!(indexPosition - 56 < 0) && !(indexPosition - 56 > 1959)){
             north = mapArray.get(indexPosition-56);
@@ -105,126 +122,63 @@ public class AI {
             east = mapArray.get(indexPosition+1);
         }
 
-        int direction = getRandomMove();
-        switch(direction) {
-            case 1:
-                //up
-                if (north != -999 && north != 45 && !(position.getY() - 16 < 0))
-                {
-                    indexPosition -= 56;
-                    this.position = new Point2D.Double(position.getX(), position.getY() - 16);
-//                    setTarget(position);
+//             north = - 56
+//             south = + 56
+//             west = - 1
+//             east = + 1
+
+//            System.out.println(north);
+//            System.out.println(south);
+//            System.out.println(west);
+//            System.out.println(east);
+
+        // height="560.0" width="896.0" canvas
+
+        // als er geen pathfinding matrix geset is
+        if (this.getPathFindingMatrix() == null){
+            // krijg een random move kijk of dit kan en voer deze uit
+            do {
+                int move = getRandomMove();
+                switch (move){
+                    case 1:
+                        if (north != -999 && north != 45 && !(position.getY() - 16 < 0)){
+                            indexPosition -= 56;
+                            position = new Point2D.Double(position.getX(), position.getY() - 16);
+                            this.setTarget(position);
+                            isDone = true;
+//                                System.out.println("north");
+                        }
+                        break;
+                    case 2:
+                        if (east != -999 && east != 45 && !(position.getX() + 16 > 896)){
+                            indexPosition += 1;
+                            position = new Point2D.Double(position.getX() + 16, position.getY());
+                            this.setTarget(position);
+                            isDone = true;
+//                                System.out.println("east");
+                        }
+                        break;
+                    case 3:
+                        if (south != -999 && south != 45 && !(position.getY() + 16 > 896)){
+                            indexPosition +=56;
+                            position = new Point2D.Double(position.getX(), position.getY()+16);
+                            this.setTarget(position);
+                            isDone = true;
+//                                System.out.println("south");
+                        }
+                        break;
+                    case 4:
+                        if (west != -999 && west != 45 && !(position.getX() - 16 < 0)){
+                            indexPosition -= 1;
+                            position = new Point2D.Double(position.getX() - 16, position.getY());
+                            this.setTarget(position);
+                            isDone = true;
+//                                System.out.println("west");
+                        }
+                        break;
                 }
-                break;
-            case 2:
-                //right
-                if (east != -999 && east != 45 && !(position.getX() + 16 > 896))
-                {
-                    indexPosition += 1;
-                    this.position = new Point2D.Double(position.getX() + 16, position.getY());
-//                    setTarget(position);
-                }
-                break;
-            case 3:
-                //left
-                if (west != -999 && west != 45 && !(position.getX() - 16 < 0))
-                {
-                    indexPosition -= 1;
-                    this.position = new Point2D.Double(position.getX() - 16, position.getY());
-//                    setTarget(position);
-                }
-                break;
-            case 4:
-                //down
-                if (south != -999 && south != 45 && !(position.getY() + 16 > 896))
-                {
-                    indexPosition += 56;
-                    this.position = new Point2D.Double(position.getX(), position.getY() + 16);
-//                    setTarget(position);
-                }
-                break;
+            } while (!isDone);
         }
-    }
-
-    public void draw(Graphics2D g) {
-        AffineTransform tx = new AffineTransform();
-        tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
-        if (lastTx != null){
-            image = tiles.get(0);
-            g.drawImage(image, lastTx, null);
-        }
-        image = colorTiles.get(0);
-        g.drawImage(image, tx, null);
-
-        lastTx = tx;
-    }
-
-//    public void update() {
-//
-//        // TODO ais mogen niet collide met elkaar
-//
-//        for (AI other : others) {
-//
-
-//
-//            boolean isDone = false;
-//
-
-//
-////             north = - 56
-////             south = + 56
-////             west = - 1
-////             east = + 1
-
-////            System.out.println(north);
-////            System.out.println(south);
-////            System.out.println(west);
-////            System.out.println(east);
-//
-//            // height="560.0" width="896.0" canvas
-//
-//            // als er geen pathfinding matrix geset is
-//            if (other.getPathFindingMatrix() == null){
-//
-//
-//                // krijg een random move kijk of dit kan en voer deze uit
-//                do {
-//                    int move = getRandomMove();
-//                    switch (move){
-//                        case 1:
-//
-//                                position = new Point2D.Double(position.getX(), position.getY() - 16);
-//                                other.setTarget(position);
-//                                isDone = true;
-////                                System.out.println("north");
-//                            }
-//                            break;
-//                        case 2:
-//                                position = new Point2D.Double(position.getX() + 16, position.getY());
-//                                other.setTarget(position);
-//                                isDone = true;
-////                                System.out.println("east");
-//                            }
-//                            break;
-//                        case 3:
-
-//                                position = new Point2D.Double(position.getX(), position.getY()+16);
-//                                other.setTarget(position);
-//                                isDone = true;
-////                                System.out.println("south");
-//                            }
-//                            break;
-//                        case 4:
-//
-//                                position = new Point2D.Double(position.getX() - 16, position.getY());
-//                                other.setTarget(position);
-//                                isDone = true;
-////                                System.out.println("west");
-//                            }
-//                            break;
-//                    }
-//                } while (!isDone);
-//            }
 //            else{
 //                int x;
 //                int y;
@@ -240,8 +194,7 @@ public class AI {
 //                //  de laagste value is de stap die je wil maken den zei dit natuurlijk een 45 is in de mapArray de index waar je ben moet worden
 //                //  bij gehouden met de indexPosition
 //            }
-//        }
-//    }
+    }
 
 
     public void setTarget(Point2D point) {

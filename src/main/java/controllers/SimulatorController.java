@@ -10,6 +10,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.scene.control.Label;
 import javax.imageio.ImageIO;
 import javax.json.Json;
@@ -39,25 +41,25 @@ public class SimulatorController extends Thread implements Runnable {
     private int hours = 10;
     private Map bottomMap;
     private Map pathFindingMap;
-    private int width;
-    private int height;
-    private int tileHeight;
-    private int tileWidth;
+    private static int width;
+    private static int height;
+    private static int tileHeight;
+    private static int tileWidth;
     private Matrix orangeShopPath;
     private boolean pastMidnight = false;
-    private ArrayList<BufferedImage> aisImage = new ArrayList<>();
-    private BufferedImage image;
-    private ArrayList<AI> ais = new ArrayList<>();
-    private ArrayList<BufferedImage> greenAI = new ArrayList<>();
-    private ArrayList<BufferedImage> blueAI = new ArrayList<>();
-    private ArrayList<BufferedImage> purpleAI = new ArrayList<>();
-    private ArrayList<BufferedImage> goldAI = new ArrayList<>();
+    private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
+    private static BufferedImage image;
+    private static ArrayList<AI> ais = new ArrayList<>();
+    private static ArrayList<BufferedImage> greenAI = new ArrayList<>();
+    private static ArrayList<BufferedImage> blueAI = new ArrayList<>();
+    private static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
+    private static ArrayList<BufferedImage> goldAI = new ArrayList<>();
+    public static int visitorCount;
 
 
     @FXML
     public void initialize() throws FileNotFoundException {
-        saveAITypes(); //slaat alle tegels op van tegelmap per AI type
-
+        saveAITypes();
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
         pathFindingMap = new Map("pathFinding.json");
@@ -75,82 +77,15 @@ public class SimulatorController extends Thread implements Runnable {
         };
     }
 
-
-
-    public void LoadAIs() throws FileNotFoundException
-    {
-        ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
-        ais.add(new AI(new Point2D.Double(664, 552), goldAI));
-        //ai's laden based on hoeveel visitors er zijn: maar werkt nog niet want andere klasses gay
-//        for (Visitor v : festival.getVisitorList())
-//        {
-//            int number = (int)((Math.random() * 4) - 1) + 1;
-//            switch(number) {
-//                case 1:
-//                    ais.add(new AI(new Point2D.Double(664, 552), goldAI));
-//                    break;
-//                case 2:
-//                    ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
-//                    break;
-//                case 3:
-//                    ais.add(new AI(new Point2D.Double(664, 552), greenAI));
-//                    break;
-//                case 4:
-//                    ais.add(new AI(new Point2D.Double(664, 552), blueAI));
-//                    break;
-//            }
-//        }
-    }
-
-    public void drawMap(Graphics2D g) {
-        map.draw(g);
-    }
-
-    public void setStatusLabel(String text) {
-        statusLabel.setText(text);
-    }
-
-    @FXML
-    public void onStartButton() throws FileNotFoundException
-    {
-        try {
-            LoadAIs();
-            animationTimer.start();
-            statusLabel.setText("Status: started");
-        } catch (Exception e) {
-            NotificationPromptController.notification(true, "Geen bezoekers gevonden om te laden :(");
-        }
-    }
-
-    @FXML
-    public void onStopButton() {
-        animationTimer.stop();
-        statusLabel.setText("Status: stopped");
-    }
-
-    public void drawBottom(Graphics2D g) {
-        bottomMap.draw(g);
-    }
-
-    public void drawPathFinding(Graphics2D g) {
-        makeOrangeShopPath();
-//        pathFindingMap.drawMatrix(g, orangeShopPath);
-    }
-
-    public void makeOrangeShopPath(){
-        orangeShopPath = new Matrix(35, 56);
-        orangeShopPath.updateAround(5, 3, 0);
-    }
-
-    public void saveAITypes() throws FileNotFoundException {
+    public static void saveAITypes() throws FileNotFoundException {
         JsonReader reader = null;
 
         File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "map.json");
         reader = Json.createReader(new FileInputStream(file));
         JsonObject root = reader.readObject();
 
-        this.width = root.getInt("width");
-        this.height = root.getInt("height");
+        width = root.getInt("width");
+        height = root.getInt("height");
 
         //Laad de tegelmap
         try {
@@ -162,7 +97,7 @@ public class SimulatorController extends Thread implements Runnable {
             String fileNameTileMap = tileset.getString("image");
 
             //Laad de tegelmap afbeelding
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileNameTileMap);
+            InputStream inputStream = SimulatorController.class.getClassLoader().getResourceAsStream(fileNameTileMap);
             BufferedImage tilemapImage = ImageIO.read(inputStream);
 
             tileHeight = tileset.getInt("tileheight");
@@ -193,5 +128,64 @@ public class SimulatorController extends Thread implements Runnable {
             goldAI.add(image = aisImage.get(i));
         }
 
+        for (int i = 0; i < ScheduleMakerController.visitorCount; i++)
+        {
+            int value = getRandom4();
+
+            if (value == 1){
+                ais.add(new AI(new Point2D.Double(664, 552), greenAI));
+            }
+            if (value == 2){
+                ais.add(new AI(new Point2D.Double(664, 552), goldAI));
+            }
+            if (value == 3){
+                ais.add(new AI(new Point2D.Double(664, 552), blueAI));
+            }
+            if (value == 4){
+                ais.add(new AI(new Point2D.Double(664, 552), purpleAI));
+            }
+        }
+    }
+
+    public void drawMap(Graphics2D g) {
+        map.draw(g);
+//        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
+    }
+
+    public static int getRandom4() {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(4) + 1;
+        return randomNumber;
+    }
+
+    public void setStatusLabel(String text) {
+        statusLabel.setText(text);
+    }
+
+    @FXML
+    public void onStartButton() {
+        animationTimer.start();
+        statusLabel.setText("Status: started");
+    }
+
+
+    @FXML
+    public void onStopButton() {
+        animationTimer.stop();
+        statusLabel.setText("Status: stopped");
+    }
+
+    public void drawBottom(Graphics2D g) {
+        bottomMap.draw(g);
+    }
+
+    public void drawPathFinding(Graphics2D g) {
+        makeOrangeShopPath();
+        //pathFindingMap.drawMatrix(g, orangeShopPath);
+    }
+
+    public void makeOrangeShopPath(){
+        orangeShopPath = new Matrix(35, 56);
+        orangeShopPath.updateAround(5, 3, 0);
     }
 }
