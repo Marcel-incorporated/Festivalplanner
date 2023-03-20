@@ -54,7 +54,6 @@ public class MyAnimationTimer extends AnimationTimer {
                 for (AI ai : ais) {
                     ai.update(ais);
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
-                    System.out.println("test");
                 }
             });
 
