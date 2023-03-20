@@ -18,7 +18,10 @@ public class MyAnimationTimer extends AnimationTimer {
     private int minutes = 0;
     private int hours = 10;
     private ArrayList<AI> ais;
+    private ArrayList<AI> realAis = new ArrayList<>();
     private Canvas simMap;
+    private int index;
+    private int counter = 10;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
@@ -27,7 +30,6 @@ public class MyAnimationTimer extends AnimationTimer {
     }
     @Override
     public void handle(long currentTime) {
-
 //        System.out.println("handle method called");
         if (lastTime == 0) {
             lastTime = currentTime;
@@ -45,15 +47,23 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         if (elapsedForTimer >= 1_000_000_000) {
+            counter++;
+            if (counter > 10){
+                if (index != ais.size()){
+                    realAis.add(ais.get(index));
+                    index++;
+                }
+                counter = 0;
+            }
             if (isPastMidnight() && getHours() == 3) {
                 stop();
                 resetTimer();
             }
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
-                for (AI ai : ais) {
-                    ai.update(ais);
+                for (AI ai : realAis) {
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                    ai.update();
                 }
             });
 
