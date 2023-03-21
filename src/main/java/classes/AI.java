@@ -144,20 +144,34 @@ public class AI
         }
 
 
+
+
+            
+
         while (!isDone) {
+        System.out.println("ja");
+
             if(counter > 10) {
                 counter = 0;
                 isDone = true;
             }
 
             counter++;
-
             int direction = getRandomMove();
             switch (direction) {
                 case 1:
                     // up
                     if (north != -999 && north != 45 && !(position.getY() - 16 < 0)) {
                         newpos = new Point2D.Double(position.getX(), position.getY() - 16);
+
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition -= 56;
+//                                }
+//                            }
+//                        }
                         if (isSafePosition(newpos)) {
                             indexPosition -= 56;
                             isDone = true;
@@ -168,6 +182,15 @@ public class AI
                     // right
                     if (east != -999 && east != 45 && !(position.getX() + 16 > 896)) {
                         newpos = new Point2D.Double(position.getX() + 16, position.getY());
+
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition += 1;
+//                                }
+//                            }
+//                        }
                         if (isSafePosition(newpos)) {
                             indexPosition += 1;
                             isDone = true;
@@ -178,6 +201,15 @@ public class AI
                     // left
                     if (west != -999 && west != 45 && !(position.getX() - 16 < 0)) {
                         newpos = new Point2D.Double(position.getX() - 16, position.getY());
+
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition -= 1;
+//                                }
+//                            }
+//                        }
                         if (isSafePosition(newpos)) {
                             indexPosition -= 1;
                             isDone = true;
@@ -188,6 +220,15 @@ public class AI
                     // down
                     if (south != -999 && south != 45 && !(position.getY() + 16 > 896)) {
                         newpos = new Point2D.Double(position.getX(), position.getY() + 16);
+
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition += 56;
+//                                }
+//                            }
+//                        }
                         if (isSafePosition(newpos)) {
                             indexPosition += 56;
                             isDone = true;
@@ -263,6 +304,15 @@ public class AI
         int randomNumber = rand.nextInt(4) + 1;
         //System.out.println("Random number: " + randomNumber);
         return randomNumber;
+    }
+
+    public boolean isSafePosition(Point2D position) {
+        for (AI ai : MyAnimationTimer.realAis) {
+            if (ai != this && ai.getPosition().equals(position)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int[] getMatrixXY(int number)
