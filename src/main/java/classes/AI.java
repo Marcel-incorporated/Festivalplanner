@@ -30,6 +30,7 @@ public class AI
     private boolean isDone;
     private Point2D newpos;
     private int id;
+    private int counter;
 
 
     public AI(Point2D position, ArrayList<BufferedImage> colorTiles, int id) throws FileNotFoundException
@@ -146,6 +147,12 @@ public class AI
         while (!isDone)
         {
             System.out.println("ja");
+            if(counter > 10) {
+                counter = 0;
+                isDone = true;
+            }
+
+            counter++;
             int direction = getRandomMove();
             switch (direction)
             {
@@ -154,18 +161,18 @@ public class AI
                     if (north != -999 && north != 45 && !(position.getY() - 16 < 0))
                     {
                         newpos = new Point2D.Double(position.getX(), position.getY() - 16);
-                        for(AI ai : MyAnimationTimer.realAis) {
-                            if(this.id != ai.id) {
-                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
-                                    isDone = true;
-                                    indexPosition -= 56;
-                                }
-                            }
-                        }
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition -= 56;
+//                                }
+//                            }
+//                        }
 
-                        if (MyAnimationTimer.realAis.size() == 1){
-                            isDone = true;
+                        if (isSafePosition(newpos)) {
                             indexPosition -= 56;
+                            isDone = true;
                         }
                     }
                     break;
@@ -174,18 +181,18 @@ public class AI
                     if (east != -999 && east != 45 && !(position.getX() + 16 > 896))
                     {
                         newpos = new Point2D.Double(position.getX() + 16, position.getY());
-                        for(AI ai : MyAnimationTimer.realAis) {
-                            if(this.id != ai.id) {
-                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
-                                    isDone = true;
-                                    indexPosition += 1;
-                                }
-                            }
-                        }
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition += 1;
+//                                }
+//                            }
+//                        }
 
-                        if (MyAnimationTimer.realAis.size() == 1){
-                            isDone = true;
+                        if (isSafePosition(newpos)) {
                             indexPosition += 1;
+                            isDone = true;
                         }
                     }
                     break;
@@ -194,18 +201,18 @@ public class AI
                     if (west != -999 && west != 45 && !(position.getX() - 16 < 0))
                     {
                         newpos = new Point2D.Double(position.getX() - 16, position.getY());
-                        for(AI ai : MyAnimationTimer.realAis) {
-                            if(this.id != ai.id) {
-                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
-                                    isDone = true;
-                                    indexPosition -= 1;
-                                }
-                            }
-                        }
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition -= 1;
+//                                }
+//                            }
+//                        }
 
-                        if(MyAnimationTimer.realAis.size() == 1) {
-                            isDone = true;
+                        if (isSafePosition(newpos)) {
                             indexPosition -= 1;
+                            isDone = true;
                         }
                     }
                     break;
@@ -214,18 +221,18 @@ public class AI
                     if (south != -999 && south != 45 && !(position.getY() + 16 > 896))
                     {
                         newpos = new Point2D.Double(position.getX(), position.getY() + 16);
-                        for(AI ai : MyAnimationTimer.realAis) {
-                            if(this.id != ai.id) {
-                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
-                                    isDone = true;
-                                    indexPosition += 56;
-                                }
-                            }
-                        }
+//                        for(AI ai : MyAnimationTimer.realAis) {
+//                            if(this.id != ai.id) {
+//                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+//                                    isDone = true;
+//                                    indexPosition += 56;
+//                                }
+//                            }
+//                        }
 
-                        if(MyAnimationTimer.realAis.size() == 1) {
-                            isDone = true;
+                        if (isSafePosition(newpos)) {
                             indexPosition += 56;
+                            isDone = true;
                         }
                     }
                     break;
@@ -288,6 +295,15 @@ public class AI
         int randomNumber = rand.nextInt(4) + 1;
         //System.out.println("Random number: " + randomNumber);
         return randomNumber;
+    }
+
+    public boolean isSafePosition(Point2D position) {
+        for (AI ai : MyAnimationTimer.realAis) {
+            if (ai != this && ai.getPosition().equals(position)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int[] getMatrixXY(int number)

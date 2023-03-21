@@ -69,8 +69,6 @@ public class MyAnimationTimer extends AnimationTimer {
 
             lastTimeForTimer = currentTime;
         }
-
-
     }
 
     public boolean isPastMidnight() {
@@ -114,4 +112,13 @@ public class MyAnimationTimer extends AnimationTimer {
         //Code die 8 keer per seconde wordt uitgevoerd
 //        System.out.println("method");
     }
+
+//    private void checkrealai() {
+//        for(AI a : realAis) {
+//            System.out.println(a.getPosition());
+//            if() {
+//
+//            }
+//        }
+//    }
 }
