@@ -258,16 +258,6 @@ public class AI
 //                //  bij gehouden met de indexPosition
 //            }
 
-
-    public boolean isSafePosition(Point2D position) {
-        for (AI ai : MyAnimationTimer.realAis) {
-            if (ai != this && ai.getPosition().equals(position)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void setTarget(Point2D point)
     {
         this.target = point;
@@ -308,7 +298,7 @@ public class AI
 
     public boolean isSafePosition(Point2D position) {
         for (AI ai : MyAnimationTimer.realAis) {
-            if (ai != this && ai.getPosition().equals(position)) {
+            if (ai != this && ai.getPosition().getX() == this.position.getX() && ai.getPosition().getY() == this.position.getY()) {
                 return false;
             }
         }

@@ -6,6 +6,8 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
+
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class MyAnimationTimer extends AnimationTimer {
@@ -48,7 +50,7 @@ public class MyAnimationTimer extends AnimationTimer {
         }
         if (elapsedForTimer >= 1_000_000_000) {
             counter++;
-            if (counter > 10){
+            if (counter > 10 && isSpawn() == true){
                 if (index != ais.size()){
                     realAis.add(ais.get(index));
                     index++;
@@ -69,6 +71,15 @@ public class MyAnimationTimer extends AnimationTimer {
 
             lastTimeForTimer = currentTime;
         }
+    }
+
+    public boolean isSpawn() {
+        for (AI ai : MyAnimationTimer.realAis) {
+            if (ai.getPosition().getX() == 664 && ai.getPosition().getY() == 552) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isPastMidnight() {
