@@ -10,10 +10,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AI {
+public class AI
+{
     private Point2D position;
     private AffineTransform lastTx;
-//    private double angle;
+    //    private double angle;
     private double speed = 1.0;
     private Point2D target;
     private int width;
@@ -26,12 +27,18 @@ public class AI {
     private ArrayList<BufferedImage> colorTiles;
     private int indexPosition;
     private Matrix pathFindingMatrix;
+    private boolean isDone;
+    private Point2D newpos;
+    private int id;
 
-    public AI(Point2D position, ArrayList<BufferedImage> colorTiles) throws FileNotFoundException {
+
+    public AI(Point2D position, ArrayList<BufferedImage> colorTiles, int id) throws FileNotFoundException
+    {
         this.position = position;
         this.target = new Point2D.Double(Math.random() * 1000, Math.random() * 1000);
         this.colorTiles = colorTiles;
         this.indexPosition = 1945;
+        this.id = id;
 
         JsonReader reader = null;
 
@@ -43,7 +50,8 @@ public class AI {
         this.height = root.getInt("height");
 
         //Laad de tegelmap
-        try {
+        try
+        {
             //Haal de tegelset JSON object op
             JsonArray tilesets = root.getJsonArray("tilesets");
             JsonObject tileset = tilesets.getJsonObject(0);
@@ -64,12 +72,15 @@ public class AI {
             tileHeight = tileset.getInt("tileheight");
             tileWidth = tileset.getInt("tilewidth");
 
-            for(int y = 0; y < tilemapImage.getHeight(); y += tileHeight) {
-                for(int x = 0; x < tilemapImage.getWidth(); x += tileWidth) {
+            for (int y = 0; y < tilemapImage.getHeight(); y += tileHeight)
+            {
+                for (int x = 0; x < tilemapImage.getWidth(); x += tileWidth)
+                {
                     tiles.add(tilemapImage.getSubimage(x, y, tileWidth, tileHeight));
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
@@ -77,18 +88,22 @@ public class AI {
 
     }
 
-    public ArrayList<Integer> getIntArray(JsonArray jsonArray) {
+    public ArrayList<Integer> getIntArray(JsonArray jsonArray)
+    {
         ArrayList<Integer> intArray = new ArrayList<>();
-        for (int i = 0; i < jsonArray.size(); i++) {
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
             intArray.add(jsonArray.getInt(i));
         }
         return intArray;
     }
 
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D g)
+    {
         AffineTransform tx = new AffineTransform();
         tx.translate(position.getX() - image.getWidth() / 2.0, position.getY() - image.getHeight() / 2.0);
-        if (lastTx != null){
+        if (lastTx != null)
+        {
             image = tiles.get(0);
             g.drawImage(image, lastTx, null);
         }
@@ -99,68 +114,127 @@ public class AI {
     }
 
 
-        public void update() {
-            // TODO ais mogen niet collide met elkaar
+    public void update()
+    {
+        // TODO ais mogen niet collide met elkaar
+
+        isDone = false;
+
+        int north = -999;
+        int south = -999;
+        int west = -999;
+        int east = -999;
+
+        if (!(indexPosition - 56 < 0) && !(indexPosition - 56 > 1959))
+        {
+            north = mapArray.get(indexPosition - 56);
+        }
+        if (!(indexPosition + 56 > 1959))
+        {
+            south = mapArray.get(indexPosition + 56);
+        }
+        if (!(indexPosition - 1 < 0) && !(indexPosition - 1 > 1959))
+        {
+            west = mapArray.get(indexPosition - 1);
+        }
+        if (!(indexPosition + 1 > 1959))
+        {
+            east = mapArray.get(indexPosition + 1);
+        }
 
 
-            int north = -999;
-            int south = -999;
-            int west = -999;
-            int east = -999;
-
-            if (!(indexPosition - 56 < 0) && !(indexPosition - 56 > 1959)){
-                north = mapArray.get(indexPosition-56);
-            }
-            if (!(indexPosition + 56 > 1959)){
-                south = mapArray.get(indexPosition+56);
-            }
-            if (!(indexPosition - 1 < 0) && !(indexPosition - 1 > 1959)){
-                west = mapArray.get(indexPosition-1);
-            }
-            if (!(indexPosition + 1 > 1959)){
-                east = mapArray.get(indexPosition+1);
-            }
-
+        while (!isDone)
+        {
+            System.out.println("ja");
             int direction = getRandomMove();
-            switch(direction) {
+            switch (direction)
+            {
                 case 1:
                     //up
                     if (north != -999 && north != 45 && !(position.getY() - 16 < 0))
                     {
-                        indexPosition -= 56;
-                        this.position = new Point2D.Double(position.getX(), position.getY() - 16);
-//                    setTarget(position);
+                        newpos = new Point2D.Double(position.getX(), position.getY() - 16);
+                        for(AI ai : MyAnimationTimer.realAis) {
+                            if(this.id != ai.id) {
+                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+                                    isDone = true;
+                                    indexPosition -= 56;
+                                }
+                            }
+                        }
+
+                        if (MyAnimationTimer.realAis.size() == 1){
+                            isDone = true;
+                            indexPosition -= 56;
+                        }
                     }
                     break;
                 case 2:
                     //right
                     if (east != -999 && east != 45 && !(position.getX() + 16 > 896))
                     {
-                        indexPosition += 1;
-                        this.position = new Point2D.Double(position.getX() + 16, position.getY());
-//                    setTarget(position);
+                        newpos = new Point2D.Double(position.getX() + 16, position.getY());
+                        for(AI ai : MyAnimationTimer.realAis) {
+                            if(this.id != ai.id) {
+                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+                                    isDone = true;
+                                    indexPosition += 1;
+                                }
+                            }
+                        }
+
+                        if (MyAnimationTimer.realAis.size() == 1){
+                            isDone = true;
+                            indexPosition += 1;
+                        }
                     }
                     break;
                 case 3:
                     //left
                     if (west != -999 && west != 45 && !(position.getX() - 16 < 0))
                     {
-                        indexPosition -= 1;
-                        this.position = new Point2D.Double(position.getX() - 16, position.getY());
-//                    setTarget(position);
+                        newpos = new Point2D.Double(position.getX() - 16, position.getY());
+                        for(AI ai : MyAnimationTimer.realAis) {
+                            if(this.id != ai.id) {
+                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+                                    isDone = true;
+                                    indexPosition -= 1;
+                                }
+                            }
+                        }
+
+                        if(MyAnimationTimer.realAis.size() == 1) {
+                            isDone = true;
+                            indexPosition -= 1;
+                        }
                     }
                     break;
                 case 4:
                     //down
                     if (south != -999 && south != 45 && !(position.getY() + 16 > 896))
                     {
-                        indexPosition += 56;
-                        this.position = new Point2D.Double(position.getX(), position.getY() + 16);
-//                    setTarget(position);
+                        newpos = new Point2D.Double(position.getX(), position.getY() + 16);
+                        for(AI ai : MyAnimationTimer.realAis) {
+                            if(this.id != ai.id) {
+                                if(ai.position.getX() != newpos.getX() || ai.position.getY() != newpos.getY()) {
+                                    isDone = true;
+                                    indexPosition += 56;
+                                }
+                            }
+                        }
+
+                        if(MyAnimationTimer.realAis.size() == 1) {
+                            isDone = true;
+                            indexPosition += 56;
+                        }
                     }
                     break;
             }
+
         }
+        this.position = newpos;
+    }
+
 //            else{
 //                int x;
 //                int y;
@@ -178,39 +252,46 @@ public class AI {
 //            }
 
 
-
-    public void setTarget(Point2D point) {
+    public void setTarget(Point2D point)
+    {
         this.target = point;
     }
 
-    public Point2D getPosition() {
+    public Point2D getPosition()
+    {
         return position;
     }
 
-    public int getIndexPosition() {
+    public int getIndexPosition()
+    {
         return indexPosition;
     }
 
-    public void setIndexPosition(int indexPosition) {
+    public void setIndexPosition(int indexPosition)
+    {
         this.indexPosition = indexPosition;
     }
 
-    public Matrix getPathFindingMatrix() {
+    public Matrix getPathFindingMatrix()
+    {
         return pathFindingMatrix;
     }
 
-    public void setPathFindingMatrix(Matrix pathFindingMatrix) {
+    public void setPathFindingMatrix(Matrix pathFindingMatrix)
+    {
         this.pathFindingMatrix = pathFindingMatrix;
     }
 
-    public int getRandomMove() {
+    public int getRandomMove()
+    {
         Random rand = new Random();
         int randomNumber = rand.nextInt(4) + 1;
         //System.out.println("Random number: " + randomNumber);
         return randomNumber;
     }
 
-    public int[] getMatrixXY(int number){
+    public int[] getMatrixXY(int number)
+    {
         int[] coordinates = new int[2];
 
         int x = 0;
