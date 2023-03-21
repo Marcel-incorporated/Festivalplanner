@@ -30,6 +30,7 @@ public class AI
     private boolean isDone;
     private Point2D newpos;
     private int id;
+    private int counter;
 
 
     public AI(Point2D position, ArrayList<BufferedImage> colorTiles, int id) throws FileNotFoundException
@@ -144,6 +145,13 @@ public class AI
 
 
         while (!isDone) {
+            if(counter > 10) {
+                counter = 0;
+                isDone = true;
+            }
+
+            counter++;
+
             int direction = getRandomMove();
             switch (direction) {
                 case 1:
