@@ -10,6 +10,7 @@ import org.jfree.fx.FXGraphics2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyAnimationTimer extends AnimationTimer {
@@ -27,7 +28,7 @@ public class MyAnimationTimer extends AnimationTimer {
     private int index;
     private int counter = 10;
     private Pos newPos;
-    private HashMap<Integer, Pos> positions = new HashMap<>();
+    private HashMap<Integer, Pos> positions;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
@@ -69,7 +70,7 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(() ->
             {
 
-                HashMap<Integer, Pos> positions = new HashMap<>();
+                this.positions = new HashMap<>();
 
                 for (newAi ai : realAis) {
                     newPos = ai.update();
@@ -86,12 +87,17 @@ public class MyAnimationTimer extends AnimationTimer {
     }
 
     public void checkPos() {
-        for (Map.Entry<Integer, Pos> e : positions.entrySet()) {
-            for (Map.Entry<Integer, Pos> f : positions.entrySet()) {
-                if (f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == f.getValue().getY() && f.getKey() != e.getKey()) {
-                    positions.remove(e.getKey());
+        List<Integer> keysToRemove = new ArrayList<>();
+        for (Map.Entry<Integer, Pos> e : this.positions.entrySet()) {
+            System.out.println(this.positions.size());
+            for (Map.Entry<Integer, Pos> f : this.positions.entrySet()) {
+                if (f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == e.getValue().getY() && f.getKey() != e.getKey()) {
+                    keysToRemove.add(f.getKey());
                 }
             }
+        }
+        for (Integer key : keysToRemove) {
+            this.positions.remove(key);
         }
     }
 
