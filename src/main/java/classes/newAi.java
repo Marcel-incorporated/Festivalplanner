@@ -148,20 +148,44 @@ public class newAi
 
         switch (move) {
             case 1:
-                if(north != -999 && north != 45)
+                if(north != -999 && north != 45) {
+                    for (newAi ai : MyAnimationTimer.realAis) {
+                        if (ai.getY() == this.getY() + 16 && ai.getX() == this.getX()) {
+                            return false;
+                        }
+                    }
                     return true;
+                }
                 break;
             case 2:
-                if(east != -999 && east != 45)
+                if(east != -999 && east != 45) {
+                    for (newAi ai : MyAnimationTimer.realAis) {
+                        if (ai.getY() == this.getY() && ai.getX() == this.getX() + 16) {
+                            return false;
+                        }
+                    }
                     return true;
+                }
                 break;
             case 3:
-                if(south != -999 && south != 45)
+                if(south != -999 && south != 45) {
+                    for (newAi ai : MyAnimationTimer.realAis) {
+                        if (ai.getY() == this.getY() - 16 && ai.getX() == this.getX()) {
+                            return false;
+                        }
+                    }
                     return true;
+                }
                 break;
             case 4:
-                if(west != -999 && west != 45)
+                if(west != -999 && west != 45) {
+                    for (newAi ai : MyAnimationTimer.realAis) {
+                        if (ai.getY() == this.getY() && ai.getX() == this.getX() - 16) {
+                            return false;
+                        }
+                    }
                     return true;
+                }
                 break;
             default:
                 System.out.println("shit man");
