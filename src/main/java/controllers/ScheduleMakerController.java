@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static controllers.NotificationPromptController.notification;
+
 public class ScheduleMakerController {
     //FXML attributen
     @FXML
@@ -163,9 +165,9 @@ public class ScheduleMakerController {
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
-            NotificationPromptController.notification(false, "Successfully exported festival file :)");
+            notification(false, "Successfully exported festival file :)");
         } catch (IOException e) {
-            NotificationPromptController.notification(true, "Unable to import festival file :(");
+            notification(true, "Unable to import festival file :(");
         }
     }
 
@@ -248,14 +250,14 @@ public class ScheduleMakerController {
             }
 
         } else {
-            NotificationPromptController.notification(true, "Maximum amount of artists reached!");
+            notification(true, "Maximum amount of artists reached!");
         }
     }
 
     @FXML
     public void onAddArtistButton() {
         if (artistNameTextfield.getText().isEmpty() || genreTextfield.getText().isEmpty() || popularity == 0) {
-            NotificationPromptController.notification(true, "Make sure to fill out all fields!");
+            notification(true, "Make sure to fill out all fields!");
             return;
         }
 
@@ -281,7 +283,7 @@ public class ScheduleMakerController {
     @FXML
     public void onSaveFestivalButton() {
         if (amountOfVisitorsTextfield.getText().isEmpty() || festivalNameTextfield.getText().isEmpty()) {
-            NotificationPromptController.notification(true, "Make sure to fill in all fields!");
+            notification(true, "Make sure to fill in all fields!");
             return;
         }
         try {
@@ -289,18 +291,18 @@ public class ScheduleMakerController {
             SimulatorController.visitorCount = visitorCount;
             SimulatorController.saveAITypes();
             if (visitorCount > 10000) {
-                NotificationPromptController.notification(true, "Can't add more than 10000 visitors!");
+                notification(true, "Can't add more than 10000 visitors!");
                 return;
             }
         } catch (Exception e) {
-            NotificationPromptController.notification(true, "Value in box Visitor Count is supposed to be a number!");
+            notification(true, "Value in box Visitor Count is supposed to be a number!");
             return;
         }
         for (int i = 0; i < visitorCount; i++) {
             visitors.add(new Visitor());            //create visitors based on user input and adds them to arraylist
         }
         festivalName = festivalNameTextfield.getText();
-        NotificationPromptController.notification(false, "Successfully saved festival information :)");
+        notification(false, "Successfully saved festival information :)");
     }
 
     @FXML
