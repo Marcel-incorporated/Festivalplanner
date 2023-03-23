@@ -289,7 +289,7 @@ public class ScheduleMakerController {
             SimulatorController.visitorCount = visitorCount;
             SimulatorController.saveAITypes();
             if (visitorCount > 10000) {
-                NotificationPromptController.notification(true, "Can't add more than 20 visitors!");
+                NotificationPromptController.notification(true, "Can't add more than 10000 visitors!");
                 return;
             }
         } catch (Exception e) {
