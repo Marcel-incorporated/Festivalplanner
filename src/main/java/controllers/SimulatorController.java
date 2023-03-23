@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.control.Label;
+
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -131,12 +133,10 @@ public class SimulatorController extends Thread implements Runnable {
 
         collisionMapArray = makeCollisionMap();
 
-        for (int i = 0; i < ScheduleMakerController.visitorCount; i++)
-        {
+        for (int i = 0; i < ScheduleMakerController.visitorCount; i++) {
             int value = getRandom4();
 
-            switch(value)
-            {
+            switch (value) {
                 case 1:
                     ais.add(new newAi(goldAI, collisionMapArray, aisImage, i));
                     break;
@@ -156,8 +156,7 @@ public class SimulatorController extends Thread implements Runnable {
         }
     }
 
-    public static ArrayList<Integer> makeCollisionMap() throws FileNotFoundException
-    {
+    public static ArrayList<Integer> makeCollisionMap() throws FileNotFoundException {
         JsonReader reader = null;
 
         File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "collision.json");
@@ -184,11 +183,9 @@ public class SimulatorController extends Thread implements Runnable {
 //        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
 
-    public static ArrayList<Integer> getIntArray(JsonArray jsonArray)
-    {
+    public static ArrayList<Integer> getIntArray(JsonArray jsonArray) {
         ArrayList<Integer> intArray = new ArrayList<>();
-        for (int i = 0; i < jsonArray.size(); i++)
-        {
+        for (int i = 0; i < jsonArray.size(); i++) {
             intArray.add(jsonArray.getInt(i));
         }
         return intArray;
@@ -226,7 +223,7 @@ public class SimulatorController extends Thread implements Runnable {
         //pathFindingMap.drawMatrix(g, orangeShopPath);
     }
 
-    public void makeOrangeShopPath(){
+    public void makeOrangeShopPath() {
         orangeShopPath = new Matrix(35, 56);
         orangeShopPath.updateAround(5, 3, 0);
     }

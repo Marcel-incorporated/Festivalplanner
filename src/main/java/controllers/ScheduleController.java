@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -57,42 +58,40 @@ public class ScheduleController {
                 startTimeHours = startTimeHours.substring(0, 2);
 
                 startTimeMinutes = artist.getSetStartingTime();
-                startTimeMinutes = startTimeMinutes.substring(3,5);
+                startTimeMinutes = startTimeMinutes.substring(3, 5);
 
                 if (Integer.parseInt(startTimeHours) == 10) {
                     yBlock = 0;
-                }
-                else {
+                } else {
                     if (Integer.parseInt(startTimeHours) == 0 || Integer.parseInt(startTimeHours) == 1 || Integer.parseInt(startTimeHours) == 2 || Integer.parseInt(startTimeHours) == 3) {
 
-                        if (Integer.parseInt(startTimeHours) == 0){
-                            yBlock = 14*29;
+                        if (Integer.parseInt(startTimeHours) == 0) {
+                            yBlock = 14 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 1){
-                            yBlock = 15*29;
+                        if (Integer.parseInt(startTimeHours) == 1) {
+                            yBlock = 15 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 2){
-                            yBlock = 16*29;
+                        if (Integer.parseInt(startTimeHours) == 2) {
+                            yBlock = 16 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 3){
-                            yBlock = 17*29;
+                        if (Integer.parseInt(startTimeHours) == 3) {
+                            yBlock = 17 * 29;
                         }
-                    }
-                    else {
+                    } else {
                         for (int i = 10; i < Integer.parseInt(startTimeHours); i++) {
                             yBlock += 29;
                         }
                     }
                 }
 
-                if (Integer.parseInt(startTimeMinutes) == 30){
+                if (Integer.parseInt(startTimeMinutes) == 30) {
                     yBlock += 14;
                 }
 
-                if (artist.getSetDurationInMinutes() == 30){
+                if (artist.getSetDurationInMinutes() == 30) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 15);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -100,7 +99,7 @@ public class ScheduleController {
                     artistNames.add(artist.getName());
                 }
 
-                if (artist.getSetDurationInMinutes() == 60){
+                if (artist.getSetDurationInMinutes() == 60) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 30);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -108,7 +107,7 @@ public class ScheduleController {
                     artistNames.add(artist.getName());
                 }
 
-                if (artist.getSetDurationInMinutes() == 90){
+                if (artist.getSetDurationInMinutes() == 90) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 45);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -116,7 +115,7 @@ public class ScheduleController {
                     artistNames.add(artist.getName());
                 }
 
-                if (artist.getSetDurationInMinutes() == 120){
+                if (artist.getSetDurationInMinutes() == 120) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock + 1, yBlock, 98, 60);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -134,63 +133,61 @@ public class ScheduleController {
                 startTimeHours = startTimeHours.substring(0, 2);
 
                 startTimeMinutes = artist.getSetStartingTime();
-                startTimeMinutes = startTimeMinutes.substring(3,5);
+                startTimeMinutes = startTimeMinutes.substring(3, 5);
 
                 if (Integer.parseInt(startTimeHours) == 10) {
                     yBlock = 0;
-                }
-                else {
+                } else {
                     if (Integer.parseInt(startTimeHours) == 0 || Integer.parseInt(startTimeHours) == 1 || Integer.parseInt(startTimeHours) == 2 || Integer.parseInt(startTimeHours) == 3) {
 
-                        if (Integer.parseInt(startTimeHours) == 0){
-                            yBlock = 14*29;
+                        if (Integer.parseInt(startTimeHours) == 0) {
+                            yBlock = 14 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 1){
-                            yBlock = 15*29;
+                        if (Integer.parseInt(startTimeHours) == 1) {
+                            yBlock = 15 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 2){
-                            yBlock = 16*29;
+                        if (Integer.parseInt(startTimeHours) == 2) {
+                            yBlock = 16 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 3){
-                            yBlock = 17*29;
+                        if (Integer.parseInt(startTimeHours) == 3) {
+                            yBlock = 17 * 29;
                         }
-                    }
-                    else {
+                    } else {
                         for (int i = 10; i < Integer.parseInt(startTimeHours); i++) {
                             yBlock += 29;
                         }
                     }
                 }
 
-                if (Integer.parseInt(startTimeMinutes) == 30){
+                if (Integer.parseInt(startTimeMinutes) == 30) {
                     yBlock += 14;
                 }
 
-                if (artist.getSetDurationInMinutes() == 30){
+                if (artist.getSetDurationInMinutes() == 30) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 15);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 60){
+                if (artist.getSetDurationInMinutes() == 60) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 30);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 90){
+                if (artist.getSetDurationInMinutes() == 90) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 45);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 120){
+                if (artist.getSetDurationInMinutes() == 120) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 60);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -207,63 +204,61 @@ public class ScheduleController {
                 startTimeHours = startTimeHours.substring(0, 2);
 
                 startTimeMinutes = artist.getSetStartingTime();
-                startTimeMinutes = startTimeMinutes.substring(3,5);
+                startTimeMinutes = startTimeMinutes.substring(3, 5);
 
                 if (Integer.parseInt(startTimeHours) == 10) {
                     yBlock = 0;
-                }
-                else {
+                } else {
                     if (Integer.parseInt(startTimeHours) == 0 || Integer.parseInt(startTimeHours) == 1 || Integer.parseInt(startTimeHours) == 2 || Integer.parseInt(startTimeHours) == 3) {
 
-                        if (Integer.parseInt(startTimeHours) == 0){
-                            yBlock = 14*29;
+                        if (Integer.parseInt(startTimeHours) == 0) {
+                            yBlock = 14 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 1){
-                            yBlock = 15*29;
+                        if (Integer.parseInt(startTimeHours) == 1) {
+                            yBlock = 15 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 2){
-                            yBlock = 16*29;
+                        if (Integer.parseInt(startTimeHours) == 2) {
+                            yBlock = 16 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 3){
-                            yBlock = 17*29;
+                        if (Integer.parseInt(startTimeHours) == 3) {
+                            yBlock = 17 * 29;
                         }
-                    }
-                    else {
+                    } else {
                         for (int i = 10; i < Integer.parseInt(startTimeHours); i++) {
                             yBlock += 29;
                         }
                     }
                 }
 
-                if (Integer.parseInt(startTimeMinutes) == 30){
+                if (Integer.parseInt(startTimeMinutes) == 30) {
                     yBlock += 14;
                 }
 
-                if (artist.getSetDurationInMinutes() == 30){
+                if (artist.getSetDurationInMinutes() == 30) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 15);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 60){
+                if (artist.getSetDurationInMinutes() == 60) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 30);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 90){
+                if (artist.getSetDurationInMinutes() == 90) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 45);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 120){
+                if (artist.getSetDurationInMinutes() == 120) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 100, 60);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -280,63 +275,61 @@ public class ScheduleController {
                 startTimeHours = startTimeHours.substring(0, 2);
 
                 startTimeMinutes = artist.getSetStartingTime();
-                startTimeMinutes = startTimeMinutes.substring(3,5);
+                startTimeMinutes = startTimeMinutes.substring(3, 5);
 
                 if (Integer.parseInt(startTimeHours) == 10) {
                     yBlock = 0;
-                }
-                else {
+                } else {
                     if (Integer.parseInt(startTimeHours) == 0 || Integer.parseInt(startTimeHours) == 1 || Integer.parseInt(startTimeHours) == 2 || Integer.parseInt(startTimeHours) == 3) {
 
-                        if (Integer.parseInt(startTimeHours) == 0){
-                            yBlock = 14*29;
+                        if (Integer.parseInt(startTimeHours) == 0) {
+                            yBlock = 14 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 1){
-                            yBlock = 15*29;
+                        if (Integer.parseInt(startTimeHours) == 1) {
+                            yBlock = 15 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 2){
-                            yBlock = 16*29;
+                        if (Integer.parseInt(startTimeHours) == 2) {
+                            yBlock = 16 * 29;
                         }
 
-                        if (Integer.parseInt(startTimeHours) == 3){
-                            yBlock = 17*29;
+                        if (Integer.parseInt(startTimeHours) == 3) {
+                            yBlock = 17 * 29;
                         }
-                    }
-                    else {
+                    } else {
                         for (int i = 10; i < Integer.parseInt(startTimeHours); i++) {
                             yBlock += 29;
                         }
                     }
                 }
 
-                if (Integer.parseInt(startTimeMinutes) == 30){
+                if (Integer.parseInt(startTimeMinutes) == 30) {
                     yBlock += 14;
                 }
 
-                if (artist.getSetDurationInMinutes() == 30){
+                if (artist.getSetDurationInMinutes() == 30) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 15);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 60){
+                if (artist.getSetDurationInMinutes() == 60) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 30);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 90){
+                if (artist.getSetDurationInMinutes() == 90) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 45);
 
                     blocksConnectedToArtist.put(block, artist);
                     blocksToDraw.add(block);
                 }
 
-                if (artist.getSetDurationInMinutes() == 120){
+                if (artist.getSetDurationInMinutes() == 120) {
                     Rectangle2D block = new Rectangle2D.Double(xBlock, yBlock, 98, 60);
 
                     blocksConnectedToArtist.put(block, artist);
@@ -359,21 +352,18 @@ public class ScheduleController {
         for (Rectangle2D block : blocksToDraw) {
             graphics.setPaint(colors[i]);
             graphics.fill(block);
-            
+
             i++;
 
-            if (i == 4){
+            if (i == 4) {
                 i = 0;
             }
         }
     }
 
-    private void mousePressed(MouseEvent event)
-    {
-        for (Rectangle2D block : blocksToDraw)
-        {
-            if (block.contains(event.getX(), event.getY()))
-            {
+    private void mousePressed(MouseEvent event) {
+        for (Rectangle2D block : blocksToDraw) {
+            if (block.contains(event.getX(), event.getY())) {
                 Artist artist = blocksConnectedToArtist.get(block);
                 NotificationPromptController.notification(false, "Name: " + artist.getName() + "\n"
                         + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" +

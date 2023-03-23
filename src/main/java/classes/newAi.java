@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class newAi
-{
+public class newAi {
     private final int width = 896;
     private final int height = 560;
     private AffineTransform lastTx;
@@ -35,45 +34,41 @@ public class newAi
         this.image = this.characterImages.get(0);
     }
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public Pos update()
-    {
+    public Pos update() {
         run = true;
         Pos newPos = null;
 
-        while (run)
-        {
-            switch (randomMove())
-            {
+        while (run) {
+            switch (randomMove()) {
                 case 1:
-                    if(canMove(1)) {
+                    if (canMove(1)) {
                         //up
-                        newPos = new Pos(this.x, this.y-16);
+                        newPos = new Pos(this.x, this.y - 16);
                         run = false;
                     }
                     break;
                 case 2:
-                    if(canMove(2)) {
+                    if (canMove(2)) {
                         //right
-                        newPos = new Pos(this.x+16, this.y);
+                        newPos = new Pos(this.x + 16, this.y);
                         run = false;
                     }
                     break;
                 case 3:
-                    if(canMove(3)) {
+                    if (canMove(3)) {
                         //down
-                        newPos = new Pos(this.x, this.y+16);
+                        newPos = new Pos(this.x, this.y + 16);
                         run = false;
                     }
                     break;
                 case 4:
-                    if(canMove(4)) {
+                    if (canMove(4)) {
                         //left
-                        newPos = new Pos(this.x-16, this.y);
+                        newPos = new Pos(this.x - 16, this.y);
                         run = false;
                     }
                     break;
@@ -86,29 +81,28 @@ public class newAi
     }
 
     public void draw(Graphics2D g, HashMap<Integer, Pos> hashmap) {
-        for(Map.Entry<Integer, Pos> e : hashmap.entrySet()) {
+        for (Map.Entry<Integer, Pos> e : hashmap.entrySet()) {
             if (e.getValue().getY() > y) {
-                y+=16;
-                index+=56;
+                y += 16;
+                index += 56;
             }
-            if(e.getValue().getY() < y) {
-                y-=16;
-                index-=56;
+            if (e.getValue().getY() < y) {
+                y -= 16;
+                index -= 56;
             }
-            if(e.getValue().getX() > x) {
-                x+=16;
-                index+=1;
+            if (e.getValue().getX() > x) {
+                x += 16;
+                index += 1;
             }
-            if(e.getValue().getX() < x) {
-                x-=16;
-                index-=1;
+            if (e.getValue().getX() < x) {
+                x -= 16;
+                index -= 1;
             }
         }
 
         AffineTransform tx = new AffineTransform();
         tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
-        if (lastTx != null)
-        {
+        if (lastTx != null) {
             image = tiles.get(0);
             g.drawImage(image, lastTx, null);
         }
@@ -118,30 +112,25 @@ public class newAi
         lastTx = tx;
     }
 
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 
-    public int getY()
-    {
+    public int getY() {
         return y;
     }
 
-    int getIndexPos(int x, int y)
-    {
+    int getIndexPos(int x, int y) {
         return x + this.width * y;
     }
 
-    void andersom(int index)
-    {
+    void andersom(int index) {
         this.x = index % this.width;
         this.y = index / this.width;
     }
 
 
-    private int randomMove()
-    {
+    private int randomMove() {
         Random rand = new Random();
         int randomNumber = rand.nextInt(4) + 1;
         //System.out.println("Random number: " + randomNumber);
@@ -155,26 +144,22 @@ public class newAi
         int west = -999;
         int east = -999;
 
-        if (!(index - 56 < 0))
-        {
+        if (!(index - 56 < 0)) {
             north = collisionMapArray.get(index - 56);
         }
-        if (!(index + 56 > 1959))
-        {
+        if (!(index + 56 > 1959)) {
             south = collisionMapArray.get(index + 56);
         }
-        if (!(index - 1 < 0))
-        {
+        if (!(index - 1 < 0)) {
             west = collisionMapArray.get(index - 1);
         }
-        if (!(index + 1 > 1959))
-        {
+        if (!(index + 1 > 1959)) {
             east = collisionMapArray.get(index + 1);
         }
 
         switch (move) {
             case 1:
-                if(north != -999 && north != 45) {
+                if (north != -999 && north != 45) {
                     for (newAi ai : MyAnimationTimer.realAis) {
                         if (ai.getY() == this.getY() + 16 && ai.getX() == this.getX()) {
                             return false;
@@ -184,7 +169,7 @@ public class newAi
                 }
                 break;
             case 2:
-                if(east != -999 && east != 45) {
+                if (east != -999 && east != 45) {
                     for (newAi ai : MyAnimationTimer.realAis) {
                         if (ai.getY() == this.getY() && ai.getX() == this.getX() + 16) {
                             return false;
@@ -194,7 +179,7 @@ public class newAi
                 }
                 break;
             case 3:
-                if(south != -999 && south != 45) {
+                if (south != -999 && south != 45) {
                     for (newAi ai : MyAnimationTimer.realAis) {
                         if (ai.getY() == this.getY() - 16 && ai.getX() == this.getX()) {
                             return false;
@@ -204,7 +189,7 @@ public class newAi
                 }
                 break;
             case 4:
-                if(west != -999 && west != 45) {
+                if (west != -999 && west != 45) {
                     for (newAi ai : MyAnimationTimer.realAis) {
                         if (ai.getY() == this.getY() && ai.getX() == this.getX() - 16) {
                             return false;

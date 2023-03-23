@@ -1,23 +1,19 @@
 package classes;
 
-public class Pos
-{
+public class Pos {
     private int x;
     private int y;
 
-    public Pos(int x, int y)
-    {
+    public Pos(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 
-    public int getY()
-    {
+    public int getY() {
         return y;
     }
 }
