@@ -138,16 +138,16 @@ public class SimulatorController extends Thread implements Runnable {
             switch(value)
             {
                 case 1:
-                    ais.add(new newAi(goldAI, collisionMapArray, aisImage));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i));
                     break;
                 case 2:
-                    ais.add(new newAi(blueAI, collisionMapArray, aisImage));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i));
                     break;
                 case 3:
-                    ais.add(new newAi(greenAI, collisionMapArray, aisImage));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i));
                     break;
                 case 4:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i));
                     break;
                 default:
                     System.out.println("generating ai error");

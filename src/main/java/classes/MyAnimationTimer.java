@@ -9,6 +9,8 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyAnimationTimer extends AnimationTimer {
 
@@ -24,6 +26,8 @@ public class MyAnimationTimer extends AnimationTimer {
     private Canvas simMap;
     private int index;
     private int counter = 10;
+    private Pos newPos;
+    private HashMap<Integer, Pos> positions;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
@@ -63,13 +67,32 @@ public class MyAnimationTimer extends AnimationTimer {
             }
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
+
+                HashMap<Integer, Pos> positions = new HashMap<>();
+
                 for (newAi ai : realAis) {
-                    ai.update();
-                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                    newPos = ai.update();
+                    positions.put(ai.getId(), newPos);
+                }
+                // check for some position and if destoy until only one position left of everyone
+                checkPos();
+                for (newAi ai : realAis) {
+                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()), positions);
                 }
             });
-
             lastTimeForTimer = currentTime;
+        }
+    }
+
+    public void checkPos() {
+        for (Map.Entry<Integer, Pos> e :positions.entrySet()) {
+            for (Map.Entry<Integer, Pos> f : positions.entrySet()) {
+                if(f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == f.getValue().getY()) {
+                    if(f.getKey() != e.getKey()) {
+                        positions.remove(e.getKey());
+                    }
+                }
+            }
         }
     }
 
