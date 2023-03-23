@@ -21,7 +21,6 @@ public class newAi
     private int id;
     private int x;
     private int y;
-
     private boolean run;
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
@@ -53,46 +52,28 @@ public class newAi
                 case 1:
                     if(canMove(1)) {
                         //up
-
                         newPos = new Pos(this.x, this.y-16);
-
-                        // Do this in draw after drawing
-                        //
-                        //y -= 16;
-                        //index -= 56;
-                        //
                         run = false;
                     }
                     break;
                 case 2:
                     if(canMove(2)) {
                         //right
-
                         newPos = new Pos(this.x+16, this.y);
-
-
-//                        x += 16;
-//                        index += 1;
                         run = false;
                     }
                     break;
                 case 3:
                     if(canMove(3)) {
                         //down
-//                        y += 16;
-//                        index += 56;
                         newPos = new Pos(this.x, this.y+16);
-
                         run = false;
                     }
                     break;
                 case 4:
                     if(canMove(4)) {
                         //left
-//                        x -= 16;
-//                        index -= 1;
                         newPos = new Pos(this.x-16, this.y);
-
                         run = false;
                     }
                     break;
@@ -101,7 +82,6 @@ public class newAi
                     break;
             }
         }
-
         return newPos;
     }
 
