@@ -49,13 +49,12 @@ public class SimulatorController extends Thread implements Runnable {
     private boolean pastMidnight = false;
     private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
-    private static ArrayList<AI> ais = new ArrayList<>();
+    private static ArrayList<newAi> ais = new ArrayList<>();
     private static ArrayList<BufferedImage> greenAI = new ArrayList<>();
     private static ArrayList<BufferedImage> blueAI = new ArrayList<>();
     private static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
     private static ArrayList<BufferedImage> goldAI = new ArrayList<>();
     public static int visitorCount;
-
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -128,6 +127,10 @@ public class SimulatorController extends Thread implements Runnable {
             goldAI.add(image = aisImage.get(i));
         }
 
+        ArrayList<Integer> collisionMapArray = new ArrayList<>();
+
+        collisionMapArray = makeCollisionMap();
+
         for (int i = 0; i < ScheduleMakerController.visitorCount; i++)
         {
             int value = getRandom4();
@@ -135,16 +138,16 @@ public class SimulatorController extends Thread implements Runnable {
             switch(value)
             {
                 case 1:
-                    ais.add(new AI(new Point2D.Double(664, 552), greenAI, i));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage));
                     break;
                 case 2:
-                    ais.add(new AI(new Point2D.Double(664, 552), goldAI, i));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage));
                     break;
                 case 3:
-                    ais.add(new AI(new Point2D.Double(664, 552), blueAI, i));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage));
                     break;
                 case 4:
-                    ais.add(new AI(new Point2D.Double(664, 552), purpleAI, i));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage));
                     break;
                 default:
                     System.out.println("generating ai error");
@@ -153,9 +156,42 @@ public class SimulatorController extends Thread implements Runnable {
         }
     }
 
+    public static ArrayList<Integer> makeCollisionMap() throws FileNotFoundException
+    {
+        JsonReader reader = null;
+
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "collision.json");
+        reader = Json.createReader(new FileInputStream(file));
+        JsonObject root = reader.readObject();
+
+        JsonArray tilesets = root.getJsonArray("tilesets");
+        JsonObject tileset = tilesets.getJsonObject(0);
+
+        JsonArray layers = root.getJsonArray("layers");
+        JsonObject layer = layers.getJsonObject(0);
+
+        JsonArray jsonArray = layer.getJsonArray("data");
+
+        ArrayList<Integer> collisionMapArray = new ArrayList<>();
+
+        collisionMapArray = getIntArray(jsonArray);
+
+        return collisionMapArray;
+    }
+
     public void drawMap(Graphics2D g) {
         map.draw(g);
 //        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
+    }
+
+    public static ArrayList<Integer> getIntArray(JsonArray jsonArray)
+    {
+        ArrayList<Integer> intArray = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            intArray.add(jsonArray.getInt(i));
+        }
+        return intArray;
     }
 
     public static int getRandom4() {

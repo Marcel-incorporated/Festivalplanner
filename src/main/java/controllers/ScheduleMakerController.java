@@ -288,7 +288,7 @@ public class ScheduleMakerController {
             visitorCount = Integer.parseInt(amountOfVisitorsTextfield.getText());
             SimulatorController.visitorCount = visitorCount;
             SimulatorController.saveAITypes();
-            if (visitorCount > 20) {
+            if (visitorCount > 10000) {
                 NotificationPromptController.notification(true, "Can't add more than 20 visitors!");
                 return;
             }

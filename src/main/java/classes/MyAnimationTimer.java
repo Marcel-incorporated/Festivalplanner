@@ -19,13 +19,13 @@ public class MyAnimationTimer extends AnimationTimer {
     private boolean pastMidnight = false;
     private int minutes = 0;
     private int hours = 10;
-    private ArrayList<AI> ais;
-    public static ArrayList<AI> realAis = new ArrayList<>();
+    private ArrayList<newAi> ais;
+    public static ArrayList<newAi> realAis = new ArrayList<>();
     private Canvas simMap;
     private int index;
     private int counter = 10;
 
-    public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap) {
+    public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
@@ -63,9 +63,9 @@ public class MyAnimationTimer extends AnimationTimer {
             }
             Platform.runLater(this::addMinute);
             Platform.runLater(() -> {
-                for (AI ai : realAis) {
-                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+                for (newAi ai : realAis) {
                     ai.update();
+                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
 
@@ -74,8 +74,8 @@ public class MyAnimationTimer extends AnimationTimer {
     }
 
     public boolean isSpawn() {
-        for (AI ai : MyAnimationTimer.realAis) {
-            if (ai.getPosition().getX() == 664 && ai.getPosition().getY() == 552) {
+        for (newAi ai : MyAnimationTimer.realAis) {
+            if (ai.getX() == 664 && ai.getY() == 552) {
                 return false;
             }
         }
