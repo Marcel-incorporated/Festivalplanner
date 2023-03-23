@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.control.Label;
+
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -49,13 +51,12 @@ public class SimulatorController extends Thread implements Runnable {
     private boolean pastMidnight = false;
     private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
-    private static ArrayList<AI> ais = new ArrayList<>();
+    private static ArrayList<newAi> ais = new ArrayList<>();
     private static ArrayList<BufferedImage> greenAI = new ArrayList<>();
     private static ArrayList<BufferedImage> blueAI = new ArrayList<>();
     private static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
     private static ArrayList<BufferedImage> goldAI = new ArrayList<>();
     public static int visitorCount;
-
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -128,23 +129,25 @@ public class SimulatorController extends Thread implements Runnable {
             goldAI.add(image = aisImage.get(i));
         }
 
-        for (int i = 0; i < ScheduleMakerController.visitorCount; i++)
-        {
+        ArrayList<Integer> collisionMapArray = new ArrayList<>();
+
+        collisionMapArray = makeCollisionMap();
+
+        for (int i = 0; i < ScheduleMakerController.visitorCount; i++) {
             int value = getRandom4();
 
-            switch(value)
-            {
+            switch (value) {
                 case 1:
-                    ais.add(new AI(new Point2D.Double(664, 552), greenAI, i));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i));
                     break;
                 case 2:
-                    ais.add(new AI(new Point2D.Double(664, 552), goldAI, i));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i));
                     break;
                 case 3:
-                    ais.add(new AI(new Point2D.Double(664, 552), blueAI, i));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i));
                     break;
                 case 4:
-                    ais.add(new AI(new Point2D.Double(664, 552), purpleAI, i));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i));
                     break;
                 default:
                     System.out.println("generating ai error");
@@ -153,9 +156,39 @@ public class SimulatorController extends Thread implements Runnable {
         }
     }
 
+    public static ArrayList<Integer> makeCollisionMap() throws FileNotFoundException {
+        JsonReader reader = null;
+
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + "collision.json");
+        reader = Json.createReader(new FileInputStream(file));
+        JsonObject root = reader.readObject();
+
+        JsonArray tilesets = root.getJsonArray("tilesets");
+        JsonObject tileset = tilesets.getJsonObject(0);
+
+        JsonArray layers = root.getJsonArray("layers");
+        JsonObject layer = layers.getJsonObject(0);
+
+        JsonArray jsonArray = layer.getJsonArray("data");
+
+        ArrayList<Integer> collisionMapArray = new ArrayList<>();
+
+        collisionMapArray = getIntArray(jsonArray);
+
+        return collisionMapArray;
+    }
+
     public void drawMap(Graphics2D g) {
         map.draw(g);
 //        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
+    }
+
+    public static ArrayList<Integer> getIntArray(JsonArray jsonArray) {
+        ArrayList<Integer> intArray = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            intArray.add(jsonArray.getInt(i));
+        }
+        return intArray;
     }
 
     public static int getRandom4() {
@@ -190,7 +223,7 @@ public class SimulatorController extends Thread implements Runnable {
         //pathFindingMap.drawMatrix(g, orangeShopPath);
     }
 
-    public void makeOrangeShopPath(){
+    public void makeOrangeShopPath() {
         orangeShopPath = new Matrix(35, 56);
         orangeShopPath.updateAround(5, 3, 0);
     }
