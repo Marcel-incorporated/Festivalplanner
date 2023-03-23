@@ -13,6 +13,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static controllers.ArtistArrayListController.artists;
+
 public class ScheduleController {
 
     @FXML
@@ -29,13 +31,13 @@ public class ScheduleController {
     @FXML
     void onImportButton() {
         Festival festivalObject = null;
-        ArtistArrayListController.artists.clear();
+        artists.clear();
 
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
             NotificationPromptController.notification(false, "Successfully import festival file :)");
             allArtists = festivalObject.getArtists();
-            ArtistArrayListController.artists.addAll(allArtists);
+            artists.addAll(allArtists);
             calculateBlockToDraw(allArtists);
             draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
         } catch (Exception e) {

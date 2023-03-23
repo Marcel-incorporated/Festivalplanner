@@ -6,6 +6,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
 
+import static controllers.ArtistArrayListController.artists;
+
 public class editArtistDialogController {
     //FXML attributen
     @FXML
@@ -63,9 +65,9 @@ public class editArtistDialogController {
             duration = Integer.parseInt(durationChoicebox.getSelectionModel().getSelectedItem().substring(0, 2));
         }
 //        artist.setSetStartingTime(startTimeChoicebox.getSelectionModel().getSelectedItem());
-        int artistPos = ArtistArrayListController.artists.indexOf(artist);
-        ArtistArrayListController.artists.remove(artist);
-        ArtistArrayListController.artists.add(artistPos, new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity,
+        int artistPos = artists.indexOf(artist);
+        artists.remove(artist);
+        artists.add(artistPos, new Artist(artistNameTextfield.getText(), genreTextfield.getText(), popularity,
                 startTimeChoicebox.getSelectionModel().getSelectedItem(),
                 duration, stagePickerChoicebox.getSelectionModel().getSelectedItem()));
     }

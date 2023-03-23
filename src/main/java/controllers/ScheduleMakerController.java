@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static controllers.ArtistArrayListController.artists;
 import static controllers.NotificationPromptController.notification;
 
 public class ScheduleMakerController {
@@ -129,7 +130,7 @@ public class ScheduleMakerController {
 
     private void deleteArtist(Artist artist, Cell<Artist> cell) {
         artistsObservableList.remove(cell.getItem());
-        ArtistArrayListController.artists.remove(artist);
+        artists.remove(artist);
     }
 
     private void openArtistEditDialog(Artist item) throws IOException {
@@ -153,7 +154,7 @@ public class ScheduleMakerController {
     @FXML
     public void onRefreshListButton() {
         artistsObservableList.clear();
-        for (Artist a : ArtistArrayListController.artists) {
+        for (Artist a : artists) {
             if (!artistsObservableList.contains(a)) {
                 artistsObservableList.add(a);
             }
@@ -162,7 +163,7 @@ public class ScheduleMakerController {
 
     @FXML
     void onExportButton() {
-        Festival festival = new Festival(visitors, festivalName, ArtistArrayListController.artists);      //create festival object with all saved information from user
+        Festival festival = new Festival(visitors, festivalName, artists);      //create festival object with all saved information from user
 
         try {                                               //try serializing all data into .txt file, showing error when unsuccessfull
             Serializer.Serialize(festival);
@@ -245,9 +246,9 @@ public class ScheduleMakerController {
     private void addArtistToList(String name, String genre, int popularity, String startingTime, String duration, String podiumName) {
         if (amountOfArtistsAdded <= 16) {
             if (duration.equals("120 minutes")) {
-                ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 3)), podiumName));
+                artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 3)), podiumName));
             } else {
-                ArtistArrayListController.artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
+                artists.add(new Artist(name, genre, popularity, startingTime, Integer.parseInt(duration.substring(0, 2)), podiumName));
             }
 
         } else {
@@ -268,7 +269,7 @@ public class ScheduleMakerController {
                 durationChoicebox.getSelectionModel().getSelectedItem(), stagePickerChoicebox.getSelectionModel().getSelectedItem());
 
 
-        for (Artist a : ArtistArrayListController.artists) {
+        for (Artist a : artists) {
             if (!artistsObservableList.contains(a)) {
                 artistsObservableList.add(a);
             }
