@@ -21,6 +21,7 @@ public class newAi {
     private int x;
     private int y;
     private boolean run;
+    private Matrix matrix = new Matrix(35, 56);
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -38,37 +39,44 @@ public class newAi {
         return id;
     }
 
-    public Pos update() {
+    public void update() {
         run = true;
-        Pos newPos = null;
 
         while (run) {
             switch (randomMove()) {
                 case 1:
                     if (canMove(1)) {
                         //up
-                        newPos = new Pos(this.x, this.y - 16);
+//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
+                        y -= 16;
+                        index -= 56;
                         run = false;
                     }
                     break;
                 case 2:
                     if (canMove(2)) {
                         //right
-                        newPos = new Pos(this.x + 16, this.y);
+//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
+                        x += 16;
+                        index += 1;
                         run = false;
                     }
                     break;
                 case 3:
                     if (canMove(3)) {
                         //down
-                        newPos = new Pos(this.x, this.y + 16);
+//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
+                        y += 16;
+                        index += 56;
                         run = false;
                     }
                     break;
                 case 4:
                     if (canMove(4)) {
                         //left
-                        newPos = new Pos(this.x - 16, this.y);
+//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
+                        x -= 16;
+                        index -= 1;
                         run = false;
                     }
                     break;
@@ -77,41 +85,36 @@ public class newAi {
                     break;
             }
         }
-        return newPos;
     }
 
     public void draw(Graphics2D g) {
-//        if(hashmap.keySet().contains(this.id)){
-//            for (Map.Entry<Integer, Pos> e : hashmap.entrySet()) {
-//                if (e.getValue().getY() > y) {
-//                    y += 16;
-//                    index += 56;
-//                }
-//                if (e.getValue().getY() < y) {
-//                    y -= 16;
-//                    index -= 56;
-//                }
-//                if (e.getValue().getX() > x) {
-//                    x += 16;
-//                    index += 1;
-//                }
-//                if (e.getValue().getX() < x) {
-//                    x -= 16;
-//                    index -= 1;
-//                }
-//            }
+//        if (this.getY() > y) {
 
-            AffineTransform tx = new AffineTransform();
-            tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
-            if (lastTx != null) {
-                image = tiles.get(0);
-                g.drawImage(image, lastTx, null);
-            }
-            image = characterImages.get(0);
-            g.drawImage(image, tx, null);
+//        }
+//        if (e.getValue().getY() < y) {
+//            y -= 16;
+//            index -= 56;
+//        }
+//        if (e.getValue().getX() > x) {
+//            x += 16;
+//            index += 1;
+//        }
+//        if (e.getValue().getX() < x) {
+//
+//        }
 
-            lastTx = tx;
+
+        AffineTransform tx = new AffineTransform();
+        tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
+        if (lastTx != null) {
+            image = tiles.get(0);
+            g.drawImage(image, lastTx, null);
         }
+        image = characterImages.get(0);
+        g.drawImage(image, tx, null);
+
+        lastTx = tx;
+    }
 
 
     public int getX() {
