@@ -6,6 +6,8 @@ public class Matrix {
     private int[][] matrix;
     private int numRows;
     private int numCols;
+    private int row;
+    private int collom;
 
     public Matrix(int numRows, int numCols) {
         this.numRows = numRows;
@@ -21,7 +23,17 @@ public class Matrix {
         return matrix[row][col];
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCollom() {
+        return collom;
+    }
+
     public void updateAround(int row, int col, int value) {
+        this.row = row;
+        this.collom = col;
         int centerRow = row;
         int centerCol = col;
 

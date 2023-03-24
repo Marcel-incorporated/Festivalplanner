@@ -48,6 +48,13 @@ public class SimulatorController extends Thread implements Runnable {
     private static int tileHeight;
     private static int tileWidth;
     private static Matrix orangeShopPath;
+    private static Matrix blueShopPath;
+    private static Matrix mainStagePath;
+    private static Matrix leftTinyStagePath;
+    private static Matrix middleTinyStagePath;
+    private static Matrix rightTinyStagePath;
+    private static Matrix toiletPath;
+
     private boolean pastMidnight = false;
     private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
@@ -61,6 +68,12 @@ public class SimulatorController extends Thread implements Runnable {
     @FXML
     public void initialize() throws FileNotFoundException {
         makeOrangeShopPath();
+        makeBlueShopPath();
+        makeMainStagePath();
+        makeLeftTinyStagePath();
+        makeMiddleTinyStagePath();
+        makeRightTinyStagePath();
+        makeToiletPath();
         saveAITypes();
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
@@ -137,20 +150,32 @@ public class SimulatorController extends Thread implements Runnable {
 
 
         for (int i = 0; i < ScheduleMakerController.visitorCount; i++) {
-            int value = getRandom4();
+            int value = getRandom7();
 
             switch (value) {
                 case 1:
-                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, orangeShopPath));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, rightTinyStagePath));
                     break;
                 case 2:
-                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, orangeShopPath));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, rightTinyStagePath));
                     break;
                 case 3:
-                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, orangeShopPath));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, rightTinyStagePath));
                     break;
                 case 4:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, orangeShopPath));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    break;
+                case 5:
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+
+                    break;
+                case 6:
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+
+                    break;
+                case 7:
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+
                     break;
                 default:
                     System.out.println("generating ai error");
@@ -200,6 +225,12 @@ public class SimulatorController extends Thread implements Runnable {
         return randomNumber;
     }
 
+    public static int getRandom7() {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(7) + 1;
+        return randomNumber;
+    }
+
     public void setStatusLabel(String text) {
         statusLabel.setText(text);
     }
@@ -222,12 +253,44 @@ public class SimulatorController extends Thread implements Runnable {
     }
 
     public void drawPathFinding(Graphics2D g) {
-        makeOrangeShopPath();
-        pathFindingMap.drawMatrix(g, orangeShopPath);   //for debugging
+        pathFindingMap.drawMatrix(g, rightTinyStagePath);   //for debugging
     }
 
     public void makeOrangeShopPath() {
         orangeShopPath = new Matrix(35, 56);
         orangeShopPath.updateAround(5, 3, 0);
     }
+
+    public void makeBlueShopPath() {
+        blueShopPath = new Matrix(35, 56);
+        blueShopPath.updateAround(15, 3, 0);
+    }
+
+    public void makeMainStagePath() {
+        mainStagePath = new Matrix(35, 56);
+        mainStagePath.updateAround(5, 24, 0);
+    }
+
+    public void makeLeftTinyStagePath() {
+        leftTinyStagePath = new Matrix(35, 56);
+        leftTinyStagePath.updateAround(30, 5, 0);
+    }
+
+    public void makeMiddleTinyStagePath() {
+        middleTinyStagePath = new Matrix(35, 56);
+        middleTinyStagePath.updateAround(28, 26, 0);
+    }
+
+    public void makeRightTinyStagePath() {
+        rightTinyStagePath = new Matrix(35, 56);
+        rightTinyStagePath.updateAround(4, 49, 0);
+    }
+
+
+    public void makeToiletPath() {
+        toiletPath = new Matrix(35, 56);
+        toiletPath.updateAround(1,8, 0);
+    }
+
+
 }

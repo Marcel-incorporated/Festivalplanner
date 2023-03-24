@@ -24,6 +24,8 @@ public class newAi {
     private Matrix matrix;
     private int row = 34;
     private int collom = 41;
+    private Matrix exitPath;
+
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -68,7 +70,6 @@ public class newAi {
                     case 1:
                         if (canMove(1)) {
                             //up
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
                             y -= 16;
                             index -= 56;
                             run = false;
@@ -77,7 +78,6 @@ public class newAi {
                     case 2:
                         if (canMove(2)) {
                             //right
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
                             x += 16;
                             index += 1;
                             run = false;
@@ -86,7 +86,6 @@ public class newAi {
                     case 3:
                         if (canMove(3)) {
                             //down
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
                             y += 16;
                             index += 56;
                             run = false;
@@ -95,7 +94,6 @@ public class newAi {
                     case 4:
                         if (canMove(4)) {
                             //left
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
                             x -= 16;
                             index -= 1;
                             run = false;
@@ -108,7 +106,6 @@ public class newAi {
             }
         } else {
             //34, 41 = spawn
-
             int north = -999;
             int east = -999;
             int south = -999;
@@ -130,38 +127,66 @@ public class newAi {
             int lowestvalue = 999;
 
             if (north < lowestvalue && north != -999) {
-                lowestvalue = north;
+                if (canMove(1)) {
+                    lowestvalue = north;
+                }
             }
             if (south < lowestvalue && south != -999) {
-                lowestvalue = south;
+                if (canMove(3)) {
+                    lowestvalue = south;
+                }
             }
             if (east < lowestvalue && east != -999) {
-                lowestvalue = east;
+                if (canMove(2)) {
+                    lowestvalue = east;
+                }
             }
             if (west < lowestvalue && west != -999) {
-                lowestvalue = west;
+                if (canMove(4)) {
+                    lowestvalue = west;
+                }
             }
 
             System.out.println(lowestvalue);
-            if(west == lowestvalue) {
-                x -= 16;
-                collom-=1;
-                index =-1;
+            while (true) {
+                if (east == lowestvalue) {
+                    //right
+                    x += 16;
+                    collom += 1;
+                    index += 1;
+                    break;
+                }
+                if (west == lowestvalue) {
+                    //left
+                    x -= 16;
+                    collom -= 1;
+                    index -= 1;
+                    break;
+                }
+                //matrix.getRow en matrix.getCollom gebruiken om target positie op te halen
+                //row en collom variables zijn huidige positie
+                //op basis van het verschil (groter of kleiner dan) bepalen of rechts of links moet gaan
+                if (north == lowestvalue) {
+                    //up
+                    y -= 16;
+                    row -= 1;
+                    index -= 56;
+                    break;
+                }
+
+                if (south == lowestvalue) {
+                    //down
+                    y += 16;
+                    row += 1;
+                    index += 56;
+                    break;
+                }
             }
-            if(north == lowestvalue) {
-                y-=16;
-                row-=1;
-                index-=56;
-            }
-            if(east == lowestvalue) {
-                x+=16;
-                collom+=1;
-                index+=1;
-            }
-            if(south == lowestvalue) {
-                y+=16;
-                row+=1;
-                index+=56;
+            if(lowestvalue == 0) {
+                System.out.println("start random");
+//                matrix = null;
+                makeExitPath();
+                matrix = exitPath;
             }
         }
     }
@@ -287,4 +312,10 @@ public class newAi {
         }
         return false;
     }
+
+    public void makeExitPath() {
+        exitPath = new Matrix(35, 56);
+        exitPath.updateAround(34, 41, 0);
+    }
+
 }

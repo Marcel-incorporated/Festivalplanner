@@ -52,7 +52,7 @@ public class MyAnimationTimer extends AnimationTimer {
             //Plan de volgende keer runnen 125 milliseconde later
             lastTime = currentTime;
         }
-        if (elapsedForTimer >= 1_000_000_000) {
+        if (elapsedForTimer >= 1_000_000_00) {
             counter++;
             if (counter > 10 && isSpawn() == true) {
                 if (index != ais.size()) {
@@ -70,6 +70,7 @@ public class MyAnimationTimer extends AnimationTimer {
             {
                 for (newAi ai : realAis) {
                     ai.update();
+//                    ai.setMatrix();
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
