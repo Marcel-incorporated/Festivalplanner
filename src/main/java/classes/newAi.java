@@ -80,37 +80,39 @@ public class newAi {
         return newPos;
     }
 
-    public void draw(Graphics2D g, HashMap<Integer, Pos> hashmap) {
-        for (Map.Entry<Integer, Pos> e : hashmap.entrySet()) {
-            if (e.getValue().getY() > y) {
-                y += 16;
-                index += 56;
+    public void draw(Graphics2D g) {
+//        if(hashmap.keySet().contains(this.id)){
+//            for (Map.Entry<Integer, Pos> e : hashmap.entrySet()) {
+//                if (e.getValue().getY() > y) {
+//                    y += 16;
+//                    index += 56;
+//                }
+//                if (e.getValue().getY() < y) {
+//                    y -= 16;
+//                    index -= 56;
+//                }
+//                if (e.getValue().getX() > x) {
+//                    x += 16;
+//                    index += 1;
+//                }
+//                if (e.getValue().getX() < x) {
+//                    x -= 16;
+//                    index -= 1;
+//                }
+//            }
+
+            AffineTransform tx = new AffineTransform();
+            tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
+            if (lastTx != null) {
+                image = tiles.get(0);
+                g.drawImage(image, lastTx, null);
             }
-            if (e.getValue().getY() < y) {
-                y -= 16;
-                index -= 56;
-            }
-            if (e.getValue().getX() > x) {
-                x += 16;
-                index += 1;
-            }
-            if (e.getValue().getX() < x) {
-                x -= 16;
-                index -= 1;
-            }
+            image = characterImages.get(0);
+            g.drawImage(image, tx, null);
+
+            lastTx = tx;
         }
 
-        AffineTransform tx = new AffineTransform();
-        tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
-        if (lastTx != null) {
-            image = tiles.get(0);
-            g.drawImage(image, lastTx, null);
-        }
-        image = characterImages.get(0);
-        g.drawImage(image, tx, null);
-
-        lastTx = tx;
-    }
 
     public int getX() {
         return x;
