@@ -28,7 +28,6 @@ public class MyAnimationTimer extends AnimationTimer {
     private int index;
     private int counter = 10;
     private Pos newPos;
-    private HashMap<Integer, Pos> positions;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
@@ -69,16 +68,8 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(this::addMinute);
             Platform.runLater(() ->
             {
-
-                this.positions = new HashMap<>();
-
                 for (newAi ai : realAis) {
-                    newPos = ai.update();
-                    positions.put(ai.getId(), newPos);
-                }
-                // check for some position and if destoy until only one position left of everyone
-//                checkPos();
-                for (newAi ai : realAis) {
+                    ai.update();
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
