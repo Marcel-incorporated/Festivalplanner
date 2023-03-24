@@ -47,7 +47,7 @@ public class SimulatorController extends Thread implements Runnable {
     private static int height;
     private static int tileHeight;
     private static int tileWidth;
-    private Matrix orangeShopPath;
+    private static Matrix orangeShopPath;
     private boolean pastMidnight = false;
     private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
@@ -60,6 +60,7 @@ public class SimulatorController extends Thread implements Runnable {
 
     @FXML
     public void initialize() throws FileNotFoundException {
+        makeOrangeShopPath();
         saveAITypes();
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
@@ -133,21 +134,23 @@ public class SimulatorController extends Thread implements Runnable {
 
         collisionMapArray = makeCollisionMap();
 
+
+
         for (int i = 0; i < ScheduleMakerController.visitorCount; i++) {
             int value = getRandom4();
 
             switch (value) {
                 case 1:
-                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, orangeShopPath));
                     break;
                 case 2:
-                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, orangeShopPath));
                     break;
                 case 3:
-                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, orangeShopPath));
                     break;
                 case 4:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, orangeShopPath));
                     break;
                 default:
                     System.out.println("generating ai error");
@@ -220,7 +223,7 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawPathFinding(Graphics2D g) {
         makeOrangeShopPath();
-        //pathFindingMap.drawMatrix(g, orangeShopPath);
+        pathFindingMap.drawMatrix(g, orangeShopPath);   //for debugging
     }
 
     public void makeOrangeShopPath() {

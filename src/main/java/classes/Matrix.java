@@ -33,7 +33,6 @@ public class Matrix {
         }
     }
 
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int[] row : matrix) {
