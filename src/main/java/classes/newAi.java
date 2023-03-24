@@ -149,37 +149,48 @@ public class newAi {
 
             System.out.println(lowestvalue);
             while (true) {
-                if (east == lowestvalue) {
-                    //right
-                    x += 16;
-                    collom += 1;
-                    index += 1;
-                    break;
+                System.out.println("target: "  + matrix.getCollom());
+                System.out.println("current: " + collom);
+                if(matrix.getCollom() > collom) {
+                    if (east == lowestvalue) {
+                        //right
+                        x += 16;
+                        collom += 1;
+                        index += 1;
+                        break;
+                    }
+                } else {
+                    if (west == lowestvalue) {
+                        //left
+                        x -= 16;
+                        collom -= 1;
+                        index -= 1;
+                        break;
+                    }
                 }
-                if (west == lowestvalue) {
-                    //left
-                    x -= 16;
-                    collom -= 1;
-                    index -= 1;
-                    break;
-                }
+
+
                 //matrix.getRow en matrix.getCollom gebruiken om target positie op te halen
                 //row en collom variables zijn huidige positie
                 //op basis van het verschil (groter of kleiner dan) bepalen of rechts of links moet gaan
-                if (north == lowestvalue) {
-                    //up
-                    y -= 16;
-                    row -= 1;
-                    index -= 56;
-                    break;
-                }
 
-                if (south == lowestvalue) {
-                    //down
-                    y += 16;
-                    row += 1;
-                    index += 56;
-                    break;
+                if(matrix.getRow() > row) {
+                    if (south == lowestvalue) {
+                        //down
+                        y += 16;
+                        row += 1;
+                        index += 56;
+                        break;
+                    }
+                } else {
+                    if (north == lowestvalue) {
+
+                        //up
+                        y -= 16;
+                        row -= 1;
+                        index -= 56;
+                        break;
+                    }
                 }
             }
             if(lowestvalue == 0) {

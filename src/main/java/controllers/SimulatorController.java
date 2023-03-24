@@ -154,28 +154,26 @@ public class SimulatorController extends Thread implements Runnable {
 
             switch (value) {
                 case 1:
-                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 case 2:
-                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 case 3:
-                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 case 4:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 case 5:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, middleTinyStagePath));
 
                     break;
                 case 6:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
-
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 case 7:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, rightTinyStagePath));
-
+                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, middleTinyStagePath));
                     break;
                 default:
                     System.out.println("generating ai error");
@@ -253,7 +251,7 @@ public class SimulatorController extends Thread implements Runnable {
     }
 
     public void drawPathFinding(Graphics2D g) {
-        pathFindingMap.drawMatrix(g, rightTinyStagePath);   //for debugging
+        pathFindingMap.drawMatrix(g, middleTinyStagePath);   //for debugging
     }
 
     public void makeOrangeShopPath() {
