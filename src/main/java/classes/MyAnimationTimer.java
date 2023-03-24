@@ -77,29 +77,29 @@ public class MyAnimationTimer extends AnimationTimer {
                     positions.put(ai.getId(), newPos);
                 }
                 // check for some position and if destoy until only one position left of everyone
-                checkPos();
+//                checkPos();
                 for (newAi ai : realAis) {
-                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()), positions);
+                    ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
             lastTimeForTimer = currentTime;
         }
     }
 
-    public void checkPos() {
-        List<Integer> keysToRemove = new ArrayList<>();
-        for (Map.Entry<Integer, Pos> e : this.positions.entrySet()) {
-            System.out.println(this.positions.size());
-            for (Map.Entry<Integer, Pos> f : this.positions.entrySet()) {
-                if (f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == e.getValue().getY() && f.getKey() != e.getKey()) {
-                    keysToRemove.add(f.getKey());
-                }
-            }
-        }
-        for (Integer key : keysToRemove) {
-            this.positions.remove(key);
-        }
-    }
+//    public void checkPos() {
+//        List<Integer> keysToRemove = new ArrayList<>();
+//        for (Map.Entry<Integer, Pos> e : this.positions.entrySet()) {
+//            System.out.println(this.positions.size());
+//            for (Map.Entry<Integer, Pos> f : this.positions.entrySet()) {
+//                if (f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == e.getValue().getY() && f.getKey() != e.getKey()) {
+//                    keysToRemove.add(f.getKey());
+//                }
+//            }
+//        }
+//        for (Integer key : keysToRemove) {
+//            this.positions.remove(key);
+//        }
+//    }
 
     public boolean isSpawn() {
         for (newAi ai : MyAnimationTimer.realAis) {
