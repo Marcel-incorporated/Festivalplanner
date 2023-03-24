@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
 import classes.Map;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -17,6 +18,7 @@ public class MapController {
     //Klasse attributen
     private Map map;
     private Map bottomMap;
+
     @FXML
     public void initialize() throws FileNotFoundException {
         map = new Map("map.json");
@@ -32,6 +34,7 @@ public class MapController {
     public void drawMap(Graphics2D g) {
         map.draw(g);
     }
+
     public void drawBottom(Graphics2D g) {
         bottomMap.draw(g);
     }

@@ -9,6 +9,9 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MyAnimationTimer extends AnimationTimer {
 
@@ -19,17 +22,20 @@ public class MyAnimationTimer extends AnimationTimer {
     private boolean pastMidnight = false;
     private int minutes = 0;
     private int hours = 10;
-    private ArrayList<AI> ais;
-    public static ArrayList<AI> realAis = new ArrayList<>();
+    private ArrayList<newAi> ais;
+    public static ArrayList<newAi> realAis = new ArrayList<>();
     private Canvas simMap;
     private int index;
     private int counter = 10;
+    private Pos newPos;
+    private HashMap<Integer, Pos> positions;
 
-    public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap) {
+    public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
     }
+
     @Override
     public void handle(long currentTime) {
 //        System.out.println("handle method called");
@@ -43,15 +49,14 @@ public class MyAnimationTimer extends AnimationTimer {
 
         if (elapsed >= 125_000_000) { // 125 milliseconden
             //Roep methode aan
-            myMethod();
 
             //Plan de volgende keer runnen 125 milliseconde later
             lastTime = currentTime;
         }
         if (elapsedForTimer >= 1_000_000_000) {
             counter++;
-            if (counter > 10 && isSpawn() == true){
-                if (index != ais.size()){
+            if (counter > 10 && isSpawn() == true) {
+                if (index != ais.size()) {
                     realAis.add(ais.get(index));
                     index++;
                 }
@@ -62,20 +67,43 @@ public class MyAnimationTimer extends AnimationTimer {
                 resetTimer();
             }
             Platform.runLater(this::addMinute);
-            Platform.runLater(() -> {
-                for (AI ai : realAis) {
+            Platform.runLater(() ->
+            {
+
+                this.positions = new HashMap<>();
+
+                for (newAi ai : realAis) {
+                    newPos = ai.update();
+                    positions.put(ai.getId(), newPos);
+                }
+                // check for some position and if destoy until only one position left of everyone
+//                checkPos();
+                for (newAi ai : realAis) {
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
-                    ai.update();
                 }
             });
-
             lastTimeForTimer = currentTime;
         }
     }
 
+//    public void checkPos() {
+//        List<Integer> keysToRemove = new ArrayList<>();
+//        for (Map.Entry<Integer, Pos> e : this.positions.entrySet()) {
+//            System.out.println(this.positions.size());
+//            for (Map.Entry<Integer, Pos> f : this.positions.entrySet()) {
+//                if (f.getValue().getX() == e.getValue().getX() && f.getValue().getY() == e.getValue().getY() && f.getKey() != e.getKey()) {
+//                    keysToRemove.add(f.getKey());
+//                }
+//            }
+//        }
+//        for (Integer key : keysToRemove) {
+//            this.positions.remove(key);
+//        }
+//    }
+
     public boolean isSpawn() {
-        for (AI ai : MyAnimationTimer.realAis) {
-            if (ai.getPosition().getX() == 664 && ai.getPosition().getY() == 552) {
+        for (newAi ai : MyAnimationTimer.realAis) {
+            if (ai.getX() == 664 && ai.getY() == 552) {
                 return false;
             }
         }
@@ -107,7 +135,7 @@ public class MyAnimationTimer extends AnimationTimer {
     }
 
     public void addMinute() {
-        if (minutes <= 59) {
+        if (minutes < 59) {
             minutes++;
         } else {
             addHour();
@@ -118,18 +146,4 @@ public class MyAnimationTimer extends AnimationTimer {
             timerLabel.setText("" + hours + ":" + minutes);
         }
     }
-
-    private void myMethod() {
-        //Code die 8 keer per seconde wordt uitgevoerd
-//        System.out.println("method");
-    }
-
-//    private void checkrealai() {
-//        for(AI a : realAis) {
-//            System.out.println(a.getPosition());
-//            if() {
-//
-//            }
-//        }
-//    }
 }
