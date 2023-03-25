@@ -1,5 +1,6 @@
 package classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Matrix {
@@ -8,10 +9,10 @@ public class Matrix {
     private int numCols;
     private int row;
     private int collom;
-
     public Matrix(int numRows, int numCols) {
         this.numRows = numRows;
         this.numCols = numCols;
+
         matrix = new int[numRows][numCols];
     }
 
@@ -32,8 +33,6 @@ public class Matrix {
     }
 
     public void updateAround(int row, int col, int value) {
-        this.row = row;
-        this.collom = col;
         int centerRow = row;
         int centerCol = col;
 

@@ -22,9 +22,14 @@ public class newAi {
     private int y;
     private boolean run;
     private Matrix matrix;
+    private ArrayList<Matrix> matrixes = new ArrayList<>();
     private int row = 34;
     private int collom = 41;
     private Matrix exitPath;
+    private String previousPathFindingMove;
+    private int previousLowestValue;
+    private int matrixCount = 0;
+    private boolean isFinished = true;
 
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
@@ -36,10 +41,13 @@ public class newAi {
         this.tiles = tiles;
         this.id = id;
 
+        previousPathFindingMove = "";
+        previousLowestValue = -999;
+
         this.image = this.characterImages.get(0);
     }
 
-    public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, Matrix m) {
+    public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, ArrayList<Matrix> matrixes) {
         this.x = 664;
         this.y = 552;
         this.index = 1945;
@@ -47,7 +55,7 @@ public class newAi {
         this.characterImages = characterImages;
         this.tiles = tiles;
         this.id = id;
-        this.matrix = m;
+        this.matrixes = matrixes;
 
         this.image = this.characterImages.get(0);
     }
@@ -61,9 +69,17 @@ public class newAi {
     }
 
     public void update() {
+        if (this.matrixes != null){
+            if (matrixes.size() > matrixCount && isFinished){
+                matrix = matrixes.get(matrixCount);
+                matrixCount++;
+                System.out.println("next");
+                isFinished = false;
+            }
+        }
+
         if (this.matrix == null) {
             run = true;
-
 
             while (run) {
                 switch (randomMove()) {
@@ -149,57 +165,66 @@ public class newAi {
 
             System.out.println(lowestvalue);
             while (true) {
-                System.out.println("target: "  + matrix.getCollom());
-                System.out.println("current: " + collom);
-                if(matrix.getCollom() > collom) {
-                    if (east == lowestvalue) {
-                        //right
-                        x += 16;
-                        collom += 1;
-                        index += 1;
-                        break;
-                    }
-                } else {
-                    if (west == lowestvalue) {
-                        //left
-                        x -= 16;
-                        collom -= 1;
-                        index -= 1;
-                        break;
-                    }
+//                System.out.println("target: "  + matrix.getCollom());
+//                System.out.println("current: " + collom);
+
+                if (east == lowestvalue) {
+                    //right
+                    x += 16;
+                    collom += 1;
+                    index += 1;
+                    break;
                 }
 
-
-                //matrix.getRow en matrix.getCollom gebruiken om target positie op te halen
-                //row en collom variables zijn huidige positie
-                //op basis van het verschil (groter of kleiner dan) bepalen of rechts of links moet gaan
-
-                if(matrix.getRow() > row) {
-                    if (south == lowestvalue) {
-                        //down
-                        y += 16;
-                        row += 1;
-                        index += 56;
-                        break;
-                    }
-                } else {
-                    if (north == lowestvalue) {
-
-                        //up
-                        y -= 16;
-                        row -= 1;
-                        index -= 56;
-                        break;
-                    }
+                if (west == lowestvalue) {
+                    //left
+                    x -= 16;
+                    collom -= 1;
+                    index -= 1;
+                    break;
                 }
+
+                if (south == lowestvalue) {
+                    //down
+                    y += 16;
+                    row += 1;
+                    index += 56;
+                    break;
+                }
+
+                if (north == lowestvalue) {
+
+                    //up
+                    y -= 16;
+                    row -= 1;
+                    index -= 56;
+                    break;
+                }
+
             }
             if(lowestvalue == 0) {
-                System.out.println("start random");
-//                matrix = null;
-                makeExitPath();
-                matrix = exitPath;
+
+                this.isFinished = true;
+
+                if (this.matrixes.size() == this.matrixCount){
+                    System.out.println("start random");
+                    this.matrix = null;
+                    //matrixCount = 0;
+                }
+
+
+
+
+                //System.out.println("goin' to exit!");
+                //makeExitPath();
+                //matrix = exitPath;
             }
         }
+    }
+
+    public void setMatrixes(ArrayList<Matrix> matrixes)
+    {
+        this.matrixes = matrixes;
     }
 
     public void draw(Graphics2D g) {
@@ -324,9 +349,9 @@ public class newAi {
         return false;
     }
 
-    public void makeExitPath() {
-        exitPath = new Matrix(35, 56);
-        exitPath.updateAround(34, 41, 0);
-    }
+//    public void makeExitPath() {
+//        exitPath = new Matrix(35, 56);
+//        exitPath.updateAround(34, 41, 0);
+//    }
 
 }

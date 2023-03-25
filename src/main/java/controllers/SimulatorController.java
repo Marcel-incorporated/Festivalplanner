@@ -51,10 +51,9 @@ public class SimulatorController extends Thread implements Runnable {
     private static Matrix blueShopPath;
     private static Matrix mainStagePath;
     private static Matrix leftTinyStagePath;
-    private static Matrix middleTinyStagePath;
+    private static ArrayList<Matrix> middleTinyStagePath;
     private static Matrix rightTinyStagePath;
     private static Matrix toiletPath;
-
     private boolean pastMidnight = false;
     private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
@@ -64,17 +63,19 @@ public class SimulatorController extends Thread implements Runnable {
     private static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
     private static ArrayList<BufferedImage> goldAI = new ArrayList<>();
     public static int visitorCount;
+    public static ArrayList<Integer> collisionMapArray = new ArrayList<>();
 
     @FXML
     public void initialize() throws FileNotFoundException {
-        makeOrangeShopPath();
-        makeBlueShopPath();
-        makeMainStagePath();
-        makeLeftTinyStagePath();
+        //makeOrangeShopPath();
+        //makeBlueShopPath();
+        //makeMainStagePath();
+        //makeLeftTinyStagePath();
         makeMiddleTinyStagePath();
-        makeRightTinyStagePath();
-        makeToiletPath();
+        //makeRightTinyStagePath();
+        //makeToiletPath();
         saveAITypes();
+
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
         pathFindingMap = new Map("pathFinding.json");
@@ -142,8 +143,6 @@ public class SimulatorController extends Thread implements Runnable {
         for (int i = 64; i <= 73; i++) {
             goldAI.add(image = aisImage.get(i));
         }
-
-        ArrayList<Integer> collisionMapArray = new ArrayList<>();
 
         collisionMapArray = makeCollisionMap();
 
@@ -251,44 +250,68 @@ public class SimulatorController extends Thread implements Runnable {
     }
 
     public void drawPathFinding(Graphics2D g) {
-        pathFindingMap.drawMatrix(g, middleTinyStagePath);   //for debugging
+        Matrix matrix = new Matrix(35, 56);
+        matrix.updateAround(18, 40, 0);
+
+        pathFindingMap.drawMatrix(g, matrix);   //for debugging
     }
 
-    public void makeOrangeShopPath() {
-        orangeShopPath = new Matrix(35, 56);
-        orangeShopPath.updateAround(5, 3, 0);
-    }
+//    public void makeOrangeShopPath() {
+//        orangeShopPath = new Matrix(35, 56);
+//        orangeShopPath.updateAround(5, 3, 0);
+//    }
 
-    public void makeBlueShopPath() {
-        blueShopPath = new Matrix(35, 56);
-        blueShopPath.updateAround(15, 3, 0);
-    }
+//    public void makeBlueShopPath() {
+//        blueShopPath = new Matrix(35, 56);
+//        blueShopPath.updateAround(15, 3, 0);
+//    }
 
-    public void makeMainStagePath() {
-        mainStagePath = new Matrix(35, 56);
-        mainStagePath.updateAround(5, 24, 0);
-    }
+//    public void makeMainStagePath() {
+//        mainStagePath = new Matrix(35, 56);
+//        mainStagePath.updateAround(5, 24, 0);
+//    }
 
-    public void makeLeftTinyStagePath() {
-        leftTinyStagePath = new Matrix(35, 56);
-        leftTinyStagePath.updateAround(30, 5, 0);
-    }
+//    public void makeLeftTinyStagePath() {
+//        leftTinyStagePath = new Matrix(35, 56);
+//        leftTinyStagePath.updateAround(30, 5, 0);
+//    }
 
     public void makeMiddleTinyStagePath() {
-        middleTinyStagePath = new Matrix(35, 56);
-        middleTinyStagePath.updateAround(28, 26, 0);
+
+        middleTinyStagePath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(18, 40, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(18, 16, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(31, 16, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(31, 23, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(29, 27, 0);
+
+        middleTinyStagePath.add(checkpoint1);
+        middleTinyStagePath.add(checkpoint2);
+        middleTinyStagePath.add(checkpoint3);
+        middleTinyStagePath.add(checkpoint4);
+        middleTinyStagePath.add(endLocation);
     }
 
-    public void makeRightTinyStagePath() {
-        rightTinyStagePath = new Matrix(35, 56);
-        rightTinyStagePath.updateAround(4, 49, 0);
-    }
-
-
-    public void makeToiletPath() {
-        toiletPath = new Matrix(35, 56);
-        toiletPath.updateAround(1,8, 0);
-    }
+//    public void makeRightTinyStagePath() {
+//        rightTinyStagePath = new Matrix(35, 56);
+//        rightTinyStagePath.updateAround(4, 49, 0);
+//    }
+//
+//
+//    public void makeToiletPath() {
+//        toiletPath = new Matrix(35, 56);
+//        toiletPath.updateAround(1,8, 0);
+//    }
 
 
 }
