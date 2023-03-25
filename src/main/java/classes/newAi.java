@@ -21,7 +21,16 @@ public class newAi {
     private int x;
     private int y;
     private boolean run;
-    private Matrix matrix = new Matrix(35, 56);
+    private Matrix matrix;
+    private ArrayList<Matrix> matrixes = new ArrayList<>();
+    private int row = 34;
+    private int collom = 41;
+    private Matrix exitPath;
+    private String previousPathFindingMove;
+    private int previousLowestValue;
+    private int matrixCount = 0;
+    private boolean isFinished = true;
+
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -32,7 +41,27 @@ public class newAi {
         this.tiles = tiles;
         this.id = id;
 
+        previousPathFindingMove = "";
+        previousLowestValue = -999;
+
         this.image = this.characterImages.get(0);
+    }
+
+    public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, ArrayList<Matrix> matrixes) {
+        this.x = 664;
+        this.y = 552;
+        this.index = 1945;
+        this.collisionMapArray = collisionMapArray;
+        this.characterImages = characterImages;
+        this.tiles = tiles;
+        this.id = id;
+        this.matrixes = matrixes;
+
+        this.image = this.characterImages.get(0);
+    }
+
+    public void setMatrix(Matrix matrix) {
+        this.matrix = matrix;
     }
 
     public int getId() {
@@ -40,51 +69,162 @@ public class newAi {
     }
 
     public void update() {
-        run = true;
-
-        while (run) {
-            switch (randomMove()) {
-                case 1:
-                    if (canMove(1)) {
-                        //up
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
-                        y -= 16;
-                        index -= 56;
-                        run = false;
-                    }
-                    break;
-                case 2:
-                    if (canMove(2)) {
-                        //right
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
-                        x += 16;
-                        index += 1;
-                        run = false;
-                    }
-                    break;
-                case 3:
-                    if (canMove(3)) {
-                        //down
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
-                        y += 16;
-                        index += 56;
-                        run = false;
-                    }
-                    break;
-                case 4:
-                    if (canMove(4)) {
-                        //left
-//                        matrix.updateAround(newPos.getX(), newPos.getY(), 0);
-                        x -= 16;
-                        index -= 1;
-                        run = false;
-                    }
-                    break;
-                default:
-                    System.out.println("shit man");
-                    break;
+        if (this.matrixes != null){
+            if (matrixes.size() > matrixCount && isFinished){
+                matrix = matrixes.get(matrixCount);
+                matrixCount++;
+                System.out.println("next");
+                isFinished = false;
             }
         }
+
+        if (this.matrix == null) {
+            run = true;
+
+            while (run) {
+                switch (randomMove()) {
+                    case 1:
+                        if (canMove(1)) {
+                            //up
+                            y -= 16;
+                            index -= 56;
+                            run = false;
+                        }
+                        break;
+                    case 2:
+                        if (canMove(2)) {
+                            //right
+                            x += 16;
+                            index += 1;
+                            run = false;
+                        }
+                        break;
+                    case 3:
+                        if (canMove(3)) {
+                            //down
+                            y += 16;
+                            index += 56;
+                            run = false;
+                        }
+                        break;
+                    case 4:
+                        if (canMove(4)) {
+                            //left
+                            x -= 16;
+                            index -= 1;
+                            run = false;
+                        }
+                        break;
+                    default:
+                        System.out.println("shit man");
+                        break;
+                }
+            }
+        } else {
+            //34, 41 = spawn
+            int north = -999;
+            int east = -999;
+            int south = -999;
+            int west = -999;
+
+            if (row - 1 > -1) {
+                north = this.matrix.get(row - 1, collom);
+            }
+            if (collom + 1 <= 54) {
+                east = this.matrix.get(row, collom + 1);
+            }
+            if (row + 1 <= 34) {
+                south = this.matrix.get(row + 1, collom);
+            }
+            if (collom - 1 > -1) {
+                west = this.matrix.get(row, collom - 1);
+            }
+
+            int lowestvalue = 999;
+
+            if (north < lowestvalue && north != -999) {
+                if (canMove(1)) {
+                    lowestvalue = north;
+                }
+            }
+            if (south < lowestvalue && south != -999) {
+                if (canMove(3)) {
+                    lowestvalue = south;
+                }
+            }
+            if (east < lowestvalue && east != -999) {
+                if (canMove(2)) {
+                    lowestvalue = east;
+                }
+            }
+            if (west < lowestvalue && west != -999) {
+                if (canMove(4)) {
+                    lowestvalue = west;
+                }
+            }
+
+            System.out.println(lowestvalue);
+            while (true) {
+//                System.out.println("target: "  + matrix.getCollom());
+//                System.out.println("current: " + collom);
+
+                if (east == lowestvalue) {
+                    //right
+                    x += 16;
+                    collom += 1;
+                    index += 1;
+                    break;
+                }
+
+                if (west == lowestvalue) {
+                    //left
+                    x -= 16;
+                    collom -= 1;
+                    index -= 1;
+                    break;
+                }
+
+                if (south == lowestvalue) {
+                    //down
+                    y += 16;
+                    row += 1;
+                    index += 56;
+                    break;
+                }
+
+                if (north == lowestvalue) {
+
+                    //up
+                    y -= 16;
+                    row -= 1;
+                    index -= 56;
+                    break;
+                }
+
+            }
+            if(lowestvalue == 0) {
+
+                this.isFinished = true;
+
+                if (this.matrixes.size() == this.matrixCount){
+                    System.out.println("start random");
+                    this.matrix = null;
+                    //matrixCount = 0;
+                }
+
+
+
+
+                //System.out.println("goin' to exit!");
+                //makeExitPath();
+                //matrix = exitPath;
+            }
+        }
+    }
+
+    public void setMatrixes(ArrayList<Matrix> matrixes)
+    {
+        this.matrixes = matrixes;
     }
 
     public void draw(Graphics2D g) {
@@ -208,4 +348,10 @@ public class newAi {
         }
         return false;
     }
+
+//    public void makeExitPath() {
+//        exitPath = new Matrix(35, 56);
+//        exitPath.updateAround(34, 41, 0);
+//    }
+
 }
