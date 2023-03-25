@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class MyAnimationTimer extends AnimationTimer {
             //Plan de volgende keer runnen 125 milliseconde later
             lastTime = currentTime;
         }
+        // 1_000_000_000
         if (elapsedForTimer >= 1_000_000_000) {
             counter++;
             if (counter > 10 && isSpawn() == true) {
@@ -70,6 +72,7 @@ public class MyAnimationTimer extends AnimationTimer {
             {
                 for (newAi ai : realAis) {
                     ai.update();
+//                    ai.setMatrix();
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });

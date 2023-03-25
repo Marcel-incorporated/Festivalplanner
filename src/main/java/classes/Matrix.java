@@ -1,15 +1,18 @@
 package classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Matrix {
     private int[][] matrix;
     private int numRows;
     private int numCols;
-
+    private int row;
+    private int collom;
     public Matrix(int numRows, int numCols) {
         this.numRows = numRows;
         this.numCols = numCols;
+
         matrix = new int[numRows][numCols];
     }
 
@@ -19,6 +22,14 @@ public class Matrix {
 
     public int get(int row, int col) {
         return matrix[row][col];
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCollom() {
+        return collom;
     }
 
     public void updateAround(int row, int col, int value) {
@@ -32,7 +43,6 @@ public class Matrix {
             }
         }
     }
-
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
