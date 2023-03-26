@@ -6,6 +6,9 @@ import java.util.List;
 import interfaces.animated;
 import net.datafaker.Faker;
 
+/**
+ * constructor voor een visitor
+ */
 public class Visitor implements Serializable, animated {
     private String name;
     private int age;

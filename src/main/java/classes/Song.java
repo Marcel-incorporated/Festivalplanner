@@ -2,6 +2,9 @@ package classes;
 
 import java.io.Serializable;
 
+/**
+ * constructor voor een song.
+ */
 public class Song implements Serializable {
     private String name;
     private int length;

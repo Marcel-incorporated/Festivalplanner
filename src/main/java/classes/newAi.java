@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * De newAi klasse implementeert AI voor een character in de simulatie. Deze klasse zorgt er voor dat de characters
+ * die in de simulatie zitten logica krijgen waardoor ze dus weten hoe ze moeten bewegen.
+ */
 public class newAi {
     private final int width = 896;
     private final int height = 560;
