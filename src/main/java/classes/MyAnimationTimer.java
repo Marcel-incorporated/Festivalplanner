@@ -78,7 +78,16 @@ public class MyAnimationTimer extends AnimationTimer {
             {
                 for (newAi ai : realAis) {
                     ai.update();
-//                    ai.setMatrix();
+                    if (ai.getTicker() == 250){
+                        ai.setFest(false);
+                        ai.setTicker(0);
+                        ai.setMatrixes(ai.getBackFromMainStageMatrixes());
+                    }
+                    if (ai.getStatus() != null){
+                        if (ai.getStatus().equals("mainStage")){
+                            ai.setTicker(ai.getTicker()+1);
+                        }
+                    }
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
             });
