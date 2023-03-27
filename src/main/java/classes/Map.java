@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Deze klasse zorgt er voor dat de map ingeladen word.
+ */
 public class Map {
     private int width;
     private int height;

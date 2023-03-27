@@ -1,5 +1,8 @@
 package classes;
 
+/**
+ * enum voor de genres.
+ */
 public enum Genre {
     POP,
     ROCK,

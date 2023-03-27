@@ -3,6 +3,9 @@ package classes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *De Matrix klasse maakt een tweedimensionale matrix die vervolgens gebruikt word voor pathfinding.
+ */
 public class Matrix {
     private int[][] matrix;
     private int numRows;

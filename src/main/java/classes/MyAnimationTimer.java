@@ -14,6 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * De MyAnimationTimer klasse breidt de de animationtimer klasse uit. Deze klasse houdt de tijd bij en zorgt er voor
+ * dat er acties worden uitgevoerd wanneer bepaalde voorwaarden voldaan zijn.
+ *
+ */
+
 public class MyAnimationTimer extends AnimationTimer {
 
     private long lastTime = 0;
