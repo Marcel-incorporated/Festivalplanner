@@ -35,7 +35,9 @@ public class newAi {
     private int previousLowestValue;
     private int matrixCount = 0;
     private boolean isFinished = true;
-
+    private boolean isFest = false;
+    private String status = "";
+    private int ticker = 0;
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -73,6 +75,16 @@ public class newAi {
         return id;
     }
 
+    public int getTicker()
+    {
+        return ticker;
+    }
+
+    public void setTicker(int ticker)
+    {
+        this.ticker = ticker;
+    }
+
     public void update() {
 
         if (this.matrixes != null){
@@ -88,15 +100,28 @@ public class newAi {
 
             int random = getRandom6();
 
-            if (random == 1){
-                setMatrixes(getToiletMatrixes());
+            if (!isFest && status.equals("")){
+                if (random == 1){
+                    setMatrixes(getToiletMatrixes());
+                }
+                if (random == 3){
+                    setMatrixes(getBlueShopMatrixes());
+                }
+                if (random == 4){
+                    setMatrixes(getOrangeShopMatrixes());
+                }
+
+                // for testing
+                if (random == 2){
+                    isFest = true;
+                    status = "mainStage";
+                    setMatrixes(getMainStageMatrixes());
+                }
             }
-            if (random == 3){
-                setMatrixes(getBlueShopMatrixes());
-            }
-            if (random == 4){
-                setMatrixes(getOrangeShopMatrixes());
-            }
+
+//            if (status.equals("mainStage")){
+//                setMatrixes(getBackFromMainStageMatrixes());
+//            }
 
             //run = true;
 //            while (run) {
@@ -229,12 +254,18 @@ public class newAi {
                     this.matrixes = null;
                     this.matrix = null;
                     matrixCount = 0;
+                    //status = "";
                 }
                 //System.out.println("goin' to exit!");
                 //makeExitPath();
                 //matrix = exitPath;
             }
         }
+    }
+
+    public String getStatus()
+    {
+        return status;
     }
 
     public ArrayList<Matrix> getToiletMatrixes(){
@@ -264,6 +295,11 @@ public class newAi {
         toiletPath.add(endLocation);
 
         return toiletPath;
+    }
+
+    public void setFest(boolean fest)
+    {
+        isFest = fest;
     }
 
     public ArrayList<Matrix> getBlueShopMatrixes(){
@@ -304,7 +340,71 @@ public class newAi {
         return toiletPath;
     }
 
+    public ArrayList<Matrix> getMainStageMatrixes(){
+        System.out.println("Main stage");
 
+        ArrayList<Matrix> mainPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(5, 5, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 5, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(17, 31, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(11, 31, 0);
+
+        Matrix checkpoint5 = new Matrix(35, 56);
+        checkpoint5.updateAround(11, 24, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(6, 24, 0);
+
+        mainPath.add(checkpoint1);
+        mainPath.add(checkpoint2);
+        mainPath.add(checkpoint3);
+        mainPath.add(checkpoint4);
+        mainPath.add(checkpoint5);
+        mainPath.add(endLocation);
+
+        return mainPath;
+    }
+
+    public ArrayList<Matrix> getBackFromMainStageMatrixes(){
+        System.out.println("Back from main stage");
+
+        ArrayList<Matrix> mainPath = new ArrayList<>();
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(5, 5, 0);
+
+        Matrix checkpoint5 = new Matrix(35, 56);
+        checkpoint5.updateAround(17, 5, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(17, 31, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(11, 31, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(11, 24, 0);
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 24, 0);
+
+        mainPath.add(checkpoint1);
+        mainPath.add(checkpoint2);
+        mainPath.add(checkpoint3);
+        mainPath.add(checkpoint4);
+        mainPath.add(checkpoint5);
+        mainPath.add(endLocation);
+
+        return mainPath;
+    }
 
     public void setMatrixes(ArrayList<Matrix> matrixes)
     {
@@ -361,7 +461,6 @@ public class newAi {
         this.x = index % this.width;
         this.y = index / this.width;
     }
-
 
     private int randomMove() {
         Random rand = new Random();
