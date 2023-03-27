@@ -3,10 +3,7 @@ package classes;
 import java.awt.geom.AffineTransform;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -98,7 +95,7 @@ public class newAi {
 
         if (this.matrix == null) {
 
-            int random = getRandom6();
+            int random = getRandom7();
 
             if (!isFest && status.equals("")){
                 if (random == 1){
@@ -109,6 +106,21 @@ public class newAi {
                 }
                 if (random == 4){
                     setMatrixes(getOrangeShopMatrixes());
+                }
+                if (random == 5) {
+                    isFest = true;
+                    status = "middleTinyStage";
+                    setMatrixes(getMiddleTinyStageMatrixes());
+                }
+                if (random == 6) {
+                    isFest = true;
+                    status = "rightTinyStage";
+                    setMatrixes(getRightTinyStageMatrixes());
+                }
+                if (random == 7) {
+                    isFest = true;
+                    status = "leftTinyStage";
+                    setMatrixes(getLeftTinyStageMatrixes());
                 }
 
                 // for testing
@@ -246,7 +258,10 @@ public class newAi {
 
             }
             if(lowestvalue == 0) {
-
+                // Todo: when going back no new matrix
+//                if (this.matrixes.size() == this.matrixCount && !this.status.equals("")){
+//                    status = "";
+//                }
                 this.isFinished = true;
 
                 if (this.matrixes.size() == this.matrixCount){
@@ -266,6 +281,94 @@ public class newAi {
     public String getStatus()
     {
         return status;
+    }
+
+    public ArrayList<Matrix> getRightTinyStageMatrixes() {
+        System.out.println("right tiny matrix");
+        ArrayList<Matrix> rightTinyStageMatrixes = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 4, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 7, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(17, 36, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(19, 37, 0);
+
+        Matrix checkpoint5 = new Matrix(35, 56);
+        checkpoint5.updateAround(19, 43, 0);
+
+        Matrix checkpoint6 = new Matrix(35, 56);
+        checkpoint6.updateAround(6, 51, 0);
+
+        rightTinyStageMatrixes.add(checkpoint1);
+        rightTinyStageMatrixes.add(checkpoint2);
+        rightTinyStageMatrixes.add(checkpoint3);
+        rightTinyStageMatrixes.add(checkpoint4);
+        rightTinyStageMatrixes.add(checkpoint5);
+        rightTinyStageMatrixes.add(checkpoint6);
+
+        return rightTinyStageMatrixes;
+    }
+
+    public ArrayList<Matrix> getMiddleTinyStageMatrixes() {
+        System.out.println("middle tiny matrix");
+        ArrayList<Matrix> middleTinyStagePath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 4, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 7, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(17, 15, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(29, 16, 0);
+
+        Matrix checkpoint5 = new Matrix(35, 56);
+        checkpoint5.updateAround(31, 26, 0);
+
+        middleTinyStagePath.add(checkpoint1);
+        middleTinyStagePath.add(checkpoint2);
+        middleTinyStagePath.add(checkpoint3);
+        middleTinyStagePath.add(checkpoint4);
+        middleTinyStagePath.add(checkpoint5);
+
+        return middleTinyStagePath;
+    }
+
+    public ArrayList<Matrix> getLeftTinyStageMatrixes() {
+        System.out.println("left tiny matrix");
+        ArrayList<Matrix> leftTinyStagePath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 4, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 7, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(17, 12, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(31, 15, 0);
+
+        Matrix checkpoint5 = new Matrix(35, 56);
+        checkpoint5.updateAround(30, 5, 0);
+
+        leftTinyStagePath.add(checkpoint1);
+        leftTinyStagePath.add(checkpoint2);
+        leftTinyStagePath.add(checkpoint3);
+        leftTinyStagePath.add(checkpoint4);
+        leftTinyStagePath.add(checkpoint5);
+
+        return leftTinyStagePath;
     }
 
     public ArrayList<Matrix> getToiletMatrixes(){
@@ -406,6 +509,83 @@ public class newAi {
         return mainPath;
     }
 
+    public ArrayList<Matrix> getBackFromLeftTinyStage() {
+        System.out.println("Back from left tiny stage");
+
+        ArrayList<Matrix> mainPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(30, 15, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 15, 0);
+
+        Matrix checkPoint3 = new Matrix(35, 56);
+        checkPoint3.updateAround(17, 7, 0);
+
+        Matrix endLocation= new Matrix(35, 56);
+        endLocation.updateAround(6, 4, 0);
+
+        mainPath.add(checkpoint1);
+        mainPath.add(checkpoint2);
+        mainPath.add(checkPoint3);
+        mainPath.add(endLocation);
+
+        return mainPath;
+    }
+
+    public ArrayList<Matrix> getBackFromMiddleTinyStage() {
+        System.out.println("Back from middle tiny stage");
+        ArrayList<Matrix> mainPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(30, 17, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 15, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(17, 7, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(6, 4, 0);
+
+        mainPath.add(checkpoint1);
+        mainPath.add(checkpoint2);
+        mainPath.add(checkpoint3);
+        mainPath.add(endLocation);
+
+        return mainPath;
+    }
+
+    public ArrayList<Matrix> getBackFromRightTinyStage() {
+        System.out.println("Back from right tiny stage");
+        ArrayList<Matrix> mainPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(18, 43, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(17, 18, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(16, 12, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(17, 7, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(6, 4, 0);
+
+        mainPath.add(checkpoint1);
+        mainPath.add(checkpoint2);
+        mainPath.add(checkpoint3);
+        mainPath.add(checkpoint4);
+        mainPath.add(endLocation);
+
+        return mainPath;
+    }
+
     public void setMatrixes(ArrayList<Matrix> matrixes)
     {
         this.matrixes = matrixes;
@@ -440,9 +620,9 @@ public class newAi {
         lastTx = tx;
     }
 
-    public static int getRandom6() {
+    public static int getRandom7() {
         Random rand = new Random();
-        return rand.nextInt(6) + 1;
+        return rand.nextInt(5) + 1;
     }
 
     public int getX() {
