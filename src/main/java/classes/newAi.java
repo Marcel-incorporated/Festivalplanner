@@ -3,6 +3,7 @@ package classes;
 import java.awt.geom.AffineTransform;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +74,7 @@ public class newAi {
     }
 
     public void update() {
+
         if (this.matrixes != null){
             if (matrixes.size() > matrixCount && isFinished){
                 matrix = matrixes.get(matrixCount);
@@ -83,47 +85,59 @@ public class newAi {
         }
 
         if (this.matrix == null) {
-            run = true;
 
-            while (run) {
-                switch (randomMove()) {
-                    case 1:
-                        if (canMove(1)) {
-                            //up
-                            y -= 16;
-                            index -= 56;
-                            run = false;
-                        }
-                        break;
-                    case 2:
-                        if (canMove(2)) {
-                            //right
-                            x += 16;
-                            index += 1;
-                            run = false;
-                        }
-                        break;
-                    case 3:
-                        if (canMove(3)) {
-                            //down
-                            y += 16;
-                            index += 56;
-                            run = false;
-                        }
-                        break;
-                    case 4:
-                        if (canMove(4)) {
-                            //left
-                            x -= 16;
-                            index -= 1;
-                            run = false;
-                        }
-                        break;
-                    default:
-                        System.out.println("shit man");
-                        break;
-                }
+            int random = getRandom6();
+
+            if (random == 1){
+                setMatrixes(getToiletMatrixes());
             }
+            if (random == 3){
+                setMatrixes(getBlueShopMatrixes());
+            }
+            if (random == 4){
+                setMatrixes(getOrangeShopMatrixes());
+            }
+
+            //run = true;
+//            while (run) {
+//                switch (randomMove()) {
+//                    case 1:
+//                        if (canMove(1)) {
+//                            //up
+//                            y -= 16;
+//                            index -= 56;
+//                            run = false;
+//                        }
+//                        break;
+//                    case 2:
+//                        if (canMove(2)) {
+//                            //right
+//                            x += 16;
+//                            index += 1;
+//                            run = false;
+//                        }
+//                        break;
+//                    case 3:
+//                        if (canMove(3)) {
+//                            //down
+//                            y += 16;
+//                            index += 56;
+//                            run = false;
+//                        }
+//                        break;
+//                    case 4:
+//                        if (canMove(4)) {
+//                            //left
+//                            x -= 16;
+//                            index -= 1;
+//                            run = false;
+//                        }
+//                        break;
+//                    default:
+//                        System.out.println("shit man");
+//                        break;
+//                }
+//            }
         } else {
             //34, 41 = spawn
             int north = -999;
@@ -212,19 +226,85 @@ public class newAi {
 
                 if (this.matrixes.size() == this.matrixCount){
                     System.out.println("start random");
+                    this.matrixes = null;
                     this.matrix = null;
-                    //matrixCount = 0;
+                    matrixCount = 0;
                 }
-
-
-
-
                 //System.out.println("goin' to exit!");
                 //makeExitPath();
                 //matrix = exitPath;
             }
         }
     }
+
+    public ArrayList<Matrix> getToiletMatrixes(){
+        System.out.println("toilet");
+
+        ArrayList<Matrix> toiletPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 4, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(1, 4, 0);
+
+        Matrix checkpoint3 = new Matrix(35, 56);
+        checkpoint3.updateAround(1, 9, 0);
+
+        Matrix checkpoint4 = new Matrix(35, 56);
+        checkpoint4.updateAround(1, 4, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(6, 4, 0);
+
+        toiletPath.add(checkpoint1);
+        toiletPath.add(checkpoint2);
+        toiletPath.add(checkpoint3);
+        toiletPath.add(checkpoint4);
+        toiletPath.add(endLocation);
+
+        return toiletPath;
+    }
+
+    public ArrayList<Matrix> getBlueShopMatrixes(){
+        System.out.println("blue");
+
+        ArrayList<Matrix> toiletPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(6, 6, 0);
+
+        Matrix checkpoint2 = new Matrix(35, 56);
+        checkpoint2.updateAround(15, 6, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(15, 3, 0);
+
+        toiletPath.add(checkpoint1);
+        toiletPath.add(checkpoint2);
+        toiletPath.add(endLocation);
+
+        return toiletPath;
+    }
+
+    public ArrayList<Matrix> getOrangeShopMatrixes(){
+        System.out.println("orange");
+
+        ArrayList<Matrix> toiletPath = new ArrayList<>();
+
+        Matrix checkpoint1 = new Matrix(35, 56);
+        checkpoint1.updateAround(5, 5, 0);
+
+        Matrix endLocation = new Matrix(35, 56);
+        endLocation.updateAround(5, 3, 0);
+
+        toiletPath.add(checkpoint1);
+        toiletPath.add(endLocation);
+
+        return toiletPath;
+    }
+
+
 
     public void setMatrixes(ArrayList<Matrix> matrixes)
     {
@@ -260,6 +340,10 @@ public class newAi {
         lastTx = tx;
     }
 
+    public static int getRandom6() {
+        Random rand = new Random();
+        return rand.nextInt(6) + 1;
+    }
 
     public int getX() {
         return x;
