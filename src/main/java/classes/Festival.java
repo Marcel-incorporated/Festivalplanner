@@ -3,6 +3,9 @@ package classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Constructor voor de festival
+ */
 public class Festival implements Serializable {
     private ArrayList<Visitor> visitors;
     private String name;

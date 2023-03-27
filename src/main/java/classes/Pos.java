@@ -1,5 +1,8 @@
 package classes;
 
+/**
+ * Deze klasse is er voor om de posities van de npc's op te slaan.
+ */
 public class Pos {
     private int x;
     private int y;

@@ -3,6 +3,9 @@ package classes;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * constructor voor de blocks in de simulatie
+ */
 public class Block extends Rectangle2D.Double {
     private double width;
     private double height;
