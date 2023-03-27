@@ -60,7 +60,7 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         // 1_000_000_000
-        if (elapsedForTimer >= 1_000_000_000) {
+        if (elapsedForTimer >= 1_000_000_00) {
             counter++;
             if (counter > 10 && isSpawn() == true) {
                 if (index != ais.size()) {
