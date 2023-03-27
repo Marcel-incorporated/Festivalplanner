@@ -9,6 +9,7 @@ import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
 
 import static java.nio.file.StandardCopyOption.*;
 
@@ -46,12 +47,8 @@ public class Serializer {
         FileInputStream fis = new FileInputStream(file);
 //        String path = System.getProperty("user.dir") +"\\src\\main\\resources\\planning.txt";
 //        Files.copy(file, path, REPLACE_EXISTING);
-        File copy = new File(System.getProperty("user.dir") +"\\src\\main\\resources\\planning.txt");
-        FileOutputStream fos = new FileOutputStream(copy);
-//        int c;
-//        while((c = fis.read()) != 0) {
-//            fos.write(c);
-//        }
+        File newFile = new File(System.getProperty("user.dir") +"\\src\\main\\resources\\planning.txt");
+        Files.copy(file.toPath(), newFile.toPath());
         ObjectInputStream ois = new ObjectInputStream(fis);
         Festival festival = (Festival) ois.readObject();
 

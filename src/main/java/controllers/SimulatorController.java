@@ -236,9 +236,13 @@ public class SimulatorController extends Thread implements Runnable {
 
     @FXML
     public void onStartButton() {
-        animationTimer.start();
-        statusLabel.setText("Status: started");
-//        notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
+        File planning = new File("src/main/resources/planning.txt");
+        if(!planning.exists()) {
+        notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
+        } else {
+            animationTimer.start();
+            statusLabel.setText("Status: started");
+        }
     }
 
 
