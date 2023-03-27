@@ -266,11 +266,14 @@ public class newAi {
                 this.isFinished = true;
 
                 if (this.matrixes.size() == this.matrixCount){
+                    if(status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
+                        status = "";
+                    }
                     System.out.println("start random");
                     this.matrixes = null;
                     this.matrix = null;
                     matrixCount = 0;
-                    //status = "";
+//                    status = "";
                 }
                 //System.out.println("goin' to exit!");
                 //makeExitPath();
@@ -282,6 +285,10 @@ public class newAi {
     public String getStatus()
     {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public ArrayList<Matrix> getRightTinyStageMatrixes() {
@@ -623,7 +630,7 @@ public class newAi {
 
     public static int getRandom7() {
         Random rand = new Random();
-        return rand.nextInt(5) + 1;
+        return rand.nextInt(7) + 1;
     }
 
     public int getX() {
