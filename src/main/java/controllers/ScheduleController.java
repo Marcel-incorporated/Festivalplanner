@@ -42,6 +42,7 @@ public class ScheduleController {
             draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
         } catch (Exception e) {
             NotificationPromptController.notification(true, "Unable to import festival file :(");
+            System.out.println(e);
         }
     }
 
