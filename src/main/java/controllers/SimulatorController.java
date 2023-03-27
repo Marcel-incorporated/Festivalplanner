@@ -21,6 +21,8 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import static controllers.NotificationPromptController.notification;
+
 public class SimulatorController extends Thread implements Runnable {
     //FXML attributen
     @FXML
@@ -148,8 +150,6 @@ public class SimulatorController extends Thread implements Runnable {
 
         collisionMapArray = makeCollisionMap();
 
-
-
         for (int i = 0; i < ScheduleMakerController.visitorCount; i++) {
             int value = getRandom7();
 
@@ -238,6 +238,7 @@ public class SimulatorController extends Thread implements Runnable {
     public void onStartButton() {
         animationTimer.start();
         statusLabel.setText("Status: started");
+//        notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
     }
 
 
@@ -257,22 +258,22 @@ public class SimulatorController extends Thread implements Runnable {
 //
 //        pathFindingMap.drawMatrix(g, matrix);   //for debugging
 //    }
-
+//
 //    public void makeOrangeShopPath() {
 //        orangeShopPath = new Matrix(35, 56);
 //        orangeShopPath.updateAround(5, 3, 0);
 //    }
-
+//
 //    public void makeBlueShopPath() {
 //        blueShopPath = new Matrix(35, 56);
 //        blueShopPath.updateAround(15, 3, 0);
 //    }
-
+//
 //    public void makeMainStagePath() {
 //        mainStagePath = new Matrix(35, 56);
 //        mainStagePath.updateAround(5, 24, 0);
 //    }
-
+//
 //    public void makeLeftTinyStagePath() {
 //        leftTinyStagePath = new Matrix(35, 56);
 //        leftTinyStagePath.updateAround(30, 5, 0);

@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static java.nio.file.StandardCopyOption.*;
+
 
 public class Serializer {
     private Desktop desktop = Desktop.getDesktop();
@@ -39,6 +44,14 @@ public class Serializer {
         File selected = fileChooser.showOpenDialog(stage);
         File file = new File(selected.getAbsolutePath());
         FileInputStream fis = new FileInputStream(file);
+//        String path = System.getProperty("user.dir") +"\\src\\main\\resources\\planning.txt";
+//        Files.copy(file, path, REPLACE_EXISTING);
+        File copy = new File(System.getProperty("user.dir") +"\\src\\main\\resources\\planning.txt");
+        FileOutputStream fos = new FileOutputStream(copy);
+//        int c;
+//        while((c = fis.read()) != 0) {
+//            fos.write(c);
+//        }
         ObjectInputStream ois = new ObjectInputStream(fis);
         Festival festival = (Festival) ois.readObject();
 
