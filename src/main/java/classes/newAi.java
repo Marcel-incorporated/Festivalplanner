@@ -95,6 +95,7 @@ public class newAi {
 
         if (this.matrix == null) {
 
+
             int random = getRandom7();
 
             if (!isFest && status.equals("")){
