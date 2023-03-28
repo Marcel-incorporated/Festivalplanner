@@ -35,6 +35,7 @@ public class newAi {
     private boolean isFest = false;
     private String status = "";
     private int ticker = 0;
+    private int stage = 0;
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -64,6 +65,15 @@ public class newAi {
         this.image = this.characterImages.get(0);
     }
 
+    public void setStage(String stage) {
+        switch (stage) {
+            case "Main stage" -> this.stage = 1;
+            case "Stage 2" -> this.stage = 2;
+            case "Stage 3" -> this.stage = 3;
+            case "Stage 4" -> this.stage = 4;
+        }
+    }
+
     public void setMatrix(Matrix matrix) {
         this.matrix = matrix;
     }
@@ -83,6 +93,23 @@ public class newAi {
     }
 
     public void update() {
+
+        if (stage != 0) {
+            switch (stage) {
+                case 1:
+                    setMatrixes(getMainStageMatrixes());
+                    break;
+                case 2:
+//                setMatrixes();
+                    break;
+                case 3:
+//                setMatrixes();
+                    break;
+                case 4:
+//                setMatrixes();
+                    break;
+            }
+        }
 
         if (this.matrixes != null){
             if (matrixes.size() > matrixCount && isFinished){

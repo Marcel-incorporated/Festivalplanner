@@ -1,5 +1,7 @@
 package classes;
 
+import controllers.ScheduleController;
+import controllers.Serializer;
 import controllers.SimulatorController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -9,6 +11,8 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +21,6 @@ import java.util.Map;
 /**
  * De MyAnimationTimer klasse breidt de de animationtimer klasse uit. Deze klasse houdt de tijd bij en zorgt er voor
  * dat er acties worden uitgevoerd wanneer bepaalde voorwaarden voldaan zijn.
- *
  */
 
 public class MyAnimationTimer extends AnimationTimer {
@@ -35,15 +38,22 @@ public class MyAnimationTimer extends AnimationTimer {
     private int index;
     private int counter = 10;
     private Pos newPos;
+    private Festival festival;
+    public static ArrayList<Artist> artists;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
+        artists = new ArrayList<>();
     }
 
     @Override
     public void handle(long currentTime) {
+        if (currentTime == 1) {
+            this.festival = ScheduleController.getFestival();
+        }
+
 //        System.out.println("handle method called");
         if (lastTime == 0) {
             lastTime = currentTime;
@@ -78,38 +88,38 @@ public class MyAnimationTimer extends AnimationTimer {
             {
                 for (newAi ai : realAis) {
                     ai.update();
-                    if (ai.getTicker() == 250){
+                    if (ai.getTicker() == 250) {
                         ai.setFest(false);
                         ai.setTicker(0);
-                        if(ai.getStatus().equals("mainStage")) {
+                        if (ai.getStatus().equals("mainStage")) {
                             ai.setMatrixes(ai.getBackFromMainStageMatrixes());
                             ai.setStatus("mainStageBack");
                         }
-                        if(ai.getStatus().equals("leftTinyStage")) {
+                        if (ai.getStatus().equals("leftTinyStage")) {
                             ai.setMatrixes(ai.getBackFromLeftTinyStage());
                             ai.setStatus("leftTinyStageBack");
                         }
-                        if(ai.getStatus().equals("rightTinyStage")) {
+                        if (ai.getStatus().equals("rightTinyStage")) {
                             ai.setMatrixes(ai.getBackFromRightTinyStage());
                             ai.setStatus("rightTinyStageBack");
                         }
-                        if(ai.getStatus().equals("middleTinyStage")) {
+                        if (ai.getStatus().equals("middleTinyStage")) {
                             ai.setMatrixes(ai.getBackFromMiddleTinyStage());
                             ai.setStatus("middleTinyStageBack");
                         }
                     }
-                    if (ai.getStatus() != null){
-                        if (ai.getStatus().equals("mainStage")){
-                            ai.setTicker(ai.getTicker()+1);
+                    if (ai.getStatus() != null) {
+                        if (ai.getStatus().equals("mainStage")) {
+                            ai.setTicker(ai.getTicker() + 1);
                         }
-                        if(ai.getStatus().equals("leftTinyStage")) {
-                            ai.setTicker(ai.getTicker()+1);
+                        if (ai.getStatus().equals("leftTinyStage")) {
+                            ai.setTicker(ai.getTicker() + 1);
                         }
-                        if(ai.getStatus().equals("middleTinyStage")) {
-                            ai.setTicker(ai.getTicker()+1);
+                        if (ai.getStatus().equals("middleTinyStage")) {
+                            ai.setTicker(ai.getTicker() + 1);
                         }
-                        if(ai.getStatus().equals("rightTinyStage")) {
-                            ai.setTicker(ai.getTicker()+1);
+                        if (ai.getStatus().equals("rightTinyStage")) {
+                            ai.setTicker(ai.getTicker() + 1);
                         }
                     }
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
@@ -117,9 +127,46 @@ public class MyAnimationTimer extends AnimationTimer {
             });
             lastTimeForTimer = currentTime;
         }
+
+        for (Artist artist : artists) {
+            LocalTime startingTime = LocalTime.parse(artist.getSetStartingTime());
+            Duration duration = Duration.between(LocalTime.MIDNIGHT, startingTime);
+            //might wanna change the next line to duration.toNanos() - whatever is equal to 30 minutes cuz idk xdd
+            if (duration.toNanos() == currentTime) {
+                for (newAi ai : realAis) {
+                    switch (artist.getPopularity()) {
+                        case 1 -> {
+                            if (Math.random() <= 0.20) {
+                                ai.setStage(artist.getPodium());
+                            }
+                        }
+                        case 2 -> {
+                            if (Math.random() <= 0.40) {
+                                ai.setStage(artist.getPodium());
+                            }
+                        }
+                        case 3 -> {
+                            if (Math.random() <= 0.60) {
+                                ai.setStage(artist.getPodium());
+                            }
+                        }
+                        case 4 -> {
+                            if (Math.random() <= 0.80) {
+                                ai.setStage(artist.getPodium());
+                            }
+                        }
+                        case 5 -> {
+                            if (Math.random() <= 0.90) {
+                                ai.setStage(artist.getPodium());
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-//    public void checkPos() {
+    //    public void checkPos() {
 //        List<Integer> keysToRemove = new ArrayList<>();
 //        for (Map.Entry<Integer, Pos> e : this.positions.entrySet()) {
 //            System.out.println(this.positions.size());
@@ -133,7 +180,6 @@ public class MyAnimationTimer extends AnimationTimer {
 //            this.positions.remove(key);
 //        }
 //    }
-
     public boolean isSpawn() {
         for (newAi ai : MyAnimationTimer.realAis) {
             if (ai.getX() == 664 && ai.getY() == 552) {
@@ -179,4 +225,6 @@ public class MyAnimationTimer extends AnimationTimer {
             timerLabel.setText("" + hours + ":" + minutes);
         }
     }
+
+
 }
