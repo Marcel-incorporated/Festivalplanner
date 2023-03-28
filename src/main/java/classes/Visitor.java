@@ -1,5 +1,6 @@
 package classes;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class Visitor implements Serializable, animated {
     private String email;
     private List<Visitor> visitorList;
     private int animationStatus = 1;
+    @Serial
+    private static final long serialVersionUID = -8515717981900000714L;
+
 
     public Visitor() {
         Faker faker = new Faker();

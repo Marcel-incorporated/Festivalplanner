@@ -2,6 +2,7 @@ package controllers;
 
 import classes.Artist;
 import classes.Festival;
+import classes.MyAnimationTimer;
 import classes.Visitor;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -27,16 +28,17 @@ public class ScheduleController {
     private int yBlock = 0;
     HashMap<Rectangle2D, Artist> blocksConnectedToArtist = new HashMap<Rectangle2D, Artist>();
     ArrayList<Artist> allArtists = new ArrayList<>();
-
+    static Festival festivalObject;
     @FXML
     void onImportButton() {
-        Festival festivalObject = null;
-        artists.clear();
 
+        artists.clear();
+        this.festivalObject = null;
         try {                                           //try importing file, showing error when unsuccessfull
             festivalObject = Serializer.DeserializeFestival();
             NotificationPromptController.notification(false, "Successfully import festival file :)");
             allArtists = festivalObject.getArtists();
+            MyAnimationTimer.artists.addAll(allArtists);
             artists.addAll(allArtists);
             calculateBlockToDraw(allArtists);
             draw(new FXGraphics2D(canvasSchedule.getGraphicsContext2D()));
@@ -340,6 +342,10 @@ public class ScheduleController {
                 }
             }
         }
+    }
+
+    public static Festival getFestival() {
+        return festivalObject;
     }
 
     public void draw(FXGraphics2D graphics) {
