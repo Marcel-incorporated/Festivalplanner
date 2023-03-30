@@ -80,6 +80,8 @@ public class SimulatorController extends Thread implements Runnable {
         makeDefaultPath();
         saveAITypes();
 
+        Timer timer = new Timer(hours, minutes);
+
         map = new Map("map.json");
         bottomMap = new Map("bottom.json");
         pathFindingMap = new Map("pathFinding.json");
@@ -92,7 +94,7 @@ public class SimulatorController extends Thread implements Runnable {
         drawBottom(bottomDrawer);
         //drawPathFinding(pathFinderDrawer);
 
-        animationTimer = new MyAnimationTimer(timeLabel, ais, simMap) {
+        animationTimer = new MyAnimationTimer(timeLabel, ais, simMap, timer) {
             long last = -1;
         };
     }
