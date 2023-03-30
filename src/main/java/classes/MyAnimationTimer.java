@@ -30,8 +30,6 @@ public class MyAnimationTimer extends AnimationTimer {
     private final SimulatorController simulatorController = new SimulatorController();
     private Label timerLabel;
     private boolean pastMidnight = false;
-    private int minutes = 0;
-    private int hours = 10;
     private ArrayList<newAi> ais;
     public static ArrayList<newAi> realAis = new ArrayList<>();
     private Canvas simMap;
@@ -40,11 +38,13 @@ public class MyAnimationTimer extends AnimationTimer {
     private Pos newPos;
     private Festival festival;
     public static ArrayList<Artist> artists;
+    private Timer timer;
 
-    public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap) {
+    public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap, Timer timer) {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
+        this.timer = timer;
         artists = new ArrayList<>();
     }
 
@@ -195,34 +195,34 @@ public class MyAnimationTimer extends AnimationTimer {
 
     public void resetTimer() {
         simulatorController.setStatusLabel("Status: finished");
-        minutes = 0;
-        hours = 10;
+        timer.setMinutes(0);
+        timer.setHours(10);
     }
 
     public void addHour() {
-        if (hours == 23) {
-            hours = 0;
+        if (timer.getHours() == 23) {
+            timer.setHours(0);
             pastMidnight = true;
         } else {
-            hours++;
+            timer.setHours(timer.getHours()+1);
         }
-        minutes = 0;
+        timer.setMinutes(0);
     }
 
     public int getHours() {
-        return hours;
+        return timer.getHours();
     }
 
     public void addMinute() {
-        if (minutes < 59) {
-            minutes++;
+        if (timer.getMinutes() < 59) {
+            timer.setMinutes(timer.getMinutes()+1);
         } else {
             addHour();
         }
-        if (minutes < 10) {
-            timerLabel.setText("" + hours + ":0" + minutes);
+        if (timer.getMinutes() < 10) {
+            timerLabel.setText("" + timer.getHours() + ":0" + timer.getMinutes());
         } else {
-            timerLabel.setText("" + hours + ":" + minutes);
+            timerLabel.setText("" + timer.getHours() + ":" + timer.getMinutes());
         }
     }
 
