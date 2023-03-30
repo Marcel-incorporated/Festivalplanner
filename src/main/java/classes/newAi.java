@@ -36,6 +36,8 @@ public class newAi {
     private String status = "";
     private int ticker = 0;
     private int stage = 0;
+    private boolean isJustSpawned;
+    private int goToPodium = 0;
 
     public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
@@ -45,7 +47,7 @@ public class newAi {
         this.characterImages = characterImages;
         this.tiles = tiles;
         this.id = id;
-
+        this.isJustSpawned = true;
         previousPathFindingMove = "";
         previousLowestValue = -999;
 
@@ -61,6 +63,7 @@ public class newAi {
         this.tiles = tiles;
         this.id = id;
         this.matrixes = matrixes;
+        this.isJustSpawned = true;
 
         this.image = this.characterImages.get(0);
     }
@@ -74,8 +77,18 @@ public class newAi {
         }
     }
 
+    public void setGoToPodium(int goToPodium)
+    {
+        this.goToPodium = goToPodium;
+    }
+
     public void setMatrix(Matrix matrix) {
         this.matrix = matrix;
+    }
+
+    public boolean isFest()
+    {
+        return isFest;
     }
 
     public int getId() {
@@ -94,23 +107,6 @@ public class newAi {
 
     public void update() {
 
-        if (stage != 0) {
-            switch (stage) {
-                case 1:
-                    setMatrixes(getMainStageMatrixes());
-                    break;
-                case 2:
-//                setMatrixes();
-                    break;
-                case 3:
-//                setMatrixes();
-                    break;
-                case 4:
-//                setMatrixes();
-                    break;
-            }
-        }
-
         if (this.matrixes != null){
             if (matrixes.size() > matrixCount && isFinished){
                 matrix = matrixes.get(matrixCount);
@@ -122,87 +118,46 @@ public class newAi {
 
         if (this.matrix == null) {
 
+            if (goToPodium == 0){
+                int random = getRandom7();
 
-            int random = getRandom7();
-
-            if (!isFest && status.equals("")){
-                if (random == 1){
-                    setMatrixes(getToiletMatrixes());
-                }
-                if (random == 3){
-                    setMatrixes(getBlueShopMatrixes());
-                }
-                if (random == 4){
-                    setMatrixes(getOrangeShopMatrixes());
-                }
-                if (random == 5) {
-                    isFest = true;
-                    status = "middleTinyStage";
-                    setMatrixes(getMiddleTinyStageMatrixes());
-                }
-                if (random == 6) {
-                    isFest = true;
-                    status = "rightTinyStage";
-                    setMatrixes(getRightTinyStageMatrixes());
-                }
-                if (random == 7) {
-                    isFest = true;
-                    status = "leftTinyStage";
-                    setMatrixes(getLeftTinyStageMatrixes());
-                }
-
-                // for testing
-                if (random == 2){
-                    isFest = true;
-                    status = "mainStage";
-                    setMatrixes(getMainStageMatrixes());
+                if (!isFest && status.equals("")){
+                    if (random == 1){
+                        setMatrixes(getToiletMatrixes());
+                    }
+                    if (random == 3){
+                        setMatrixes(getBlueShopMatrixes());
+                    }
+                    if (random == 4){
+                        setMatrixes(getOrangeShopMatrixes());
+                    }
                 }
             }
 
-//            if (status.equals("mainStage")){
-//                setMatrixes(getBackFromMainStageMatrixes());
-//            }
-
-            //run = true;
-//            while (run) {
-//                switch (randomMove()) {
-//                    case 1:
-//                        if (canMove(1)) {
-//                            //up
-//                            y -= 16;
-//                            index -= 56;
-//                            run = false;
-//                        }
-//                        break;
-//                    case 2:
-//                        if (canMove(2)) {
-//                            //right
-//                            x += 16;
-//                            index += 1;
-//                            run = false;
-//                        }
-//                        break;
-//                    case 3:
-//                        if (canMove(3)) {
-//                            //down
-//                            y += 16;
-//                            index += 56;
-//                            run = false;
-//                        }
-//                        break;
-//                    case 4:
-//                        if (canMove(4)) {
-//                            //left
-//                            x -= 16;
-//                            index -= 1;
-//                            run = false;
-//                        }
-//                        break;
-//                    default:
-//                        System.out.println("shit man");
-//                        break;
-//                }
-//            }
+            if (goToPodium == 1){
+                setFest(true);
+                setStatus("mainStage");
+                setMatrixes(getMainStageMatrixes());
+                goToPodium = 0;
+            }
+            if (goToPodium == 2){
+                setFest(true);
+                setStatus("leftTinyStage");
+                setMatrixes(getLeftTinyStageMatrixes());
+                goToPodium = 0;
+            }
+            if (goToPodium == 3){
+                setFest(true);
+                setStatus("middleTinyStage");
+                setMatrixes(getMiddleTinyStageMatrixes());
+                goToPodium = 0;
+            }
+            if (goToPodium == 4){
+                setFest(true);
+                setStatus("rightTinyStage");
+                setMatrixes(getRightTinyStageMatrixes());
+                goToPodium = 0;
+            }
         } else {
             //34, 41 = spawn
             int north = -999;
@@ -246,7 +201,7 @@ public class newAi {
                 }
             }
 
-            System.out.println(lowestvalue);
+            //System.out.println(lowestvalue);
             while (true) {
 //                System.out.println("target: "  + matrix.getCollom());
 //                System.out.println("current: " + collom);
@@ -286,25 +241,17 @@ public class newAi {
 
             }
             if(lowestvalue == 0) {
-                // Todo: when going back no new matrix
-//                if (this.matrixes.size() == this.matrixCount && !this.status.equals("")){
-//                    status = "";
-//                }
                 this.isFinished = true;
 
                 if (this.matrixes.size() == this.matrixCount){
                     if(status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
                         status = "";
                     }
-                    System.out.println("start random");
+                    isJustSpawned = false;
                     this.matrixes = null;
                     this.matrix = null;
                     matrixCount = 0;
-//                    status = "";
                 }
-                //System.out.println("goin' to exit!");
-                //makeExitPath();
-                //matrix = exitPath;
             }
         }
     }
@@ -751,7 +698,12 @@ public class newAi {
         return false;
     }
 
-//    public void makeExitPath() {
+    public boolean isJustSpawned()
+    {
+        return isJustSpawned;
+    }
+
+    //    public void makeExitPath() {
 //        exitPath = new Matrix(35, 56);
 //        exitPath.updateAround(34, 41, 0);
 //    }
