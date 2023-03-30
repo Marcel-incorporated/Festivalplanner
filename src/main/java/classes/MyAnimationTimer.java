@@ -50,9 +50,8 @@ public class MyAnimationTimer extends AnimationTimer {
 
     @Override
     public void handle(long currentTime) {
-        if (currentTime == 1) {
-            this.festival = ScheduleController.getFestival();
-        }
+
+        this.festival = ScheduleController.getFestival();
 
 //        System.out.println("handle method called");
         if (lastTime == 0) {
@@ -87,83 +86,220 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(() ->
             {
                 for (newAi ai : realAis) {
+
+                    for (Artist artist : this.festival.getArtists())
+                    {
+                        String time = artist.getSetStartingTime();
+                        String[] parts = time.split(":");
+
+                        int hours = Integer.parseInt(parts[0]);
+                        int minutes = Integer.parseInt(parts[1]);
+
+                        int allMinutesArtist = (hours * 60) + minutes;
+                        int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
+
+                        if (allMinutesArtist + artist.getSetDurationInMinutes() == allMinutesTimer){
+                            if (ai.getStatus().equals("mainStage")){
+                                ai.setMatrixes(ai.getBackFromMainStageMatrixes());
+                                ai.setFest(false);
+                                ai.setStatus("mainStageBack");
+                            }
+                            if (ai.getStatus().equals("leftTinyStage")){
+                                ai.setMatrixes(ai.getBackFromLeftTinyStage());
+                                ai.setFest(false);
+                                ai.setStatus("leftTinyStageBack");
+                            }
+                            if (ai.getStatus().equals("middleTinyStage")){
+                                ai.setMatrixes(ai.getBackFromMiddleTinyStage());
+                                ai.setFest(false);
+                                ai.setStatus("middleTinyStageBack");
+                            }
+                            if (ai.getStatus().equals("rightTinyStage")){
+                                ai.setMatrixes(ai.getBackFromRightTinyStage());
+                                ai.setFest(false);
+                                ai.setStatus("rightTinyStageBack");
+                            }
+                        }
+
+                        if (allMinutesArtist - 30 == allMinutesTimer && !ai.isFest()){
+                            switch (artist.getPopularity()) {
+                                case 1 -> {
+                                    if (Math.random() <= 0.20) {
+                                        if (artist.getPodium().equals("Main stage")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(1);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 2")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(2);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 3")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(3);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 4")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(4);
+                                            }
+                                        }
+                                    }
+                                }
+                                case 2 -> {
+                                    if (Math.random() <= 0.40) {
+                                        if (artist.getPodium().equals("Main stage")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(1);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 2")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(2);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 3")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(3);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 4")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(4);
+                                            }
+                                        }
+                                    }
+                                }
+                                case 3 -> {
+                                    if (Math.random() <= 0.60) {
+                                        if (artist.getPodium().equals("Main stage")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(1);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 2")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(2);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 3")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(3);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 4")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(4);
+                                            }
+                                        }
+                                    }
+                                }
+                                case 4 -> {
+                                    if (Math.random() <= 0.80) {
+                                        if (artist.getPodium().equals("Main stage")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(1);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 2")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(2);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 3")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(3);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 4")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(4);
+                                            }
+                                        }
+                                    }
+                                }
+                                case 5 -> {
+                                    if (Math.random() <= 0.90) {
+                                        if (artist.getPodium().equals("Main stage")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(1);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 2")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(2);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 3")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(3);
+                                            }
+                                        }
+                                        if (artist.getPodium().equals("Stage 4")){
+                                            if (!ai.isJustSpawned()){
+                                                ai.setGoToPodium(4);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     ai.update();
-                    if (ai.getTicker() == 250) {
-                        ai.setFest(false);
-                        ai.setTicker(0);
-                        if (ai.getStatus().equals("mainStage")) {
-                            ai.setMatrixes(ai.getBackFromMainStageMatrixes());
-                            ai.setStatus("mainStageBack");
-                        }
-                        if (ai.getStatus().equals("leftTinyStage")) {
-                            ai.setMatrixes(ai.getBackFromLeftTinyStage());
-                            ai.setStatus("leftTinyStageBack");
-                        }
-                        if (ai.getStatus().equals("rightTinyStage")) {
-                            ai.setMatrixes(ai.getBackFromRightTinyStage());
-                            ai.setStatus("rightTinyStageBack");
-                        }
-                        if (ai.getStatus().equals("middleTinyStage")) {
-                            ai.setMatrixes(ai.getBackFromMiddleTinyStage());
-                            ai.setStatus("middleTinyStageBack");
-                        }
-                    }
-                    if (ai.getStatus() != null) {
-                        if (ai.getStatus().equals("mainStage")) {
-                            ai.setTicker(ai.getTicker() + 1);
-                        }
-                        if (ai.getStatus().equals("leftTinyStage")) {
-                            ai.setTicker(ai.getTicker() + 1);
-                        }
-                        if (ai.getStatus().equals("middleTinyStage")) {
-                            ai.setTicker(ai.getTicker() + 1);
-                        }
-                        if (ai.getStatus().equals("rightTinyStage")) {
-                            ai.setTicker(ai.getTicker() + 1);
-                        }
-                    }
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
+
+//                    if (ai.getTicker() == 250) {
+//                        ai.setFest(false);
+//                        ai.setTicker(0);
+//                        if (ai.getStatus().equals("mainStage")) {
+//                            ai.setMatrixes(ai.getBackFromMainStageMatrixes());
+//                            ai.setStatus("mainStageBack");
+//                        }
+//                        if (ai.getStatus().equals("leftTinyStage")) {
+//                            ai.setMatrixes(ai.getBackFromLeftTinyStage());
+//                            ai.setStatus("leftTinyStageBack");
+//                        }
+//                        if (ai.getStatus().equals("rightTinyStage")) {
+//                            ai.setMatrixes(ai.getBackFromRightTinyStage());
+//                            ai.setStatus("rightTinyStageBack");
+//                        }
+//                        if (ai.getStatus().equals("middleTinyStage")) {
+//                            ai.setMatrixes(ai.getBackFromMiddleTinyStage());
+//                            ai.setStatus("middleTinyStageBack");
+//                        }
+//                    }
+//                    if (ai.getStatus() != null) {
+//                        if (ai.getStatus().equals("mainStage")) {
+//                            ai.setTicker(ai.getTicker() + 1);
+//                        }
+//                        if (ai.getStatus().equals("leftTinyStage")) {
+//                            ai.setTicker(ai.getTicker() + 1);
+//                        }
+//                        if (ai.getStatus().equals("middleTinyStage")) {
+//                            ai.setTicker(ai.getTicker() + 1);
+//                        }
+//                        if (ai.getStatus().equals("rightTinyStage")) {
+//                            ai.setTicker(ai.getTicker() + 1);
+//                        }
+//                    }
                 }
             });
             lastTimeForTimer = currentTime;
         }
 
-        for (Artist artist : artists) {
-            LocalTime startingTime = LocalTime.parse(artist.getSetStartingTime());
-            Duration duration = Duration.between(LocalTime.MIDNIGHT, startingTime);
-            //might wanna change the next line to duration.toNanos() - whatever is equal to 30 minutes cuz idk xdd
-            if (duration.toNanos() == currentTime) {
-                for (newAi ai : realAis) {
-                    switch (artist.getPopularity()) {
-                        case 1 -> {
-                            if (Math.random() <= 0.20) {
-                                ai.setStage(artist.getPodium());
-                            }
-                        }
-                        case 2 -> {
-                            if (Math.random() <= 0.40) {
-                                ai.setStage(artist.getPodium());
-                            }
-                        }
-                        case 3 -> {
-                            if (Math.random() <= 0.60) {
-                                ai.setStage(artist.getPodium());
-                            }
-                        }
-                        case 4 -> {
-                            if (Math.random() <= 0.80) {
-                                ai.setStage(artist.getPodium());
-                            }
-                        }
-                        case 5 -> {
-                            if (Math.random() <= 0.90) {
-                                ai.setStage(artist.getPodium());
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        for (Artist artist : artists) {
+//            LocalTime startingTime = LocalTime.parse(artist.getSetStartingTime());
+//            Duration duration = Duration.between(LocalTime.MIDNIGHT, startingTime);
+//            //might wanna change the next line to duration.toNanos() - whatever is equal to 30 minutes cuz idk xdd
+//            if (duration.toNanos() == currentTime) {
+//                for (newAi ai : realAis) {
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
     //    public void checkPos() {
