@@ -58,13 +58,13 @@ public class SimulatorController extends Thread implements Runnable {
     private static Matrix rightTinyStagePath;
     private static Matrix toiletPath;
     private boolean pastMidnight = false;
-    private static ArrayList<BufferedImage> aisImage = new ArrayList<>();
+    public static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
     private static ArrayList<newAi> ais = new ArrayList<>();
-    private static ArrayList<BufferedImage> greenAI = new ArrayList<>();
-    private static ArrayList<BufferedImage> blueAI = new ArrayList<>();
-    private static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
-    private static ArrayList<BufferedImage> goldAI = new ArrayList<>();
+    public static ArrayList<BufferedImage> greenAI = new ArrayList<>();
+    public static ArrayList<BufferedImage> blueAI = new ArrayList<>();
+    public static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
+    public static ArrayList<BufferedImage> goldAI = new ArrayList<>();
     public static int visitorCount;
     public static ArrayList<Integer> collisionMapArray = new ArrayList<>();
 
