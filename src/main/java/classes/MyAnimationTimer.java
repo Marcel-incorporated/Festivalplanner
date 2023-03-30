@@ -10,11 +10,12 @@ import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ public class MyAnimationTimer extends AnimationTimer {
     private Pos newPos;
     private Festival festival;
     public static ArrayList<Artist> artists;
+    private ArrayList<BufferedImage> artistPlayerViewModels = new ArrayList<>();
     private Timer timer;
 
     public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap, Timer timer) {
@@ -45,7 +47,18 @@ public class MyAnimationTimer extends AnimationTimer {
         this.ais = ais;
         this.simMap = simMap;
         this.timer = timer;
+        artistPlayerViewModels.add(SimulatorController.greenAI.get(1));
+        artistPlayerViewModels.add(SimulatorController.blueAI.get(1));
+        artistPlayerViewModels.add(SimulatorController.purpleAI.get(1));
+        artistPlayerViewModels.add(SimulatorController.goldAI.get(1));
+
         artists = new ArrayList<>();
+    }
+
+    public static int getRandom4() {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(4);
+        return randomNumber;
     }
 
     @Override
@@ -245,6 +258,73 @@ public class MyAnimationTimer extends AnimationTimer {
                                 }
                             }
                         }
+                    }
+
+                    for (Artist artist : this.festival.getArtists()){
+                        int number = getRandom4();
+
+                        String time = artist.getSetStartingTime();
+                        String[] parts = time.split(":");
+
+                        int hours = Integer.parseInt(parts[0]);
+                        int minutes = Integer.parseInt(parts[1]);
+
+                        int allMinutesArtist = (hours * 60) + minutes;
+                        int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
+
+                        if (allMinutesArtist == allMinutesTimer) {
+                            if (artist.getPodium().equals("Main stage")){
+                                BufferedImage image = artistPlayerViewModels.get(number);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((24*16) - image.getWidth() / 2.0, (2*16) - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                            }
+                            if (artist.getPodium().equals("Stage 2")){
+                                BufferedImage image = artistPlayerViewModels.get(number);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((2*16) - image.getWidth() / 2.0, (27*16) - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                            }
+                            if (artist.getPodium().equals("Stage 3")){
+                                BufferedImage image = artistPlayerViewModels.get(number);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((29*16) - image.getWidth() / 2.0, (26*16) - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                            }
+                            if (artist.getPodium().equals("Stage 4")){
+                                BufferedImage image = artistPlayerViewModels.get(number);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((51*16) - image.getWidth() / 2.0, (1*16) - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                            }
+                        }
+
+//                        if (allMinutesArtist + artist.getSetDurationInMinutes() == allMinutesTimer) {
+//                            if (artist.getPodium().equals("Main stage")){
+//                                BufferedImage image = SimulatorController.aisImage.get(SimulatorController.aisImage.size()-7);
+//                                AffineTransform tx = new AffineTransform();
+//                                tx.translate((24*16) - image.getWidth() / 2.0, (2*16) - image.getHeight() / 2.0);
+//                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+//                            }
+//                            if (artist.getPodium().equals("Stage 2")){
+//                                BufferedImage image = SimulatorController.aisImage.get(SimulatorController.aisImage.size()-7);
+//                                AffineTransform tx = new AffineTransform();
+//                                tx.translate((2*16) - image.getWidth() / 2.0, (27*16) - image.getHeight() / 2.0);
+//                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+//                            }
+//                            if (artist.getPodium().equals("Stage 3")){
+//                                BufferedImage image = SimulatorController.aisImage.get(SimulatorController.aisImage.size()-7);
+//                                AffineTransform tx = new AffineTransform();
+//                                tx.translate((29*16) - image.getWidth() / 2.0, (26*16) - image.getHeight() / 2.0);
+//                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+//                            }
+//                            if (artist.getPodium().equals("Stage 4")){
+//                                BufferedImage image = SimulatorController.aisImage.get(SimulatorController.aisImage.size()-7);
+//                                AffineTransform tx = new AffineTransform();
+//                                tx.translate((51*16) - image.getWidth() / 2.0, (1*16) - image.getHeight() / 2.0);
+//                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+//                            }
+//                        }
                     }
 
                     ai.update();
