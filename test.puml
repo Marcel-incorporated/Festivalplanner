@@ -107,7 +107,7 @@ class controllers.FestivalplannerController {
 + Tab scheduleMakerTab
 + Tab mapTab
 }
-class controllers.editArtistDialogController {
+class controllers.EditArtistDialogController {
 - TextField artistNameTextfield
 - ChoiceBox<String> durationChoicebox
 - SVGPath fifthStar

@@ -1,6 +1,7 @@
 package interfaces;
 
-public interface animated {
+public interface Animated
+{
     int animationStatus = 1;
 
     void update();

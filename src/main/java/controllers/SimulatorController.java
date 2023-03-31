@@ -1,13 +1,11 @@
 package controllers;
 
 import classes.*;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class SimulatorController extends Thread implements Runnable {
     private boolean pastMidnight = false;
     public static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
-    private static ArrayList<newAi> ais = new ArrayList<>();
+    private static ArrayList<AI> ais = new ArrayList<>();
     public static ArrayList<BufferedImage> greenAI = new ArrayList<>();
     public static ArrayList<BufferedImage> blueAI = new ArrayList<>();
     public static ArrayList<BufferedImage> purpleAI = new ArrayList<>();
@@ -157,26 +155,26 @@ public class SimulatorController extends Thread implements Runnable {
 
             switch (value) {
                 case 1:
-                    ais.add(new newAi(goldAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(goldAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 case 2:
-                    ais.add(new newAi(blueAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(blueAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 case 3:
-                    ais.add(new newAi(greenAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(greenAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 case 4:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(purpleAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 case 5:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(purpleAI, collisionMapArray, aisImage, i, defaultPath));
 
                     break;
                 case 6:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(purpleAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 case 7:
-                    ais.add(new newAi(purpleAI, collisionMapArray, aisImage, i, defaultPath));
+                    ais.add(new AI(purpleAI, collisionMapArray, aisImage, i, defaultPath));
                     break;
                 default:
                     System.out.println("generating ai error");
