@@ -4,13 +4,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import interfaces.animated;
+import interfaces.Animated;
 import net.datafaker.Faker;
 
 /**
  * constructor voor een visitor
  */
-public class Visitor implements Serializable, animated {
+public class Visitor implements Serializable, Animated
+{
     private String name;
     private int age;
     private String gender;

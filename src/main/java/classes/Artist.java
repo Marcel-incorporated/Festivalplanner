@@ -2,13 +2,13 @@ package classes;
 
 import java.io.Serializable;
 
-import interfaces.animated;
-import javafx.scene.canvas.GraphicsContext;
+import interfaces.Animated;
 
 
 //Deze methode bevat informatie van elke artiest die op het podium komt.
 //Ook bevat deze klasse code voor het animeren van de Artiest.
-public class Artist implements Serializable, animated {
+public class Artist implements Serializable, Animated
+{
     private String name;
     private int popularity;
     //    private ArrayList<Song> songs = new ArrayList<>();
