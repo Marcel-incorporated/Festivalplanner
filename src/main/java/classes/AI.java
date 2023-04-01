@@ -10,7 +10,8 @@ import java.util.Random;
  * De newAi klasse implementeert AI voor een character in de simulatie. Deze klasse zorgt er voor dat de characters
  * die in de simulatie zitten logica krijgen waardoor ze dus weten hoe ze moeten bewegen.
  */
-public class newAi {
+public class AI
+{
     private final int width = 896;
     private final int height = 560;
     private AffineTransform lastTx;
@@ -39,7 +40,7 @@ public class newAi {
     private boolean isJustSpawned;
     private int goToPodium = 0;
 
-    public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
+    public AI(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
         this.x = 664;
         this.y = 552;
         this.index = 1945;
@@ -54,7 +55,7 @@ public class newAi {
         this.image = this.characterImages.get(0);
     }
 
-    public newAi(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, ArrayList<Matrix> matrixes) {
+    public AI(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, ArrayList<Matrix> matrixes) {
         this.x = 664;
         this.y = 552;
         this.index = 1945;

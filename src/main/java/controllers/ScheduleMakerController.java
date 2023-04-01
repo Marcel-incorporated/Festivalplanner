@@ -137,7 +137,7 @@ public class ScheduleMakerController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/FXML/editArtistDialog.fxml"));
         DialogPane editArtistDialogPane = fxmlLoader.load();
 
-        editArtistDialogController editArtistDialogController = fxmlLoader.getController();
+        EditArtistDialogController editArtistDialogController = fxmlLoader.getController();
 
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(editArtistDialogPane);

@@ -1,7 +1,6 @@
 package classes;
 
 import controllers.ScheduleController;
-import controllers.Serializer;
 import controllers.SimulatorController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -9,15 +8,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import org.jfree.fx.FXGraphics2D;
 
-import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.*;
-import java.util.List;
-import java.util.Map;
 
 /**
  * De MyAnimationTimer klasse breidt de de animationtimer klasse uit. Deze klasse houdt de tijd bij en zorgt er voor
@@ -31,18 +24,18 @@ public class MyAnimationTimer extends AnimationTimer {
     private final SimulatorController simulatorController = new SimulatorController();
     private Label timerLabel;
     private boolean pastMidnight = false;
-    private ArrayList<newAi> ais;
-    public static ArrayList<newAi> realAis = new ArrayList<>();
+    private ArrayList<AI> ais;
+    public static ArrayList<AI> realAis = new ArrayList<>();
     private Canvas simMap;
     private int index;
     private int counter = 10;
-    private Pos newPos;
+    private Position newPos;
     private Festival festival;
     public static ArrayList<Artist> artists;
     private ArrayList<BufferedImage> artistPlayerViewModels = new ArrayList<>();
     private Timer timer;
 
-    public MyAnimationTimer(Label timerLabel, ArrayList<newAi> ais, Canvas simMap, Timer timer) {
+    public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap, Timer timer) {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
@@ -105,7 +98,7 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(this::addMinute);
             Platform.runLater(() ->
             {
-                for (newAi ai : realAis)
+                for (AI ai : realAis)
                 {
 
                     for (Artist artist : this.festival.getArtists())
@@ -412,7 +405,7 @@ public class MyAnimationTimer extends AnimationTimer {
     }
         
     public boolean isSpawn() {
-        for (newAi ai : MyAnimationTimer.realAis) {
+        for (AI ai : MyAnimationTimer.realAis) {
             if (ai.getX() == 664 && ai.getY() == 552) {
                 return false;
             }

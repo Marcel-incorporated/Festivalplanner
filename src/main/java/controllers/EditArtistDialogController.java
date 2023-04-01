@@ -8,7 +8,8 @@ import javafx.scene.shape.SVGPath;
 
 import static controllers.ArtistArrayListController.artists;
 
-public class editArtistDialogController {
+public class EditArtistDialogController
+{
     //FXML attributen
     @FXML
     private TextField artistNameTextfield;
