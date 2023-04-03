@@ -3,7 +3,6 @@ package controllers;
 import classes.Artist;
 import classes.Festival;
 import classes.MyAnimationTimer;
-import classes.Visitor;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -29,6 +28,7 @@ public class ScheduleController {
     HashMap<Rectangle2D, Artist> blocksConnectedToArtist = new HashMap<Rectangle2D, Artist>();
     ArrayList<Artist> allArtists = new ArrayList<>();
     static Festival festivalObject;
+
     @FXML
     void onImportButton() {
 
@@ -376,7 +376,8 @@ public class ScheduleController {
                 Artist artist = blocksConnectedToArtist.get(block);
                 NotificationPromptController.notification(false, "Name: " + artist.getName() + "\n"
                         + "Time: " + artist.getSetStartingTime() + " + " + artist.getSetDurationInMinutes() + " minuten" + "\n" +
-                        "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium());
+                        "Genre: " + artist.getGenre() + "\n" + "Podium: " + artist.getPodium() + "\n" +
+                        "Popularity: " + artist.getPopularity());
             }
         }
     }

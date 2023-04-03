@@ -1,14 +1,13 @@
 package classes;
 
-import java.io.Serializable;
-
 import interfaces.Animated;
+
+import java.io.Serializable;
 
 
 //Deze methode bevat informatie van elke artiest die op het podium komt.
 //Ook bevat deze klasse code voor het animeren van de Artiest.
-public class Artist implements Serializable, Animated
-{
+public class Artist implements Serializable, Animated {
     private String name;
     private int popularity;
     //    private ArrayList<Song> songs = new ArrayList<>();
