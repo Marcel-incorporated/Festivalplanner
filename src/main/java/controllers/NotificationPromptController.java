@@ -15,6 +15,7 @@ public class NotificationPromptController {
             alert.setTitle("Information");
             alert.setHeaderText("Information");
             alert.showAndWait();
+
         }
     }
 }
