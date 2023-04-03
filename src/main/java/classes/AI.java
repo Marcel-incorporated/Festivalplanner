@@ -116,25 +116,21 @@ public class AI {
                 setFest(true);
                 setStatus("mainStage");
                 setMatrixes(getMainStageMatrixes());
-                goToPodium = 0;
             }
             if (goToPodium == 2) {
                 setFest(true);
                 setStatus("leftTinyStage");
                 setMatrixes(getLeftTinyStageMatrixes());
-                goToPodium = 0;
             }
             if (goToPodium == 3) {
                 setFest(true);
                 setStatus("middleTinyStage");
                 setMatrixes(getMiddleTinyStageMatrixes());
-                goToPodium = 0;
             }
             if (goToPodium == 4) {
                 setFest(true);
                 setStatus("rightTinyStage");
                 setMatrixes(getRightTinyStageMatrixes());
-                goToPodium = 0;
             }
         } else {
             //34, 41 = spawn
@@ -221,6 +217,7 @@ public class AI {
                 if (this.matrixes.size() == this.matrixCount) {
                     if (status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
                         setStatus("");
+                        goToPodium = 0;
                     }
                     isJustSpawned = false;
                     this.matrixes = null;
