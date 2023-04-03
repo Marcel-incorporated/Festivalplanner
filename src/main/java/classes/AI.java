@@ -90,28 +90,25 @@ public class AI {
             if (matrixes.size() > matrixCount && isFinished) {
                 matrix = matrixes.get(matrixCount);
                 matrixCount++;
-                System.out.println("next");
+//                System.out.println("next");
                 isFinished = false;
             }
         }
 
         if (this.matrix == null) {
             //random moven als AI geen taak heeft
-            if (goToPodium == 0) {
+            if (goToPodium == 0 && !isFest && status.equals("")) {
                 int random = getRandom7();
-                if (!isFest && status.equals("")) {
                     if (random == 1) {
                         setMatrixes(getToiletMatrixes());
                     }
-                    if (random == 3) {
+                    if (random == 2) {
                         setMatrixes(getBlueShopMatrixes());
                     }
-                    if (random == 4) {
+                    if (random == 3) {
                         setMatrixes(getOrangeShopMatrixes());
-                    }
                 }
             }
-            //
             if (goToPodium == 1) {
                 setFest(true);
                 setStatus("mainStage");
@@ -236,6 +233,7 @@ public class AI {
     }
 
     public void setStatus(String status) {
+        System.out.println("Status geset naar: " + status);
         this.status = status;
     }
 

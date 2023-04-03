@@ -1,6 +1,7 @@
 package classes;
 
 import controllers.ScheduleController;
+import controllers.Serializer;
 import controllers.SimulatorController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -10,6 +11,7 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,14 +31,12 @@ public class MyAnimationTimer extends AnimationTimer {
     public static ArrayList<AI> realAis = new ArrayList<>();
     private Canvas simMap;
     private int index;
-    private int counter = 10;
-    private Position newPos;
-    private Festival festival;
     public static ArrayList<Artist> artists;
     private ArrayList<BufferedImage> artistPlayerViewModels = new ArrayList<>();
     private Timer timer;
+    private Festival festival;
 
-    public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap, Timer timer) {
+    public MyAnimationTimer(Label timerLabel, ArrayList<AI> ais, Canvas simMap, Timer timer) throws IOException, ClassNotFoundException {
         this.timerLabel = timerLabel;
         this.ais = ais;
         this.simMap = simMap;
@@ -47,12 +47,12 @@ public class MyAnimationTimer extends AnimationTimer {
         artistPlayerViewModels.add(SimulatorController.goldAI.get(1));
 
         artists = new ArrayList<>();
+        this.festival = ScheduleController.getFestival();
     }
 
     public static int getRandom4() {
         Random rand = new Random();
-        int randomNumber = rand.nextInt(4);
-        return randomNumber;
+        return rand.nextInt(4);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         // 1_000_000_000
-        if (elapsedForTimer >= 1_000_000_00) {
+        if (elapsedForTimer >= 1_000_000_000) {
             if (isSpawn()) {
                 if (index != ais.size()) {
                     realAis.add(ais.get(index));
@@ -91,7 +91,7 @@ public class MyAnimationTimer extends AnimationTimer {
             Platform.runLater(() ->
             {
                 for (AI ai : realAis) {
-
+                    //stuurt visitors op tijd naar podiums
                     for (Artist artist : this.festival.getArtists()) {
                         String time = artist.getSetStartingTime();
                         String[] parts = time.split(":");
@@ -249,9 +249,57 @@ public class MyAnimationTimer extends AnimationTimer {
                                 }
                             }
                         }
+                        String time1 = artist.getSetStartingTime();
+                        String[] parts2 = time1.split(":");
+
+                        int hours1 = Integer.parseInt(parts2[0]);
+                        int minutes1 = Integer.parseInt(parts2[1]);
+
+                        int allMinutesArtist1 = (hours1 * 60) + minutes1;
+                        int allMinutesTimer1 = (timer.getHours() * 60) + timer.getMinutes();
+
+                        if (allMinutesArtist1 + artist.getSetDurationInMinutes() < allMinutesTimer1) {
+                            if (artist.getPodium().equals("Main stage")) {
+                                BufferedImage image = SimulatorController.aisImage.get(90);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((24 * 16) + 8 - (image.getWidth() / 2.0), (2 * 16) + 8 - (image.getHeight() / 2.0));
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                                this.festival.getArtists().remove(artist);
+
+                            }
+                            if (artist.getPodium().equals("Stage 2")) {
+                                BufferedImage image = SimulatorController.aisImage.get(90);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((2 * 16) + 8 - image.getWidth() / 2.0, (27 * 16) + 8 - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                                this.festival.getArtists().remove(artist);
+
+                            }
+                            if (artist.getPodium().equals("Stage 3")) {
+                                BufferedImage image = SimulatorController.aisImage.get(90);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((29 * 16) + 8 - image.getWidth() / 2.0, (26 * 16) + 8 - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                                this.festival.getArtists().remove(artist);
+
+                            }
+                            if (artist.getPodium().equals("Stage 4")) {
+                                BufferedImage image = SimulatorController.aisImage.get(90);
+                                AffineTransform tx = new AffineTransform();
+                                tx.translate((51 * 16) + 8 - image.getWidth() / 2.0, (1 * 16) + 8 - image.getHeight() / 2.0);
+                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
+                                         this.festival.getArtists().remove(artist);
+
+                            }
+                        }
                     }
 
+
+
+
+                    //tekent artiesten op podiums als het tijd is
                     for (Artist artist : this.festival.getArtists()) {
+
                         int number = getRandom4();
 
                         String time = artist.getSetStartingTime();
@@ -262,6 +310,8 @@ public class MyAnimationTimer extends AnimationTimer {
 
                         int allMinutesArtist = (hours * 60) + minutes;
                         int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
+
+
 
                         if (allMinutesArtist == allMinutesTimer) {
                             if (artist.getPodium().equals("Main stage")) {
@@ -290,34 +340,8 @@ public class MyAnimationTimer extends AnimationTimer {
                             }
                         }
 
-                        if (allMinutesArtist + artist.getSetDurationInMinutes() < allMinutesTimer) {
-                            if (artist.getPodium().equals("Main stage")) {
-                                BufferedImage image = SimulatorController.aisImage.get(90);
-                                AffineTransform tx = new AffineTransform();
-                                tx.translate((24 * 16) + 8 - (image.getWidth() / 2.0), (2 * 16) + 8 - (image.getHeight() / 2.0));
-                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
-                            }
-                            if (artist.getPodium().equals("Stage 2")) {
-                                BufferedImage image = SimulatorController.aisImage.get(90);
-                                AffineTransform tx = new AffineTransform();
-                                tx.translate((2 * 16) + 8 - image.getWidth() / 2.0, (27 * 16) + 8 - image.getHeight() / 2.0);
-                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
-                            }
-                            if (artist.getPodium().equals("Stage 3")) {
-                                BufferedImage image = SimulatorController.aisImage.get(90);
-                                AffineTransform tx = new AffineTransform();
-                                tx.translate((29 * 16) + 8 - image.getWidth() / 2.0, (26 * 16) + 8 - image.getHeight() / 2.0);
-                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
-                            }
-                            if (artist.getPodium().equals("Stage 4")) {
-                                BufferedImage image = SimulatorController.aisImage.get(90);
-                                AffineTransform tx = new AffineTransform();
-                                tx.translate((51 * 16) + 8 - image.getWidth() / 2.0, (1 * 16) + 8 - image.getHeight() / 2.0);
-                                new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
-                            }
-                        }
-                    }
 
+                    }
                     ai.update();
                     ai.draw(new FXGraphics2D(simMap.getGraphicsContext2D()));
                 }
