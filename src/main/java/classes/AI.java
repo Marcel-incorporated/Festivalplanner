@@ -101,6 +101,7 @@ public class AI {
         if (this.matrix == null) {
             //random moven als AI geen taak heeft
             if (goToPodium == 0 && !isFest && status.equals("")) {
+//                System.out.println("going random");
                 int random = getRandom7();
                 if (random == 1) {
                     setMatrixes(getToiletMatrixes());
@@ -112,24 +113,28 @@ public class AI {
                     setMatrixes(getOrangeShopMatrixes());
                 }
             }
-            if (goToPodium == 1) {
+            if (goToPodium == 1 && !isFest) {
                 setFest(true);
                 setStatus("mainStage");
+                System.out.println("going mainstage");
                 setMatrixes(getMainStageMatrixes());
             }
-            if (goToPodium == 2) {
+            if (goToPodium == 2 && !isFest) {
                 setFest(true);
                 setStatus("leftTinyStage");
+                System.out.println("going left stage");
                 setMatrixes(getLeftTinyStageMatrixes());
             }
-            if (goToPodium == 3) {
+            if (goToPodium == 3 && !isFest) {
                 setFest(true);
                 setStatus("middleTinyStage");
+                System.out.println("going middle stage");
                 setMatrixes(getMiddleTinyStageMatrixes());
             }
-            if (goToPodium == 4) {
+            if (goToPodium == 4 && !isFest) {
                 setFest(true);
                 setStatus("rightTinyStage");
+                System.out.println("going right stage");
                 setMatrixes(getRightTinyStageMatrixes());
             }
         } else {
@@ -216,6 +221,7 @@ public class AI {
 
                 if (this.matrixes.size() == this.matrixCount) {
                     if (status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
+                        setFest(false);
                         setStatus("");
                         goToPodium = 0;
                     }

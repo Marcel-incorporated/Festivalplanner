@@ -104,22 +104,22 @@ public class MyAnimationTimer extends AnimationTimer {
                         if (allMinutesArtist + artist.getSetDurationInMinutes() == allMinutesTimer) {
                             if (ai.getStatus().equals("mainStage")) {
                                 ai.setMatrixes(ai.getBackFromMainStageMatrixes());
-                                ai.setFest(false);
+//                                ai.setFest(false);
                                 ai.setStatus("mainStageBack");
                             }
                             if (ai.getStatus().equals("leftTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromLeftTinyStage());
-                                ai.setFest(false);
+//                                ai.setFest(false);
                                 ai.setStatus("leftTinyStageBack");
                             }
                             if (ai.getStatus().equals("middleTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromMiddleTinyStage());
-                                ai.setFest(false);
+//                                ai.setFest(false);
                                 ai.setStatus("middleTinyStageBack");
                             }
                             if (ai.getStatus().equals("rightTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromRightTinyStage());
-                                ai.setFest(false);
+//                                ai.setFest(false);
                                 ai.setStatus("rightTinyStageBack");
                             }
                         }
