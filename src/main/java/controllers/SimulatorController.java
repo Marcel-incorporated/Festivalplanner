@@ -220,6 +220,7 @@ public class SimulatorController extends Thread implements Runnable {
             statusLabel.setText("Status: started");
         }
     }
+
     @FXML
     public void onStopButton() {
         animationTimer.stop();

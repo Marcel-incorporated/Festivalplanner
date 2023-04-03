@@ -11,7 +11,7 @@ import java.util.Random;
  * die in de simulatie zitten logica krijgen waardoor ze dus weten hoe ze moeten bewegen.
  */
 public class AI {
-//    private final int width = 896;
+    //    private final int width = 896;
 //    private final int height = 560;
     private AffineTransform lastTx;
     private BufferedImage image;
@@ -22,19 +22,19 @@ public class AI {
     private int id;
     private int x;
     private int y;
-//    private boolean run;
+    //    private boolean run;
     private Matrix matrix;
     private ArrayList<Matrix> matrixes = new ArrayList<>();
     private int row = 34;
     private int collom = 41;
-//    private Matrix exitPath;
+    //    private Matrix exitPath;
 //    private String previousPathFindingMove;
 //    private int previousLowestValue;
     private int matrixCount = 0;
     private boolean isFinished = true;
     private boolean isFest = false;
     private String status = "";
-//    private int ticker = 0;
+    //    private int ticker = 0;
 //    private int stage = 0;
     private boolean isJustSpawned;
     private int goToPodium = 0;
@@ -51,12 +51,15 @@ public class AI {
         this.isJustSpawned = true;
         this.image = this.characterImages.get(0);
     }
+
     public boolean isFest() {
         return isFest;
     }
+
     public int getId() {
         return id;
     }
+
     public void setGoToPodium(int goToPodium) {
         this.goToPodium = goToPodium;
     }
@@ -99,14 +102,14 @@ public class AI {
             //random moven als AI geen taak heeft
             if (goToPodium == 0 && !isFest && status.equals("")) {
                 int random = getRandom7();
-                    if (random == 1) {
-                        setMatrixes(getToiletMatrixes());
-                    }
-                    if (random == 2) {
-                        setMatrixes(getBlueShopMatrixes());
-                    }
-                    if (random == 3) {
-                        setMatrixes(getOrangeShopMatrixes());
+                if (random == 1) {
+                    setMatrixes(getToiletMatrixes());
+                }
+                if (random == 2) {
+                    setMatrixes(getBlueShopMatrixes());
+                }
+                if (random == 3) {
+                    setMatrixes(getOrangeShopMatrixes());
                 }
             }
             if (goToPodium == 1) {

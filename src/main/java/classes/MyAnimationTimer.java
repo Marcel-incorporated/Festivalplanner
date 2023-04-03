@@ -1,7 +1,6 @@
 package classes;
 
 import controllers.ScheduleController;
-import controllers.Serializer;
 import controllers.SimulatorController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -288,7 +287,7 @@ public class MyAnimationTimer extends AnimationTimer {
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((51 * 16) + 8 - image.getWidth() / 2.0, (1 * 16) + 8 - image.getHeight() / 2.0);
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
-                                         this.festival.getArtists().remove(artist);
+                                this.festival.getArtists().remove(artist);
 
                             }
                         }
@@ -306,7 +305,6 @@ public class MyAnimationTimer extends AnimationTimer {
 
                         int allMinutesArtist = (hours * 60) + minutes;
                         int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
-
 
 
                         if (allMinutesArtist == allMinutesTimer) {
