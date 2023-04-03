@@ -1,9 +1,9 @@
 package controllers;
 
+import classes.Map;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import org.jfree.fx.FXGraphics2D;
-import classes.Map;
 
 import java.awt.*;
 import java.io.FileNotFoundException;

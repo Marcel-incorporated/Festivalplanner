@@ -3,21 +3,19 @@ package controllers;
 import classes.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import org.jfree.fx.FXGraphics2D;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
-
 import javafx.scene.control.Label;
+import org.jfree.fx.FXGraphics2D;
 
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static controllers.NotificationPromptController.notification;
 
@@ -47,15 +45,7 @@ public class SimulatorController extends Thread implements Runnable {
     private static int height;
     private static int tileHeight;
     private static int tileWidth;
-    private static Matrix orangeShopPath;
-    private static Matrix blueShopPath;
-    private static Matrix mainStagePath;
-    private static Matrix leftTinyStagePath;
-    private static ArrayList<Matrix> middleTinyStagePath;
     private static ArrayList<Matrix> defaultPath;
-    private static Matrix rightTinyStagePath;
-    private static Matrix toiletPath;
-    private boolean pastMidnight = false;
     public static ArrayList<BufferedImage> aisImage = new ArrayList<>();
     private static BufferedImage image;
     private static ArrayList<AI> ais = new ArrayList<>();
@@ -67,14 +57,7 @@ public class SimulatorController extends Thread implements Runnable {
     public static ArrayList<Integer> collisionMapArray = new ArrayList<>();
 
     @FXML
-    public void initialize() throws FileNotFoundException {
-        //makeOrangeShopPath();
-        //makeBlueShopPath();
-        //makeMainStagePath();
-        //makeLeftTinyStagePath();
-        //makeMiddleTinyStagePath();
-        //makeRightTinyStagePath();
-        //makeToiletPath();
+    public void initialize() throws IOException, ClassNotFoundException {
         makeDefaultPath();
         saveAITypes();
 
@@ -90,7 +73,7 @@ public class SimulatorController extends Thread implements Runnable {
 
         drawMap(g2d);
         drawBottom(bottomDrawer);
-        //drawPathFinding(pathFinderDrawer);
+//        drawPathFinding(pathFinderDrawer);
 
         animationTimer = new MyAnimationTimer(timeLabel, ais, simMap, timer) {
             long last = -1;
@@ -207,7 +190,6 @@ public class SimulatorController extends Thread implements Runnable {
 
     public void drawMap(Graphics2D g) {
         map.draw(g);
-//        Graphics2D timerDrawer = new FXGraphics2D(timerCanvas.getGraphicsContext2D());
     }
 
     public static ArrayList<Integer> getIntArray(JsonArray jsonArray) {
@@ -216,12 +198,6 @@ public class SimulatorController extends Thread implements Runnable {
             intArray.add(jsonArray.getInt(i));
         }
         return intArray;
-    }
-
-    public static int getRandom4() {
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(4) + 1;
-        return randomNumber;
     }
 
     public static int getRandom7() {
@@ -237,14 +213,13 @@ public class SimulatorController extends Thread implements Runnable {
     @FXML
     public void onStartButton() {
         File planning = new File("src/main/resources/planning.txt");
-        if(!planning.exists()) {
-        notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
+        if (!planning.exists()) {
+            notification(true, "geen file geïmporteerd dat werkt natuurlijk niet he ik hoop dat je teen pijn gaat doen");
         } else {
             animationTimer.start();
             statusLabel.setText("Status: started");
         }
     }
-
 
     @FXML
     public void onStopButton() {
@@ -256,57 +231,11 @@ public class SimulatorController extends Thread implements Runnable {
         bottomMap.draw(g);
     }
 
-//    public void drawPathFinding(Graphics2D g) {
-//        Matrix matrix = new Matrix(35, 56);
-//        matrix.updateAround(18, 40, 0);
-//
-//        pathFindingMap.drawMatrix(g, matrix);   //for debugging
-//    }
-//
-//    public void makeOrangeShopPath() {
-//        orangeShopPath = new Matrix(35, 56);
-//        orangeShopPath.updateAround(5, 3, 0);
-//    }
-//
-//    public void makeBlueShopPath() {
-//        blueShopPath = new Matrix(35, 56);
-//        blueShopPath.updateAround(15, 3, 0);
-//    }
-//
-//    public void makeMainStagePath() {
-//        mainStagePath = new Matrix(35, 56);
-//        mainStagePath.updateAround(5, 24, 0);
-//    }
-//
-//    public void makeLeftTinyStagePath() {
-//        leftTinyStagePath = new Matrix(35, 56);
-//        leftTinyStagePath.updateAround(30, 5, 0);
-//    }
+    public void drawPathFinding(Graphics2D g) {
+        Matrix matrix = new Matrix(35, 56);
+        matrix.updateAround(18, 40, 0);
 
-    public void makeMiddleTinyStagePath() {
-
-        middleTinyStagePath = new ArrayList<>();
-
-        Matrix checkpoint1 = new Matrix(35, 56);
-        checkpoint1.updateAround(18, 40, 0);
-
-        Matrix checkpoint2 = new Matrix(35, 56);
-        checkpoint2.updateAround(18, 16, 0);
-
-        Matrix checkpoint3 = new Matrix(35, 56);
-        checkpoint3.updateAround(31, 16, 0);
-
-        Matrix checkpoint4 = new Matrix(35, 56);
-        checkpoint4.updateAround(31, 23, 0);
-
-        Matrix endLocation = new Matrix(35, 56);
-        endLocation.updateAround(29, 27, 0);
-
-        middleTinyStagePath.add(checkpoint1);
-        middleTinyStagePath.add(checkpoint2);
-        middleTinyStagePath.add(checkpoint3);
-        middleTinyStagePath.add(checkpoint4);
-        middleTinyStagePath.add(endLocation);
+        pathFindingMap.drawMatrix(g, matrix);   //for debugging
     }
 
     public void makeDefaultPath() {
@@ -333,17 +262,4 @@ public class SimulatorController extends Thread implements Runnable {
         defaultPath.add(checkpoint4);
         defaultPath.add(endLocation);
     }
-
-//    public void makeRightTinyStagePath() {
-//        rightTinyStagePath = new Matrix(35, 56);
-//        rightTinyStagePath.updateAround(4, 49, 0);
-//    }
-//
-//
-//    public void makeToiletPath() {
-//        toiletPath = new Matrix(35, 56);
-//        toiletPath.updateAround(1,8, 0);
-//    }
-
-
 }

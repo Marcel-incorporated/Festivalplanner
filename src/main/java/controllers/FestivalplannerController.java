@@ -1,6 +1,6 @@
 package controllers;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Tab;
 
 public class FestivalplannerController {
     public Tab scheduleTab;

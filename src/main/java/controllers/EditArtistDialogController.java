@@ -8,8 +8,7 @@ import javafx.scene.shape.SVGPath;
 
 import static controllers.ArtistArrayListController.artists;
 
-public class EditArtistDialogController
-{
+public class EditArtistDialogController {
     //FXML attributen
     @FXML
     private TextField artistNameTextfield;
@@ -39,10 +38,10 @@ public class EditArtistDialogController
 
     @FXML
     void initialize() {
-        startTimeChoicebox.getItems().addAll("11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00",
+        startTimeChoicebox.getItems().addAll("12:00", "12:30", "13:00", "13:30", "14:00",
                 "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30",
                 "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00", "01:30", "02:00", "02:30");
-        startTimeChoicebox.setValue("11:00");
+        startTimeChoicebox.setValue("12:00");
 
         durationChoicebox.getItems().addAll("30 minutes", "60 minutes", "90 minutes", "120 minutes");
         durationChoicebox.setValue("30 minutes");

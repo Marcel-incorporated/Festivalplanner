@@ -22,25 +22,25 @@ public class Block extends Rectangle2D.Double {
         setRect(x, y, width, height);
     }
 
-    public void setPos(double x, double y) {
-        this.x = x;
-        this.y = y;
-        setRect(x, y, width, height);
-    }
+//    public void setPos(double x, double y) {
+//        this.x = x;
+//        this.y = y;
+//        setRect(x, y, width, height);
+//    }
 
-    public void changeSizeOfBlock(double width, double height) {
-        this.width = width;
-        this.height = height;
-        setRect(x, y, width, height);
-    }
+//    public void changeSizeOfBlock(double width, double height) {
+//        this.width = width;
+//        this.height = height;
+//        setRect(x, y, width, height);
+//    }
 
-    public Color getColor() {
-        return color;
-    }
+//    public Color getColor() {
+//        return color;
+//    }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+//    public void setColor(Color color) {
+//        this.color = color;
+//    }
 
     @Override
     public String toString() {

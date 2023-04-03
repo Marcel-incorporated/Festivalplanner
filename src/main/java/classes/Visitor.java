@@ -1,17 +1,16 @@
 package classes;
 
+import interfaces.Animated;
+import net.datafaker.Faker;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import interfaces.Animated;
-import net.datafaker.Faker;
-
 /**
  * constructor voor een visitor
  */
-public class Visitor implements Serializable, Animated
-{
+public class Visitor implements Serializable, Animated {
     private String name;
     private int age;
     private String gender;

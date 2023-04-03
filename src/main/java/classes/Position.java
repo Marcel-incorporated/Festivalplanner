@@ -3,8 +3,7 @@ package classes;
 /**
  * Deze klasse is er voor om de posities van de npc's op te slaan.
  */
-public class Position
-{
+public class Position {
     private int x;
     private int y;
     private int index;

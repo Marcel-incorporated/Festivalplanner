@@ -1,19 +1,18 @@
 package classes;
 
-import java.awt.geom.AffineTransform;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * De newAi klasse implementeert AI voor een character in de simulatie. Deze klasse zorgt er voor dat de characters
+ * De AI klasse zorgt er voor dat de characters
  * die in de simulatie zitten logica krijgen waardoor ze dus weten hoe ze moeten bewegen.
  */
-public class AI
-{
-    private final int width = 896;
-    private final int height = 560;
+public class AI {
+    //    private final int width = 896;
+//    private final int height = 560;
     private AffineTransform lastTx;
     private BufferedImage image;
     private ArrayList<BufferedImage> characterImages;
@@ -23,37 +22,22 @@ public class AI
     private int id;
     private int x;
     private int y;
-    private boolean run;
+    //    private boolean run;
     private Matrix matrix;
     private ArrayList<Matrix> matrixes = new ArrayList<>();
     private int row = 34;
     private int collom = 41;
-    private Matrix exitPath;
-    private String previousPathFindingMove;
-    private int previousLowestValue;
+    //    private Matrix exitPath;
+//    private String previousPathFindingMove;
+//    private int previousLowestValue;
     private int matrixCount = 0;
     private boolean isFinished = true;
     private boolean isFest = false;
     private String status = "";
-    private int ticker = 0;
-    private int stage = 0;
+    //    private int ticker = 0;
+//    private int stage = 0;
     private boolean isJustSpawned;
     private int goToPodium = 0;
-
-    public AI(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id) {
-        this.x = 664;
-        this.y = 552;
-        this.index = 1945;
-        this.collisionMapArray = collisionMapArray;
-        this.characterImages = characterImages;
-        this.tiles = tiles;
-        this.id = id;
-        this.isJustSpawned = true;
-        previousPathFindingMove = "";
-        previousLowestValue = -999;
-
-        this.image = this.characterImages.get(0);
-    }
 
     public AI(ArrayList<BufferedImage> characterImages, ArrayList<Integer> collisionMapArray, ArrayList<BufferedImage> tiles, int id, ArrayList<Matrix> matrixes) {
         this.x = 664;
@@ -65,30 +49,10 @@ public class AI
         this.id = id;
         this.matrixes = matrixes;
         this.isJustSpawned = true;
-
         this.image = this.characterImages.get(0);
     }
 
-    public void setStage(String stage) {
-        switch (stage) {
-            case "Main stage" -> this.stage = 1;
-            case "Stage 2" -> this.stage = 2;
-            case "Stage 3" -> this.stage = 3;
-            case "Stage 4" -> this.stage = 4;
-        }
-    }
-
-    public void setGoToPodium(int goToPodium)
-    {
-        this.goToPodium = goToPodium;
-    }
-
-    public void setMatrix(Matrix matrix) {
-        this.matrix = matrix;
-    }
-
-    public boolean isFest()
-    {
+    public boolean isFest() {
         return isFest;
     }
 
@@ -96,71 +60,86 @@ public class AI
         return id;
     }
 
-    public int getTicker()
-    {
-        return ticker;
+    public void setGoToPodium(int goToPodium) {
+        this.goToPodium = goToPodium;
     }
 
-    public void setTicker(int ticker)
-    {
-        this.ticker = ticker;
-    }
+
+//    public void setStage(String stage) {
+//        switch (stage) {
+//            case "Main stage" -> this.stage = 1;
+//            case "Stage 2" -> this.stage = 2;
+//            case "Stage 3" -> this.stage = 3;
+//            case "Stage 4" -> this.stage = 4;
+//        }
+//    }
+
+
+//    public void setMatrix(Matrix matrix) {
+//        this.matrix = matrix;
+//    }
+
+
+//    public int getTicker() {
+//        return ticker;
+//    }
+
+//    public void setTicker(int ticker) {
+//        this.ticker = ticker;
+//    }
 
     public void update() {
-
-        if (this.matrixes != null){
-            if (matrixes.size() > matrixCount && isFinished){
+        if (this.matrixes != null) {
+            if (matrixes.size() > matrixCount && isFinished) {
                 matrix = matrixes.get(matrixCount);
                 matrixCount++;
-                System.out.println("next");
+//                System.out.println("next");
                 isFinished = false;
             }
         }
 
         if (this.matrix == null) {
-
-            if (goToPodium == 0){
+            //random moven als AI geen taak heeft
+            if (goToPodium == 0 && !isFest && status.equals("")) {
+//                System.out.println("going random");
                 int random = getRandom7();
-
-                if (!isFest && status.equals("")){
-                    if (random == 1){
-                        setMatrixes(getToiletMatrixes());
-                    }
-                    if (random == 3){
-                        setMatrixes(getBlueShopMatrixes());
-                    }
-                    if (random == 4){
-                        setMatrixes(getOrangeShopMatrixes());
-                    }
+                if (random == 1) {
+                    setMatrixes(getToiletMatrixes());
+                }
+                if (random == 2) {
+                    setMatrixes(getBlueShopMatrixes());
+                }
+                if (random == 3) {
+                    setMatrixes(getOrangeShopMatrixes());
                 }
             }
-
-            if (goToPodium == 1){
+            if (goToPodium == 1 && !isFest) {
                 setFest(true);
                 setStatus("mainStage");
+                System.out.println("going mainstage");
                 setMatrixes(getMainStageMatrixes());
-                goToPodium = 0;
             }
-            if (goToPodium == 2){
+            if (goToPodium == 2 && !isFest) {
                 setFest(true);
                 setStatus("leftTinyStage");
+                System.out.println("going left stage");
                 setMatrixes(getLeftTinyStageMatrixes());
-                goToPodium = 0;
             }
-            if (goToPodium == 3){
+            if (goToPodium == 3 && !isFest) {
                 setFest(true);
                 setStatus("middleTinyStage");
+                System.out.println("going middle stage");
                 setMatrixes(getMiddleTinyStageMatrixes());
-                goToPodium = 0;
             }
-            if (goToPodium == 4){
+            if (goToPodium == 4 && !isFest) {
                 setFest(true);
                 setStatus("rightTinyStage");
+                System.out.println("going right stage");
                 setMatrixes(getRightTinyStageMatrixes());
-                goToPodium = 0;
             }
         } else {
             //34, 41 = spawn
+            //logic om naar de laagste value te lopen in de matrix
             int north = -999;
             int east = -999;
             int south = -999;
@@ -214,7 +193,6 @@ public class AI
                     index += 1;
                     break;
                 }
-
                 if (west == lowestvalue) {
                     //left
                     x -= 16;
@@ -222,7 +200,6 @@ public class AI
                     index -= 1;
                     break;
                 }
-
                 if (south == lowestvalue) {
                     //down
                     y += 16;
@@ -230,9 +207,7 @@ public class AI
                     index += 56;
                     break;
                 }
-
                 if (north == lowestvalue) {
-
                     //up
                     y -= 16;
                     row -= 1;
@@ -241,12 +216,14 @@ public class AI
                 }
 
             }
-            if(lowestvalue == 0) {
+            if (lowestvalue == 0) {
                 this.isFinished = true;
 
-                if (this.matrixes.size() == this.matrixCount){
-                    if(status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
-                        status = "";
+                if (this.matrixes.size() == this.matrixCount) {
+                    if (status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
+                        setFest(false);
+                        setStatus("");
+                        goToPodium = 0;
                     }
                     isJustSpawned = false;
                     this.matrixes = null;
@@ -257,17 +234,129 @@ public class AI
         }
     }
 
-    public String getStatus()
-    {
+    public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
+        System.out.println("Status geset naar: " + status);
         this.status = status;
     }
 
+    public void setFest(boolean fest) {
+        isFest = fest;
+    }
+
+    public void setMatrixes(ArrayList<Matrix> matrixes) {
+        this.matrixes = matrixes;
+    }
+
+    public void draw(Graphics2D g) {
+        AffineTransform tx = new AffineTransform();
+        //locatie zetten op x en y
+        tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
+        //vorige AI overtekenen met pad
+        if (lastTx != null) {
+            image = tiles.get(0);
+            g.drawImage(image, lastTx, null);
+        }
+        image = characterImages.get(0);
+        //AI tekenen op nieuwe positie
+        g.drawImage(image, tx, null);
+        //huidige positie opslaan om later te overtekenen
+        lastTx = tx;
+    }
+
+    public static int getRandom7() {
+        Random rand = new Random();
+        return rand.nextInt(7) + 1;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+//    int getIndexPos(int x, int y) {
+//        return x + this.width * y;
+//    }
+
+//    void andersom(int index) {
+//        this.x = index % this.width;
+//        this.y = index / this.width;
+//    }
+
+//    private int randomMove() {
+//        Random rand = new Random();
+//        int randomNumber = rand.nextInt(4) + 1;
+//        //System.out.println("Random number: " + randomNumber);
+//        return randomNumber;
+//    }
+
+    public boolean canMove(int move) {
+        //logic om te controleren of ai kan moven naar nieuwe positie
+        int north = -999;
+        int south = -999;
+        int west = -999;
+        int east = -999;
+
+        //value voor de volgende move instellen
+        if (!(index - 56 < 0)) {
+            north = collisionMapArray.get(index - 56);
+        }
+        if (!(index + 56 > 1959)) {
+            south = collisionMapArray.get(index + 56);
+        }
+        if (!(index - 1 < 0)) {
+            west = collisionMapArray.get(index - 1);
+        }
+        if (!(index + 1 > 1959)) {
+            east = collisionMapArray.get(index + 1);
+        }
+
+        //checken of er in de volgende move geen uit de map value, of collision tile is
+        switch (move) {
+            case 1:
+                if (north != -999 && north != 45) {
+                    return true;
+                }
+                break;
+            case 2:
+                if (east != -999 && east != 45) {
+                    return true;
+                }
+                break;
+            case 3:
+                if (south != -999 && south != 45) {
+                    return true;
+                }
+                break;
+            case 4:
+                if (west != -999 && west != 45) {
+                    return true;
+                }
+                break;
+            default:
+                System.out.println("shit man");
+        }
+        return false;
+    }
+
+    public boolean isJustSpawned() {
+        return isJustSpawned;
+    }
+
+    //    public void makeExitPath() {
+//        exitPath = new Matrix(35, 56);
+//        exitPath.updateAround(34, 41, 0);
+//    }
+
+
     public ArrayList<Matrix> getRightTinyStageMatrixes() {
-        System.out.println("right tiny matrix");
+//        System.out.println("right tiny matrix");
         ArrayList<Matrix> rightTinyStageMatrixes = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -299,7 +388,7 @@ public class AI
     }
 
     public ArrayList<Matrix> getMiddleTinyStageMatrixes() {
-        System.out.println("middle tiny matrix");
+//        System.out.println("middle tiny matrix");
         ArrayList<Matrix> middleTinyStagePath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -327,7 +416,7 @@ public class AI
     }
 
     public ArrayList<Matrix> getLeftTinyStageMatrixes() {
-        System.out.println("left tiny matrix");
+//        System.out.println("left tiny matrix");
         ArrayList<Matrix> leftTinyStagePath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -354,8 +443,8 @@ public class AI
         return leftTinyStagePath;
     }
 
-    public ArrayList<Matrix> getToiletMatrixes(){
-        System.out.println("toilet");
+    public ArrayList<Matrix> getToiletMatrixes() {
+//        System.out.println("toilet");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -383,13 +472,9 @@ public class AI
         return toiletPath;
     }
 
-    public void setFest(boolean fest)
-    {
-        isFest = fest;
-    }
 
-    public ArrayList<Matrix> getBlueShopMatrixes(){
-        System.out.println("blue");
+    public ArrayList<Matrix> getBlueShopMatrixes() {
+//        System.out.println("blue");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -409,8 +494,8 @@ public class AI
         return toiletPath;
     }
 
-    public ArrayList<Matrix> getOrangeShopMatrixes(){
-        System.out.println("orange");
+    public ArrayList<Matrix> getOrangeShopMatrixes() {
+//        System.out.println("orange");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -426,8 +511,8 @@ public class AI
         return toiletPath;
     }
 
-    public ArrayList<Matrix> getMainStageMatrixes(){
-        System.out.println("Main stage");
+    public ArrayList<Matrix> getMainStageMatrixes() {
+//        System.out.println("Main stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
@@ -459,13 +544,13 @@ public class AI
         return mainPath;
     }
 
-    public ArrayList<Matrix> getBackFromMainStageMatrixes(){
-        System.out.println("Back from main stage");
+    public ArrayList<Matrix> getBackFromMainStageMatrixes() {
+//        System.out.println("Back from main stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix endLocation = new Matrix(35, 56);
-        endLocation.updateAround(5, 5, 0);
+        endLocation.updateAround(6, 4, 0);
 
         Matrix checkpoint5 = new Matrix(35, 56);
         checkpoint5.updateAround(17, 5, 0);
@@ -493,7 +578,7 @@ public class AI
     }
 
     public ArrayList<Matrix> getBackFromLeftTinyStage() {
-        System.out.println("Back from left tiny stage");
+//        System.out.println("Back from left tiny stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
@@ -506,7 +591,7 @@ public class AI
         Matrix checkPoint3 = new Matrix(35, 56);
         checkPoint3.updateAround(17, 7, 0);
 
-        Matrix endLocation= new Matrix(35, 56);
+        Matrix endLocation = new Matrix(35, 56);
         endLocation.updateAround(6, 4, 0);
 
         mainPath.add(checkpoint1);
@@ -518,7 +603,7 @@ public class AI
     }
 
     public ArrayList<Matrix> getBackFromMiddleTinyStage() {
-        System.out.println("Back from middle tiny stage");
+//        System.out.println("Back from middle tiny stage");
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -542,7 +627,7 @@ public class AI
     }
 
     public ArrayList<Matrix> getBackFromRightTinyStage() {
-        System.out.println("Back from right tiny stage");
+//        System.out.println("Back from right tiny stage");
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -568,145 +653,4 @@ public class AI
 
         return mainPath;
     }
-
-    public void setMatrixes(ArrayList<Matrix> matrixes)
-    {
-        this.matrixes = matrixes;
-    }
-
-    public void draw(Graphics2D g) {
-//        if (this.getY() > y) {
-
-//        }
-//        if (e.getValue().getY() < y) {
-//            y -= 16;
-//            index -= 56;
-//        }
-//        if (e.getValue().getX() > x) {
-//            x += 16;
-//            index += 1;
-//        }
-//        if (e.getValue().getX() < x) {
-//
-//        }
-
-
-        AffineTransform tx = new AffineTransform();
-        tx.translate(x - image.getWidth() / 2.0, y - image.getHeight() / 2.0);
-        if (lastTx != null) {
-            image = tiles.get(0);
-            g.drawImage(image, lastTx, null);
-        }
-        image = characterImages.get(0);
-        g.drawImage(image, tx, null);
-
-        lastTx = tx;
-    }
-
-    public static int getRandom7() {
-        Random rand = new Random();
-        return rand.nextInt(7) + 1;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    int getIndexPos(int x, int y) {
-        return x + this.width * y;
-    }
-
-    void andersom(int index) {
-        this.x = index % this.width;
-        this.y = index / this.width;
-    }
-
-    private int randomMove() {
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(4) + 1;
-        //System.out.println("Random number: " + randomNumber);
-        return randomNumber;
-    }
-
-    public boolean canMove(int move) {
-        //logic om te controleren of ai kan moven naar nieuwe positie
-        int north = -999;
-        int south = -999;
-        int west = -999;
-        int east = -999;
-
-        if (!(index - 56 < 0)) {
-            north = collisionMapArray.get(index - 56);
-        }
-        if (!(index + 56 > 1959)) {
-            south = collisionMapArray.get(index + 56);
-        }
-        if (!(index - 1 < 0)) {
-            west = collisionMapArray.get(index - 1);
-        }
-        if (!(index + 1 > 1959)) {
-            east = collisionMapArray.get(index + 1);
-        }
-
-        switch (move) {
-            case 1:
-                if (north != -999 && north != 45) {
-//                    for (newAi ai : MyAnimationTimer.realAis) {
-//                        if (ai.getY() == this.getY() + 16 && ai.getX() == this.getX()) {
-//                            return false;
-//                        }
-//                    }
-                    return true;
-                }
-                break;
-            case 2:
-                if (east != -999 && east != 45) {
-//                    for (newAi ai : MyAnimationTimer.realAis) {
-//                        if (ai.getY() == this.getY() && ai.getX() == this.getX() + 16) {
-//                            return false;
-//                        }
-//                    }
-                    return true;
-                }
-                break;
-            case 3:
-                if (south != -999 && south != 45) {
-//                    for (newAi ai : MyAnimationTimer.realAis) {
-//                        if (ai.getY() == this.getY() - 16 && ai.getX() == this.getX()) {
-//                            return false;
-//                        }
-//                    }
-                    return true;
-                }
-                break;
-            case 4:
-                if (west != -999 && west != 45) {
-//                    for (newAi ai : MyAnimationTimer.realAis) {
-//                        if (ai.getY() == this.getY() && ai.getX() == this.getX() - 16) {
-//                            return false;
-//                        }
-//                    }
-                    return true;
-                }
-                break;
-            default:
-                System.out.println("shit man");
-        }
-        return false;
-    }
-
-    public boolean isJustSpawned()
-    {
-        return isJustSpawned;
-    }
-
-    //    public void makeExitPath() {
-//        exitPath = new Matrix(35, 56);
-//        exitPath.updateAround(34, 41, 0);
-//    }
-
 }
