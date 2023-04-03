@@ -3,21 +3,19 @@ package controllers;
 import classes.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import org.jfree.fx.FXGraphics2D;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
-
 import javafx.scene.control.Label;
+import org.jfree.fx.FXGraphics2D;
 
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static controllers.NotificationPromptController.notification;
 
@@ -237,8 +235,8 @@ public class SimulatorController extends Thread implements Runnable {
     @FXML
     public void onStartButton() {
         File planning = new File("src/main/resources/planning.txt");
-        if(!planning.exists()) {
-        notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
+        if (!planning.exists()) {
+            notification(true, "import file stupid anders werkt het niet wat een domme pauper lul ben jij toch weer waarom leef jij ik hoop dat je teen eraf rolt");
         } else {
             animationTimer.start();
             statusLabel.setText("Status: started");

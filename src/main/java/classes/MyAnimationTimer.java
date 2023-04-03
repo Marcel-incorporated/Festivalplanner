@@ -10,7 +10,8 @@ import org.jfree.fx.FXGraphics2D;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * De MyAnimationTimer klasse breidt de de animationtimer klasse uit. Deze klasse houdt de tijd bij en zorgt er voor
@@ -55,14 +56,12 @@ public class MyAnimationTimer extends AnimationTimer {
     }
 
     @Override
-    public void handle(long currentTime)
-    {
+    public void handle(long currentTime) {
 
         this.festival = ScheduleController.getFestival();
 
 //        System.out.println("handle method called");
-        if (lastTime == 0)
-        {
+        if (lastTime == 0) {
             lastTime = currentTime;
             return;
         }
@@ -70,39 +69,30 @@ public class MyAnimationTimer extends AnimationTimer {
         long elapsed = currentTime - lastTime;
         long elapsedForTimer = currentTime - lastTimeForTimer;
 
-        if (elapsed >= 125_000_000)
-        { // 125 milliseconden
+        if (elapsed >= 125_000_000) { // 125 milliseconden
             //Roep methode aan
 
             //Plan de volgende keer runnen 125 milliseconde later
             lastTime = currentTime;
         }
         // 1_000_000_000
-        if (elapsedForTimer >= 1_000_000_00)
-        {
-            counter++;
-            if (counter > 10 && isSpawn() == true)
-            {
-                if (index != ais.size())
-                {
+        if (elapsedForTimer >= 1_000_000_00) {
+            if (isSpawn()) {
+                if (index != ais.size()) {
                     realAis.add(ais.get(index));
                     index++;
                 }
-                counter = 0;
             }
-            if (isPastMidnight() && getHours() == 3)
-            {
+            if (isPastMidnight() && getHours() == 3) {
                 stop();
                 resetTimer();
             }
             Platform.runLater(this::addMinute);
             Platform.runLater(() ->
             {
-                for (AI ai : realAis)
-                {
+                for (AI ai : realAis) {
 
-                    for (Artist artist : this.festival.getArtists())
-                    {
+                    for (Artist artist : this.festival.getArtists()) {
                         String time = artist.getSetStartingTime();
                         String[] parts = time.split(":");
 
@@ -112,203 +102,146 @@ public class MyAnimationTimer extends AnimationTimer {
                         int allMinutesArtist = (hours * 60) + minutes;
                         int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
 
-                        if (allMinutesArtist + artist.getSetDurationInMinutes() == allMinutesTimer)
-                        {
-                            if (ai.getStatus().equals("mainStage"))
-                            {
+                        if (allMinutesArtist + artist.getSetDurationInMinutes() == allMinutesTimer) {
+                            if (ai.getStatus().equals("mainStage")) {
                                 ai.setMatrixes(ai.getBackFromMainStageMatrixes());
                                 ai.setFest(false);
                                 ai.setStatus("mainStageBack");
                             }
-                            if (ai.getStatus().equals("leftTinyStage"))
-                            {
+                            if (ai.getStatus().equals("leftTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromLeftTinyStage());
                                 ai.setFest(false);
                                 ai.setStatus("leftTinyStageBack");
                             }
-                            if (ai.getStatus().equals("middleTinyStage"))
-                            {
+                            if (ai.getStatus().equals("middleTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromMiddleTinyStage());
                                 ai.setFest(false);
                                 ai.setStatus("middleTinyStageBack");
                             }
-                            if (ai.getStatus().equals("rightTinyStage"))
-                            {
+                            if (ai.getStatus().equals("rightTinyStage")) {
                                 ai.setMatrixes(ai.getBackFromRightTinyStage());
                                 ai.setFest(false);
                                 ai.setStatus("rightTinyStageBack");
                             }
                         }
 
-                        if (allMinutesArtist - 30 == allMinutesTimer && !ai.isFest())
-                        {
-                            switch (artist.getPopularity())
-                            {
-                                case 1 ->
-                                {
-                                    if (Math.random() <= 0.20)
-                                    {
-                                        if (artist.getPodium().equals("Main stage"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                        if (allMinutesArtist - 90 == allMinutesTimer && !ai.isFest()) {
+                            switch (artist.getPopularity()) {
+                                case 1 -> {
+                                    if (Math.random() <= 0.20) {
+                                        if (artist.getPodium().equals("Main stage")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(1);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 2"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 2")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(2);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 3"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 3")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(3);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 4"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 4")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(4);
                                             }
                                         }
                                     }
                                 }
-                                case 2 ->
-                                {
-                                    if (Math.random() <= 0.40)
-                                    {
-                                        if (artist.getPodium().equals("Main stage"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                case 2 -> {
+                                    if (Math.random() <= 0.40) {
+                                        if (artist.getPodium().equals("Main stage")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(1);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 2"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 2")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(2);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 3"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 3")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(3);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 4"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 4")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(4);
                                             }
                                         }
                                     }
                                 }
-                                case 3 ->
-                                {
-                                    if (Math.random() <= 0.60)
-                                    {
-                                        if (artist.getPodium().equals("Main stage"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                case 3 -> {
+                                    if (Math.random() <= 0.60) {
+                                        if (artist.getPodium().equals("Main stage")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(1);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 2"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 2")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(2);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 3"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 3")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(3);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 4"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 4")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(4);
                                             }
                                         }
                                     }
                                 }
-                                case 4 ->
-                                {
-                                    if (Math.random() <= 0.80)
-                                    {
-                                        if (artist.getPodium().equals("Main stage"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                case 4 -> {
+                                    if (Math.random() <= 0.80) {
+                                        if (artist.getPodium().equals("Main stage")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(1);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 2"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 2")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(2);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 3"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 3")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(3);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 4"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 4")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(4);
                                             }
                                         }
                                     }
                                 }
-                                case 5 ->
-                                {
-                                    if (Math.random() <= 0.90)
-                                    {
-                                        if (artist.getPodium().equals("Main stage"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                case 5 -> {
+                                    if (Math.random() <= 0.90) {
+                                        if (artist.getPodium().equals("Main stage")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(1);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 2"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 2")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(2);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 3"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 3")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(3);
                                             }
                                         }
-                                        if (artist.getPodium().equals("Stage 4"))
-                                        {
-                                            if (!ai.isJustSpawned())
-                                            {
+                                        if (artist.getPodium().equals("Stage 4")) {
+                                            if (!ai.isJustSpawned()) {
                                                 ai.setGoToPodium(4);
                                             }
                                         }
@@ -318,8 +251,7 @@ public class MyAnimationTimer extends AnimationTimer {
                         }
                     }
 
-                    for (Artist artist : this.festival.getArtists())
-                    {
+                    for (Artist artist : this.festival.getArtists()) {
                         int number = getRandom4();
 
                         String time = artist.getSetStartingTime();
@@ -331,31 +263,26 @@ public class MyAnimationTimer extends AnimationTimer {
                         int allMinutesArtist = (hours * 60) + minutes;
                         int allMinutesTimer = (timer.getHours() * 60) + timer.getMinutes();
 
-                        if (allMinutesArtist == allMinutesTimer)
-                        {
-                            if (artist.getPodium().equals("Main stage"))
-                            {
+                        if (allMinutesArtist == allMinutesTimer) {
+                            if (artist.getPodium().equals("Main stage")) {
                                 BufferedImage image = artistPlayerViewModels.get(number);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((24 * 16) + 8 - (image.getWidth() / 2.0), (2 * 16) + 8 - (image.getHeight() / 2.0));
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 2"))
-                            {
+                            if (artist.getPodium().equals("Stage 2")) {
                                 BufferedImage image = artistPlayerViewModels.get(number);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((2 * 16) + 8 - image.getWidth() / 2.0, (27 * 16) + 8 - image.getHeight() / 2.0);
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 3"))
-                            {
+                            if (artist.getPodium().equals("Stage 3")) {
                                 BufferedImage image = artistPlayerViewModels.get(number);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((29 * 16) + 8 - image.getWidth() / 2.0, (26 * 16) + 8 - image.getHeight() / 2.0);
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 4"))
-                            {
+                            if (artist.getPodium().equals("Stage 4")) {
                                 BufferedImage image = artistPlayerViewModels.get(number);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((51 * 16) + 8 - image.getWidth() / 2.0, (1 * 16) + 8 - image.getHeight() / 2.0);
@@ -363,31 +290,26 @@ public class MyAnimationTimer extends AnimationTimer {
                             }
                         }
 
-                        if (allMinutesArtist + artist.getSetDurationInMinutes() < allMinutesTimer)
-                        {
-                            if (artist.getPodium().equals("Main stage"))
-                            {
+                        if (allMinutesArtist + artist.getSetDurationInMinutes() < allMinutesTimer) {
+                            if (artist.getPodium().equals("Main stage")) {
                                 BufferedImage image = SimulatorController.aisImage.get(90);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((24 * 16) + 8 - (image.getWidth() / 2.0), (2 * 16) + 8 - (image.getHeight() / 2.0));
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 2"))
-                            {
+                            if (artist.getPodium().equals("Stage 2")) {
                                 BufferedImage image = SimulatorController.aisImage.get(90);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((2 * 16) + 8 - image.getWidth() / 2.0, (27 * 16) + 8 - image.getHeight() / 2.0);
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 3"))
-                            {
+                            if (artist.getPodium().equals("Stage 3")) {
                                 BufferedImage image = SimulatorController.aisImage.get(90);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((29 * 16) + 8 - image.getWidth() / 2.0, (26 * 16) + 8 - image.getHeight() / 2.0);
                                 new FXGraphics2D(simMap.getGraphicsContext2D()).drawImage(image, tx, null);
                             }
-                            if (artist.getPodium().equals("Stage 4"))
-                            {
+                            if (artist.getPodium().equals("Stage 4")) {
                                 BufferedImage image = SimulatorController.aisImage.get(90);
                                 AffineTransform tx = new AffineTransform();
                                 tx.translate((51 * 16) + 8 - image.getWidth() / 2.0, (1 * 16) + 8 - image.getHeight() / 2.0);
@@ -403,7 +325,7 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTimeForTimer = currentTime;
         }
     }
-        
+
     public boolean isSpawn() {
         for (AI ai : MyAnimationTimer.realAis) {
             if (ai.getX() == 664 && ai.getY() == 552) {
@@ -428,7 +350,7 @@ public class MyAnimationTimer extends AnimationTimer {
             timer.setHours(0);
             pastMidnight = true;
         } else {
-            timer.setHours(timer.getHours()+1);
+            timer.setHours(timer.getHours() + 1);
         }
         timer.setMinutes(0);
     }
@@ -439,7 +361,7 @@ public class MyAnimationTimer extends AnimationTimer {
 
     public void addMinute() {
         if (timer.getMinutes() < 59) {
-            timer.setMinutes(timer.getMinutes()+1);
+            timer.setMinutes(timer.getMinutes() + 1);
         } else {
             addHour();
         }
