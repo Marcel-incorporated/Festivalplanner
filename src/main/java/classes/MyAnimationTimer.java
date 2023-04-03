@@ -76,7 +76,7 @@ public class MyAnimationTimer extends AnimationTimer {
             lastTime = currentTime;
         }
         // 1_000_000_000
-        if (elapsedForTimer >= 1_000_000_000) {
+        if (elapsedForTimer >= 1_000_000_00) {
             if (isSpawn()) {
                 if (index != ais.size()) {
                     realAis.add(ais.get(index));
@@ -125,7 +125,7 @@ public class MyAnimationTimer extends AnimationTimer {
                             }
                         }
 
-                        if (allMinutesArtist - 90 == allMinutesTimer && !ai.isFest()) {
+                        if (allMinutesArtist - 90 == allMinutesTimer && !ai.isFest() && ai.getStatus().equals("")) {
                             switch (artist.getPopularity()) {
                                 case 1 -> {
                                     if (Math.random() <= 0.20) {
@@ -293,10 +293,6 @@ public class MyAnimationTimer extends AnimationTimer {
                             }
                         }
                     }
-
-
-
-
                     //tekent artiesten op podiums als het tijd is
                     for (Artist artist : this.festival.getArtists()) {
 

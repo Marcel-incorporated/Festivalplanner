@@ -217,7 +217,7 @@ public class AI {
 
                 if (this.matrixes.size() == this.matrixCount) {
                     if (status.equals("mainStageBack") || status.equals("leftTinyStageBack") || status.equals("rightTinyStageBack") || status.equals("middleTinyStageBack")) {
-                        status = "";
+                        setStatus("");
                     }
                     isJustSpawned = false;
                     this.matrixes = null;
@@ -350,7 +350,7 @@ public class AI {
 
 
     public ArrayList<Matrix> getRightTinyStageMatrixes() {
-        System.out.println("right tiny matrix");
+//        System.out.println("right tiny matrix");
         ArrayList<Matrix> rightTinyStageMatrixes = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -382,7 +382,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getMiddleTinyStageMatrixes() {
-        System.out.println("middle tiny matrix");
+//        System.out.println("middle tiny matrix");
         ArrayList<Matrix> middleTinyStagePath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -410,7 +410,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getLeftTinyStageMatrixes() {
-        System.out.println("left tiny matrix");
+//        System.out.println("left tiny matrix");
         ArrayList<Matrix> leftTinyStagePath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -438,7 +438,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getToiletMatrixes() {
-        System.out.println("toilet");
+//        System.out.println("toilet");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -468,7 +468,7 @@ public class AI {
 
 
     public ArrayList<Matrix> getBlueShopMatrixes() {
-        System.out.println("blue");
+//        System.out.println("blue");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -489,7 +489,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getOrangeShopMatrixes() {
-        System.out.println("orange");
+//        System.out.println("orange");
 
         ArrayList<Matrix> toiletPath = new ArrayList<>();
 
@@ -506,7 +506,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getMainStageMatrixes() {
-        System.out.println("Main stage");
+//        System.out.println("Main stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
@@ -539,12 +539,12 @@ public class AI {
     }
 
     public ArrayList<Matrix> getBackFromMainStageMatrixes() {
-        System.out.println("Back from main stage");
+//        System.out.println("Back from main stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix endLocation = new Matrix(35, 56);
-        endLocation.updateAround(5, 5, 0);
+        endLocation.updateAround(6, 4, 0);
 
         Matrix checkpoint5 = new Matrix(35, 56);
         checkpoint5.updateAround(17, 5, 0);
@@ -572,7 +572,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getBackFromLeftTinyStage() {
-        System.out.println("Back from left tiny stage");
+//        System.out.println("Back from left tiny stage");
 
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
@@ -597,7 +597,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getBackFromMiddleTinyStage() {
-        System.out.println("Back from middle tiny stage");
+//        System.out.println("Back from middle tiny stage");
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
@@ -621,7 +621,7 @@ public class AI {
     }
 
     public ArrayList<Matrix> getBackFromRightTinyStage() {
-        System.out.println("Back from right tiny stage");
+//        System.out.println("Back from right tiny stage");
         ArrayList<Matrix> mainPath = new ArrayList<>();
 
         Matrix checkpoint1 = new Matrix(35, 56);
