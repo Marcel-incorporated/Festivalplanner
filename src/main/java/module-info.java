@@ -7,8 +7,8 @@ module com.example.festivalplanner {
     requires fxgraphics2d;
     requires javax.json;
 
-    opens GUI to javafx.fxml;
-    exports GUI;
+    opens gui to javafx.fxml;
+    exports gui;
     exports controllers;
     opens controllers to javafx.fxml;
     exports classes;

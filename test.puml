@@ -87,7 +87,7 @@ enum classes.Genre {
 +  COUNTRY
 +  CLASSICAL
 }
-class GUI.Festivalplanner {
+class gui.Festivalplanner {
 + void start(Stage)
 + {static} void main(String[])
 }
@@ -243,7 +243,7 @@ class classes.Visitor {
 java.io.Serializable <|.. classes.Festival
 classes.Double <|-- classes.Block
 java.io.Serializable <|.. classes.Song
-javafx.application.Application <|-- GUI.Festivalplanner
+javafx.application.Application <|-- gui.Festivalplanner
 java.io.Serializable <|.. classes.Artist
 controllers.Runnable <|.. controllers.SimulatorController
 controllers.Thread <|-- controllers.SimulatorController

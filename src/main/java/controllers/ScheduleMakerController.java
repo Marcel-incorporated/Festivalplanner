@@ -134,7 +134,7 @@ public class ScheduleMakerController {
     }
 
     private void openArtistEditDialog(Artist item) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/FXML/editArtistDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/editArtistDialog.fxml"));
         DialogPane editArtistDialogPane = fxmlLoader.load();
 
         EditArtistDialogController editArtistDialogController = fxmlLoader.getController();
